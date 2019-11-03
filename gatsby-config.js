@@ -94,11 +94,7 @@ module.exports = {
         theme_color: config.themeColor,
         display: 'minimal-ui',
         icons: [
-          {
-            src: 'http://staging.procuro.io/assets/dashboard/src/img/partners/r-app-tile.png',
-            sizes: '771x724',
-            type: 'image/png',
-          },
+
         ],
       },
     },
