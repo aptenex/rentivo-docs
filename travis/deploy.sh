@@ -2,9 +2,9 @@
 
 
 if [ "$TRAVIS_BRANCH" == "master" ]; then
-  S3_BUCKET="s3://sendgrid-knowledge-center-production"
+  S3_BUCKET="s3://public-rentivo-docs"
 else
-  S3_BUCKET="s3://sendgrid-knowledge-center-staging"
+  S3_BUCKET="s3://public-rentivo-docs-staging"
 fi
 echo "Deploying to $S3_BUCKET"
 #AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY aws s3api put-bucket-website --bucket sendgrid-knowledge-center-staging --website-configuration file://static/config.json
