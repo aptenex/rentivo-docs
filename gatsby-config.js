@@ -7,15 +7,6 @@ module.exports = {
   pathPrefix: config.pathPrefix,
   siteMetadata: {
     siteUrl: config.siteUrl,
-    rssMetadata: {
-      site_url: config.siteUrl + pathPrefix,
-      feed_url: config.siteUrl + pathPrefix + config.siteRss,
-      title: config.siteTitle,
-      description: config.siteDescription,
-      image_url: `${config.siteUrl + pathPrefix}/logos/logo-512.png`,
-      author: config.userName,
-      copyright: config.copyright,
-    },
   },
   plugins: [
     'gatsby-plugin-react-helmet',
@@ -94,7 +85,11 @@ module.exports = {
         theme_color: config.themeColor,
         display: 'minimal-ui',
         icons: [
-
+            {
+                src: '/brand/sg-mark.png',
+                sizes: '771x724',
+                type: 'image/png',
+            },
         ],
       },
     },
