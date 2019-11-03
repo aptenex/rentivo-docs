@@ -5,11 +5,11 @@ publish_mode: editorial_workflow
 media_folder: "static/images" # Media files will be stored in the repo under images/uploads
 public_folder: "/images" # The src attribute for uploaded media will begin with /images/uploads
 collections:
-- name: "posts"
-  label: "Post"
-  folder: "content/docs/ui"
-  filter:
-      field: language
-      value: en
-  fields:
-  - {label: "Language", name: "language"}
+-   name: "posts"
+    label: "Post"
+    folder: "content/docs/ui"
+    filter:
+        field: language
+        value: en
+    fields:
+    - {label: "Language", name: "language"}
