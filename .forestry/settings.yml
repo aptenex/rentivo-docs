@@ -3,7 +3,12 @@ new_page_extension: md
 auto_deploy: false
 admin_path: 
 webhook_url: 
-sections: 
+sections:
+- type: directory
+  path: content/docs/ui
+  label: UI
+  create: all
+  match: "**/*"
 upload_dir: static/img
 public_path: "/img"
 front_matter_path: ''
