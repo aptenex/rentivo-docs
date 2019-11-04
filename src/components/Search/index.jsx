@@ -9,8 +9,9 @@ class Search extends Component {
     const container = document.querySelector('.search-hero') || false;
     const prefix = process.env.NODE_ENV === 'development' ? '' : '/docs';
     window.docsearch({
-      apiKey: '621c583d8098d07c471dbaf6c2178e56',
-      indexName: '_hc',
+        appId: '455HJBADWX',
+      apiKey: 'f51a1414f76a99f11219c87e70b3c763',
+      indexName: 'rentivo_kb',
       inputSelector: '.search-query',
       debug: false, // Set debug to true if you want to inspect the dropdown
       queryHook(query) {
