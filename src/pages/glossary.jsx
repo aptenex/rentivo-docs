@@ -17,7 +17,7 @@ class Glossary extends React.Component {
     const groupedEdges = {};
 
     edges.forEach((edge) => {
-      const sortChar = edge.node.fields.title.slice(0, 1);
+      const sortChar = edge.node.title.slice(0, 1);
 
       if (sortChar in groupedEdges) {
         groupedEdges[sortChar].push(edge);
@@ -34,7 +34,7 @@ class Glossary extends React.Component {
     return (
       <Layout location={location} subNav={true}>
         <div className="container">
-          <SEO postNode={this.props} title="Glossary" description="SendGrid documentation glossary" />
+          <SEO postNode={this.props} title="Glossary" description="Rentivo Glossary of Terms" />
           <h1>Glossary</h1>
           <div className="row">
             {Object.keys(this.glossary).map(key => (
@@ -42,10 +42,10 @@ class Glossary extends React.Component {
                 <h3>{key}</h3>
                 {this.glossary[key].map(edge => (
                   <Link
-                    key={edge.node.fields.title}
-                    to={edge.node.fields.permalink}
+                    key={edge.node.title}
+                    to={`glossary/` + edge.node.slug}
                   >
-                    {edge.node.fields.title}
+                    {edge.node.title}
                   </Link>
                 ))}
               </div>
@@ -61,20 +61,15 @@ export default Glossary;
 
 export const pageQuery = graphql`
   query glossary {
-    glossary: allMarkdownRemark(
-      limit: 2000,
-      filter: { fields: {docType: { eq: "glossary" } } },
-      sort: { fields: [frontmatter___title], order: ASC }
+    glossary: allContentfulGlossaryTerm(
+      limit: 2000,      
+      sort: { fields: [title], order: ASC }
     ) {
       edges {
         node {
-          fields {
-            docType
-            slug
-            permalink
-            category
-            title
-          }
+          id
+          title
+          slug
         }
       }
     }

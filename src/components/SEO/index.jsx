@@ -23,6 +23,7 @@ class SEO extends Component {
     let permalink;
     let description = false;
 
+    // #SG Frontmatter
     if (postType === 'category') {
       const {
         docType,
@@ -31,8 +32,11 @@ class SEO extends Component {
 
 
       title = SEO.capitalizeFirstLetter(`${docType.replace('-', ' ')} | ${category.replace('-', ' ')}`);
+
     } else if (postType === 'doc') {
-      const { seo } = postNode.frontmatter;
+
+      // #SG Frontmatter
+      const { seo } = postNode.frontmatter ?? {};
       permalink = sitePath + postNode.fields.permalink;
 
       if (seo) {
@@ -41,8 +45,12 @@ class SEO extends Component {
       } else {
         ({ title } = postNode.fields);
       }
-    } else {
+    } else if(postNode.location) {
       permalink = sitePath + postNode.location.pathname;
+      ({ title } = this.props);
+      ({ description } = this.props);
+    } else if(postType ==='glossary'){
+      permalink = sitePath + '/glossary/' + postNode.slug;
       ({ title } = this.props);
       ({ description } = this.props);
     }

@@ -15,8 +15,11 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
    * Add slug edge
    */
   let slug;
-  if (node.internal.type === 'MarkdownRemark') {
+  if (node && node.internal && node.internal.type === 'MarkdownRemark') {
     const fileNode = getNode(node.parent);
+    if(!fileNode.relativePath){
+      return;
+    }
     const parsedFilePath = path.parse(fileNode.relativePath);
     if (
       Object.prototype.hasOwnProperty.call(node, 'frontmatter')
@@ -63,10 +66,6 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       docType = 'ui';
     } else if (permalink.match(/for-developers\/[^/]+/)) {
       docType = 'for-developers';
-    } else if (permalink.match(/glossary\/[^/]+/)) {
-      docType = 'glossary';
-    } else if (permalink.match(/release-notes\/[^/]+/)) {
-      docType = 'release-notes';
     }
 
     createNodeField({ node, name: 'docType', value: docType });
@@ -111,13 +110,59 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators;
 
-  return new Promise((resolve, reject) => {
+  const  glossaryPromise = new Promise((resolve, reject) => {
+
+    const docsPage = path.resolve('src/templates/doc.jsx');
+    const categoryPage = path.resolve('src/templates/category.jsx');
+    const glossaryPage = path.resolve('src/templates/glossary.jsx');
+    resolve(
+        graphql(
+            `
+            {
+              allContentfulGlossaryTerm(
+                limit: 2000,      
+                sort: { fields: [title], order: ASC }
+              ) {
+                edges {
+                  node {
+                    id
+                    title
+                    slug
+                  }
+                }
+              }
+            }
+          `
+        ).then(result => {
+          if (result.errors) {
+            reject(result.errors)
+          }
+
+          const pages = result.data.allContentfulGlossaryTerm.edges;
+          pages.forEach((page, index) => {
+            console.log(">>>>>>>>>", page);
+            createPage({
+              path: '/glossary/' + `${_.kebabCase(page.node.slug)}` + '/' ,
+              component: glossaryPage ,
+              context: {
+                slug: page.node.slug,
+                id: page.node.id,
+              },
+            });
+          })
+        })
+    )
+  });
+
+
+
+  const markdownPromise = new Promise((resolve, reject) => {
     const docsPage = path.resolve('src/templates/doc.jsx');
     const categoryPage = path.resolve('src/templates/category.jsx');
 
     resolve(graphql(`
         {
-          allMarkdownRemark {
+          allMarkdownRemark(filter: {fields: {docType: {ne: null}}}) {
             edges {
               node {
                 id
@@ -237,6 +282,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       });
     }));
   });
+
+  return Promise.all([markdownPromise, glossaryPromise]);
+
+
 };
 
 exports.onCreateWebpackConfig = ({ stage, actions }) => {

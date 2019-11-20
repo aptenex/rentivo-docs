@@ -4,6 +4,7 @@
 import React from 'react';
 
 export default class HTML extends React.Component {
+
   render() {
     return (
       <html lang="en">

@@ -3,6 +3,24 @@ const config = require('./data/SiteConfig');
 const pathPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix;
 const policyAccess = process.env.GATSBY_ENV === 'production' ? [{ userAgent: '*', allow: ['/'] }] : [{ userAgent: '*', disallow: ['/'] }];
 
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`
+})
+
+const contentfulConfig = {
+  spaceId: process.env.CONTENTFUL_SPACE_ID,
+  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+  host: process.env.CONTENTFUL_HOST
+}
+
+const { spaceId, accessToken } = contentfulConfig
+
+if (!spaceId || !accessToken) {
+  throw new Error(
+      'Contentful spaceId and the access token need to be provided.'
+  )
+}
+
 module.exports = {
   pathPrefix: config.pathPrefix,
   siteMetadata: {
@@ -28,11 +46,8 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-google-tagmanager',
-      options: {
-        id: 'GTM-PQC59L',
-        includeInDevelopment: true,
-      },
+      resolve: `gatsby-source-contentful`,
+      options: contentfulConfig
     },
     {
       resolve: 'gatsby-transformer-remark',
@@ -63,17 +78,18 @@ module.exports = {
         color: config.themeColor,
       },
     },
-    'gatsby-plugin-sharp',
-    'gatsby-plugin-catch-links',
     {
-      resolve: 'gatsby-plugin-segment-js',
+      resolve: 'gatsby-plugin-google-tagmanager',
       options: {
-        prodKey: '1CjnBNPybWzyv10ssZRxdwmb8vrYF4yj',
-        devKey: 'QaZKJjbUWrCqNO0ObRrF64qDRVE40ZIr',
-        // This is done via GTM.
-        trackPage: true,
+        id: 'XXXX',
+        includeInDevelopment: true,
       },
     },
+    'gatsby-plugin-sharp',
+    'gatsby-plugin-catch-links',
+    'gatsby-plugin-nullish-coalescing-operator',
+
+
     {
       resolve: 'gatsby-plugin-manifest',
       options: {

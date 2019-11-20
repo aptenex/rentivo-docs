@@ -14,6 +14,6 @@ const config = {
   userTwitter: 'rentivo',
 };
 
-config.envPrefix = process.env.NODE_ENV === 'development' ? '' : config.pathPrefix;
+config.envPrefix = process.env.NODE_ENV === 'development' ? config.pathPrefix : config.pathPrefix;
 
 module.exports = config;

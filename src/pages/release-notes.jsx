@@ -12,7 +12,7 @@ import Layout from '../components/layout';
 class ReleaseNotes extends React.Component {
   getAsideLinks() {
     const { data } = this.props;
-    const { edges } = data.releaseNotes;
+    const { edges } = data.allContentfulReleaseNote;
     const overview = {
       tagName: 'h2',
       textNode: 'Overview',
@@ -22,8 +22,8 @@ class ReleaseNotes extends React.Component {
     const asideLinks = edges.map((edge) => {
       const link = {};
       link.tagName = 'h2';
-      link.textNode = edge.node.frontmatter.date;
-      link.id = _.kebabCase(edge.node.frontmatter.date);
+      link.textNode = edge.node.releaseDate;
+      link.id = _.kebabCase(edge.node.releaseDate);
       return link;
     });
 
@@ -32,12 +32,13 @@ class ReleaseNotes extends React.Component {
 
   render() {
     const { data, location } = this.props;
-    const { edges } = data.releaseNotes;
+    console.log("ADASDASD", data);
+    const { edges } = data.allContentfulReleaseNote;
     const asideLinks = this.getAsideLinks();
     return (
       <Layout location={location} subNav={true}>
         <div className="container-lg">
-          <SEO postNode={this.props} title="Release Notes" description="SendGrid API and Marketing Campaigns Release Notes" />
+          <SEO postNode={this.props} title="Rentivo Release Notes" description="Rentivo PMS for Vacation Rentals Release Notes" />
           <div className="row">
             <div className="col-md-3">
               <AsideMenu asideLinks={asideLinks} pageType="release-notes" />
@@ -58,7 +59,7 @@ class ReleaseNotes extends React.Component {
               <ReleaseKey />
               {edges.map(edge => (
                 <ReleaseNotePost
-                  key={edge.node.frontmatter.date}
+                  key={edge.node.releaseDate}
                   node={edge.node}
                 />
               ))}
@@ -75,16 +76,19 @@ export default ReleaseNotes;
 
 export const pageQuery = graphql`
   query releaseNote {
-    releaseNotes: allMarkdownRemark(
-      filter: { fields: {docType: { eq: "release-notes" } } },
-      sort: { fields: [frontmatter___date], order: DESC }
-    ) {
+    allContentfulReleaseNote(sort: {fields: releaseDate, order: DESC}) {
       edges {
         node {
-          htmlAst
-          frontmatter {
-            releaseType
-            date(formatString: "Do MMMM YYYY")
+          id
+          title
+          releaseDate
+          releaseType
+          body {
+            childMarkdownRemark {
+              htmlAst
+              html
+              rawMarkdownBody
+            }
           }
         }
       }

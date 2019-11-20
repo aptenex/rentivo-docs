@@ -11,7 +11,7 @@ import CALLOUTS from '../constants/homeCallouts';
 import Layout from '../components/layout';
 import './index.scss';
 
-class Index extends React.Component {
+class Docs extends React.Component {
   static renderCards() {
     return HOME_CARDS.map(card => (
       <div className="card card--home col-md-6 ta-center" key={card.TITLE}>
@@ -63,7 +63,7 @@ class Index extends React.Component {
           <div className="home-callouts">
             <div className="container">
               <div className="row row--home-callouts">
-                {Index.renderCallouts()}
+                {Docs.renderCallouts()}
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@ class Index extends React.Component {
               <div className="container">
                 <h2>Featured Resources</h2>
                 <div className="row row--home-cards">
-                  {Index.renderCards()}
+                  {Docs.renderCards()}
                 </div>
               </div>
             </div>
@@ -85,4 +85,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+export default Docs;
