@@ -6,7 +6,7 @@ import GlossaryPartial from '../components/GlossaryPartial/glossaryPartial';
 import FOR_DEVS_CARDS from '../constants/forDevelopersCards';
 import Libaries from '../components/Libaries';
 import withSubNav from '../components/NavSub';
-import Layout from '../components/layout';
+import Layout from '../components/DocsLayout';
 import './for-developers.scss';
 
 class ForDevelopers extends Component {

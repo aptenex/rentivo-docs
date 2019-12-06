@@ -112,9 +112,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
   const  glossaryPromise = new Promise((resolve, reject) => {
 
-    const docsPage = path.resolve('src/templates/doc.jsx');
-    const categoryPage = path.resolve('src/templates/category.jsx');
     const glossaryPage = path.resolve('src/templates/glossary.jsx');
+
     resolve(
         graphql(
             `
@@ -140,7 +139,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
           const pages = result.data.allContentfulGlossaryTerm.edges;
           pages.forEach((page, index) => {
-            console.log(">>>>>>>>>", page);
             createPage({
               path: '/glossary/' + `${_.kebabCase(page.node.slug)}` + '/' ,
               component: glossaryPage ,
@@ -180,7 +178,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
       `).then((result) => {
       if (result.errors) {
         /* eslint no-console: "off" */
-        console.log(result.errors);
         reject(result.errors);
       }
 
@@ -283,7 +280,49 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     }));
   });
 
-  return Promise.all([markdownPromise, glossaryPromise]);
+
+  const  productPromise = new Promise((resolve, reject) => {
+
+    const productPage = path.resolve('src/templates/product.jsx');
+
+    resolve(
+        graphql(
+            `
+            { 
+              allContentfulProduct {
+                edges {
+                  node {
+                    id
+                    slug
+                    name
+                    summary
+                  }
+                }
+              }
+            }
+          `
+        ).then(result => {
+          if (result.errors) {
+            reject(result.errors)
+          }
+
+          const pages = result.data.allContentfulProduct.edges;
+          console.log(pages,"ASdasadasdasdasd");
+          pages.forEach((page, index) => {
+            createPage({
+              path: `/${_.kebabCase(page.node.slug)}`,
+              component: productPage ,
+              context: {
+                slug: page.node.slug,
+                id: page.node.id,
+              },
+            });
+          })
+        })
+    )
+  });
+
+  return Promise.all([markdownPromise, glossaryPromise, productPromise]);
 
 
 };
@@ -291,6 +330,38 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   if (stage === 'build-javascript') {
     actions.setWebpackConfig({
+      module: {
+        noParse: /svg/,
+        rules: [
+          {
+            test: /\.svg$/,
+            include: /img\/svg/,
+            use: {
+              loader: 'svg-react-loader',
+              options: {
+                classIdPrefix: true
+              }
+            },
+          }
+        ],
+        loaders: [
+          {
+            test: /\.svg$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'svg-react-loader',
+              options: {
+                tag: 'symbol',
+                classIdPrefix: '[name]-[hash:8]__',
+                attrs: {
+                  title: 'example',
+                },
+                name: 'MyIcon',
+              },
+            },
+          }
+        ]
+      },
       plugins: [webpackLodashPlugin],
     });
   }

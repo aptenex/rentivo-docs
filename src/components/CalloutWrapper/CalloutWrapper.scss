@@ -1,0 +1,10 @@
+@import '../../scss/global/variables';
+
+.callout-wrapper {
+  background-color: rgba(77,170,105,0.1);
+  color: #2d643e;
+  width: 100%;
+  display: flex;
+  padding: 30px 20px;
+  margin-top: 40px;
+}

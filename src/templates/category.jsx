@@ -5,7 +5,7 @@ import Group from '../components/Group';
 import CATEGORIES from '../constants/categories';
 import SEO from '../components/SEO';
 import GROUPS from '../constants/groups';
-import Layout from '../components/layout';
+import Layout from '../components/DocsLayout';
 import './category.scss';
 
 class CategoryTemplate extends React.Component {

@@ -3,6 +3,23 @@ import { Link } from 'gatsby';
 import LINKS from '../../constants/pageLinks';
 import { AuthCtx } from '../withUser';
 import './NavMain.scss';
+import LogoImage from 'common/src/assets/image/rentivo-logo.png';
+import Logo from 'reusecore/src/elements/UI/Logo';
+import styled from "styled-components"
+import {  IconLock as Lock } from 'containers/Rentivo/Icons';
+const Img = styled('img')`
+
+`;
+
+const IconLock = styled(Lock)`
+    height: 12px;
+    line-height: 22px;
+    float:left;
+    position: relative;
+    
+    opacity: 0.7;
+    margin-right: 8px;
+  `
 
 class NavMain extends Component {
   constructor(props) {
@@ -32,7 +49,13 @@ class NavMain extends Component {
 
     return (
       <nav className="nav-main">
+
         <Link className="nav-main__logo" onClick={this.closeMenu} to="/">
+          <Img
+              href="/"
+              src={LogoImage}
+              title="Rentivo"
+          />
           <span className="nav-main__help-center">Knowledge Center</span>
         </Link>
 
@@ -47,10 +70,10 @@ class NavMain extends Component {
 
         <div className={`nav-main__mobile ${menuState}`}>
 
-          <div className="nav-center">
+          <div className="nav-left">
               <div className="nav-item">
-                  <a className="nav-main__plain" onClick={this.closeMenu} href={LINKS.RENTIVO}>
-                      Rentivo Home
+                  <a className="nav-main__plain" onClick={this.closeMenu} href={'/'}>
+                      Products
                   </a>
               </div>
 
@@ -82,7 +105,10 @@ class NavMain extends Component {
                   user ? (
                     <a className="nav-secondary__dashboard" href={LINKS.APP}>Dashboard</a>
                   ) : (
-                    <a className="nav-secondary__link" href={LINKS.APP}>Sign In</a>
+                    <a className="nav-secondary__link" href={LINKS.APP}>
+                      <IconLock />
+                      Sign In
+                    </a>
                   )
                 )}
               </AuthCtx.Consumer>

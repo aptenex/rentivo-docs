@@ -30,9 +30,9 @@ $card-gutter: 40px;
 
 .search-hero__bg {
   padding: $scaleup-6 0 13rem 0;
-  background: url('../img/help-center-hero.svg') no-repeat;
+  background: url('../img/rentivo-help-center-success.svg') no-repeat;
   background-position: bottom center;
-
+  background-size: 1725px 375px;
   @media (max-width: $width-small) {
     background-size: contain;
     padding-bottom: $scaleup-10;

@@ -24,9 +24,49 @@ if (!spaceId || !accessToken) {
 module.exports = {
   pathPrefix: config.pathPrefix,
   siteMetadata: {
+    title : config.siteTitle,
+    author : config.siteAuthor,
     siteUrl: config.siteUrl,
+    description: config.siteDescription
   },
   plugins: [
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /img\/svg/ // See below to configure properly
+        }
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-module-resolver',
+      options: {
+        root: './src', // <- will be used as a root dir
+        aliases: {
+          'reusecore': './reusecore',
+          'common': './common',
+          'functions': './functions',
+          'containers' : './containers',
+          'components' : './components'
+        }
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-module-resolver',
+      options: {
+        root: './static',
+        aliases: {
+          'svg': './img/svg',
+          'img': './img',
+        }
+      }
+    },
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        minify: false, // Breaks styles if not set to false
+      },
+    },
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sass',
     'gatsby-plugin-sitemap',
@@ -48,6 +88,21 @@ module.exports = {
     {
       resolve: `gatsby-source-contentful`,
       options: contentfulConfig
+    },
+    `gatsby-transformer-json`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/common/src/data/`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `common`,
+        path: `${__dirname}/src/common/src/assets/`,
+      },
     },
     {
       resolve: 'gatsby-transformer-remark',
@@ -85,7 +140,54 @@ module.exports = {
         includeInDevelopment: true,
       },
     },
+    {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Roboto`,
+            variants: [
+              `100`,
+              `100i`,
+              `300`,
+              `300i`,
+              `400`,
+              `400i`,
+              `500`,
+              `500i`,
+              `700`,
+              `700i`,
+              `900`,
+              `900i`,
+            ],
+          },
+          {
+            family: `Poppins`,
+            variants: [`300`, `400`, `500`, `600`, `700`],
+          },
+          {
+            family: `Lato`,
+            variants: [`300`, `400`, `700`],
+          },
+          {
+            family: `Open Sans`,
+            variants: [`300`, `400`, `600`, `700`, `800`],
+          },
+          {
+            family: `Raleway`,
+            variants: [`500`, `600`],
+          },
+
+          {
+            family: `Heebo`,
+            variants: [`300`, `400`, `500`, `600`, `700`, `800`],
+          },
+        ],
+      },
+    },
+    'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
+    `gatsby-transformer-inline-svg`, // https://www.gatsbyjs.or
     'gatsby-plugin-catch-links',
     'gatsby-plugin-nullish-coalescing-operator',
 

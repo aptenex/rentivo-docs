@@ -1,6 +1,6 @@
 import React from 'react';
 import './api-reference.scss';
-import Layout from '../components/layout';
+import Layout from '../components/DocsLayout';
 
 function stopLight({ location }) {
   return (

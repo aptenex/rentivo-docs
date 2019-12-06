@@ -8,9 +8,9 @@ import FooterCallout from '../components/FooterCallout';
 import config from '../../data/SiteConfig';
 import HOME_CARDS from '../constants/homeCards';
 import CALLOUTS from '../constants/homeCallouts';
-import Layout from '../components/layout';
-import './index.scss';
-
+import Layout from '../components/DocsLayout';
+import './docs.scss';
+import MarketingLayout from "../components/MarketingLayout";
 class Docs extends React.Component {
   static renderCards() {
     return HOME_CARDS.map(card => (

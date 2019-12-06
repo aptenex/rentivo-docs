@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import './404.scss';
-import NoHeaderFooter from '../components/layout/NoHeaderFooter';
+import NoHeaderFooter from '../components/DocsLayout/NoHeaderFooter';
 
 function NotFound({ location }) {
   return (

@@ -2,6 +2,7 @@ const config = {
   env: process.env.NODE_ENV,
   docsDir: 'docs',
   siteTitle: 'Rentivo Documentation',
+  siteAuthor: 'Rentivo',
   siteTitleAlt: 'Rentivo Knowledge Center',
   siteLogo: 'http://staging.procuro.io/assets/dashboard/src/img/partners/r-app-tile.png',
   ogImage: 'http://staging.procuro.io/assets/dashboard/src/img/partners/r-app-tile.png',

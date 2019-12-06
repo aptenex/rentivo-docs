@@ -3,7 +3,7 @@ import { Link, graphql } from 'gatsby';
 import SEO from '../components/SEO';
 import './glossary.scss';
 import withSubNav from '../components/NavSub';
-import Layout from '../components/layout';
+import Layout from '../components/DocsLayout';
 
 class Glossary extends React.Component {
   constructor(props) {

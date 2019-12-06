@@ -109,6 +109,31 @@
   }
 }
 
+.nav-left {
+
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  .nav-item {
+    margin-top: 4px;
+    font-size: 18px;
+  }
+  @media (max-width: $width-medium) {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .nav-item:first-of-type {
+    margin-left: 0;
+  }
+
+  .nav-item:last-of-type {
+    margin-right: 0;
+  }
+}
+
 .nav-center {
   align-items: center;
   display: flex;
@@ -245,15 +270,26 @@
 
 .nav-main__logo {
   padding: $scaleup-4 0;
-  background-image: url('http://staging.procuro.io/assets/dashboard/src/img/partners/r-app-tile.png');
+
   background-position: 0;
   background-repeat: no-repeat;
   background-size: 33px auto;
   display: block;
   height: 33px;
-  width: 220px;
+  width: 350px;
+  margin-right: 80px;
   text-align: right;
   position: relative;
+  img {
+    position: absolute;
+    top: 14px;
+    max-width: 130px;
+    display: block;
+    height: 48px;
+    margin-right: 0px;
+    margin-top: 00px;
+
+  }
 
   @media (max-width: $width-small) {
     background-size: 33px auto;
@@ -269,7 +305,7 @@
 .nav-main__help-center {
   text-transform: capitalize;
   display: inline-block;
-  padding: 3px 8px 0;
+  padding: 0px 0 0 8px;
   border-left: 2px solid $slate-40;
   color: $slate-40;
   position: absolute;

@@ -1,0 +1,24 @@
+---
+name: ProductBlock
+---
+
+import { ThemeProvider } from 'styled-components';
+import { Playground, PropsTable } from 'docz';
+import { agencyTheme } from '../../theme/agency';
+import ProductBlock from './';
+
+# ProductBlock
+
+## Basic Usage
+
+<Playground>
+  <ThemeProvider theme={agencyTheme}>
+    <>
+      <ProductBlock/>
+    </>
+  </ThemeProvider>
+</Playground>
+
+## Properties
+
+<PropsTable of={ProductBlock} />

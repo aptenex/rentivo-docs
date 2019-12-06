@@ -9,7 +9,14 @@
     "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ] } ]
   },
   "settings": {
-    "import/core-modules": []
+    "import/core-modules": [],
+    "import/resolver": {
+      "alias": [
+          ["reusecore", "./src/reusecore"],
+          ["common", "./src/common"],
+          ["functions", "./src/functions"]
+      ]
+    }
   },
   "env": {
     "browser": true

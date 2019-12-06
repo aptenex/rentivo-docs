@@ -7,7 +7,7 @@ import ReleaseKey from '../components/ReleaseNotes/ReleaseKey';
 import ReleaseNotePost from '../components/ReleaseNotes/ReleaseNotePost';
 import withSubNav from '../components/NavSub';
 import './release-notes.scss';
-import Layout from '../components/layout';
+import Layout from '../components/DocsLayout';
 
 class ReleaseNotes extends React.Component {
   getAsideLinks() {

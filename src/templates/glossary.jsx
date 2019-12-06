@@ -11,7 +11,7 @@ import Rating from '../components/Rating';
 import Gist from '../componentsMarkdown/Gist';
 import CodeGroup from '../componentsMarkdown/CodeGroup';
 import withSubNav from '../components/NavSub';
-import Layout from '../components/layout';
+import Layout from '../components/DocsLayout';
 import './syntax-highlighting.scss';
 import './glossary.scss';
 import { BLOCKS, MARKS } from "@contentful/rich-text-types"
