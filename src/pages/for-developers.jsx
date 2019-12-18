@@ -30,7 +30,7 @@ class ForDevelopers extends Component {
     return (
       <Layout location={location}>
         <div className="for-developers">
-          <SEO postNode={this.props} title="For Developers" description="SendGrid API and Marketing Campaigns documentation for Developers" />
+          <SEO postNode={this.props} title="For Developers" description="Rentivo API and Product Helpguides for Developers" />
           <div className="container for-devs-callouts m-bottom-6">
             <h1 className="page-title">For Developers</h1>
             <div className="row row--home-cards">

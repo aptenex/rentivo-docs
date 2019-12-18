@@ -67,7 +67,9 @@
     flex-direction: row-reverse;
     > div {
       padding-left: 80px;
-
+      @media (max-width: 767px) {
+        padding-left: var(--half-gutter-width, 8px);
+      }
     }
 }
 

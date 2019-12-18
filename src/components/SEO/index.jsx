@@ -22,9 +22,16 @@ class SEO extends Component {
     let title;
     let permalink;
     let description = false;
-
+    console.log(postNode,"<<<<<<<");
     // #SG Frontmatter
-    if (postType === 'category') {
+
+
+    // Defined on Contentful... regardless of category...
+    if(postNode.seoTitle){
+      title = postNode.seoTitle;
+      description = postNode.seoDescription;
+
+    } else if (postType === 'category') {
       const {
         docType,
         category,
@@ -45,14 +52,18 @@ class SEO extends Component {
       } else {
         ({ title } = postNode.fields);
       }
-    } else if(postNode.location) {
-      permalink = sitePath + postNode.location.pathname;
-      ({ title } = this.props);
-      ({ description } = this.props);
     } else if(postType ==='glossary'){
       permalink = sitePath + '/glossary/' + postNode.slug;
       ({ title } = this.props);
       ({ description } = this.props);
+    } else if(postNode.location) {
+      permalink = sitePath + postNode.location.pathname;
+      ( title  = this.props.title ? this.props.title : this.props.name);
+      ({ description } = this.props);
+
+    } else if(postNode.title || postNode.name){
+      ( title = postNode.title || postNode.name);
+      ({ description } = postNode.summary | '');
     }
 
     const schemaOrgJSONLD = [
@@ -80,7 +91,7 @@ class SEO extends Component {
 
     return (
       <Helmet>
-        <title>{`${title} | ${config.siteTitle}`}</title>
+        <title>{`${title}`}</title>
         {/* General tags */}
         <meta name="description" content={description} />
         <meta name="image" content={image} />

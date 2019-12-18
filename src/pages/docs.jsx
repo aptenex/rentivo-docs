@@ -51,7 +51,7 @@ class Docs extends React.Component {
     return (
       <Layout location={location} subNav={false}>
         <div className="docs-home">
-          <SEO postNode={this.props} title={config.siteTitle} description="SendGrid documentation home" />
+          <SEO postNode={this.props} title={config.siteTitle} description="Rentivo Documentation Home" />
           <div className="search-hero ta-center color-white">
             <div className="container">
               <div className="search-hero__bg">

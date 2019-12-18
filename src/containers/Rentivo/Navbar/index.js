@@ -42,10 +42,16 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
     float:right;
     opacity: 0.7;
     margin-right: 8px;
+     @media (max-width: 767px) {
+      display: none;
+    }   
   `
 
   const LoginLink = styled('a')`
-    float:right;    
+    float:right;   
+    @media (max-width: 767px) {
+      display: none;
+    }   
     padding: 1rem 1.5rem 0rem 0rem;
     button {
       float: right;
@@ -54,7 +60,10 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
 
 
   const Cta = styled('div')`
-    float:right;    
+    float:right;  
+    @media (max-width: 767px) {
+      margin-right: 20px;
+    }  
     a {
       float: right;
       padding-top: 14px;

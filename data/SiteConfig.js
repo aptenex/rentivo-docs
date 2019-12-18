@@ -1,7 +1,7 @@
 const config = {
   env: process.env.NODE_ENV,
   docsDir: 'docs',
-  siteTitle: 'Rentivo Documentation',
+  siteTitle: 'Rentivo Booking Software',
   siteAuthor: 'Rentivo',
   siteTitleAlt: 'Rentivo Knowledge Center',
   siteLogo: 'http://staging.procuro.io/assets/dashboard/src/img/partners/r-app-tile.png',
@@ -9,7 +9,7 @@ const config = {
   siteUrl: 'https://www.rentivo.com',
   gitHubMarkdownPath: 'https://github.com/a/docs/tree/develop/content/docs',
   pathPrefix: '',
-  siteDescription: 'Learn how to get started using SendGrid. Integrate in minutes, test for free, and get access to documents to help solve your email deliverability problems.',
+  siteDescription: 'Get started with Rentivo, a software solution to help improve your Airbnb, HomeAway, Booking.com and many more direct and channel distributed bookings. Save time, money and acquire more inventory.',
   siteRss: '/rss.xml',
   googleAnalyticsID: '',
   userTwitter: 'rentivo',

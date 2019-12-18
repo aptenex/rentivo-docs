@@ -153,6 +153,8 @@ export const pageQuery = graphql`
       id
       name
       slug
+      seoTitle
+      seoDescription
       onboardingSchedule
       minimumUnits
       partnerCost  

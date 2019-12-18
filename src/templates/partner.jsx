@@ -173,6 +173,8 @@ export const pageQuery = graphql`
       id
       name
       slug
+      seoTitle
+      seoDescription
       tags
       webAddress
       faq {

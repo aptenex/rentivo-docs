@@ -34,7 +34,7 @@ const MarketingLayout = props => {
   return (
       <ThemeProvider theme={rentivoTheme}>
         <Fragment>
-          <SEO title="Rentivo | Enterprise Holiday Rental Software for Short Term Vacation Rental Management" />
+          <SEO title="Enterprise Holiday Rental Software for Short Term Vacation Rental Management" />
           <ResetCSS />
           <GlobalStyle />
           <ContentWrapper>

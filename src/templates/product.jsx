@@ -64,21 +64,6 @@ class ProductTemplate extends React.Component {
     });
   }
 
-  getRepoLink() {
-    const { data } = this.props;
-    const {
-      permalink,
-    } = data.product.fields;
-
-    const absPath = data.product.fileAbsolutePath;
-    const filename = absPath.substring(absPath.lastIndexOf('/') + 1);
-    const fileSlug = filename.replace('.md', '');
-    const path = permalink.replace(`${fileSlug}/`, '');
-    const gitHubURL = config.gitHubMarkdownPath + path + filename;
-
-    return gitHubURL;
-  }
-
   render() {
     const { data, location } = this.props;
 
@@ -125,6 +110,8 @@ export const pageQuery = graphql`
     product: contentfulProduct(id: {eq: $id}) {
       id
       summary
+      seoTitle
+      seoDescription
       name
       slug      
       heroFeaturette {
