@@ -48,7 +48,7 @@
     "gatsby-remark-responsive-iframe": "^2.2.25",
     "gatsby-source-contentful": "^2.1.61",
     "gatsby-source-filesystem": "^2.1.33",
-    "gatsby-transformer-inline-svg": "^0.0.3",
+    "gatsby-transformer-inline-svg": "^0.0.4",
     "gatsby-transformer-json": "^2.2.0",
     "gatsby-transformer-remark": "^2.6.30",
     "gatsby-transformer-sharp": "^2.2.1",

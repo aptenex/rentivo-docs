@@ -193,7 +193,7 @@ module.exports = {
     },
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
-    `gatsby-transformer-inline-svg`, // https://www.gatsbyjs.or
+    'gatsby-transformer-inline-svg', // https://www.gatsbyjs.or
     'gatsby-plugin-catch-links',
     'gatsby-plugin-nullish-coalescing-operator',
 

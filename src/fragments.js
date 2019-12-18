@@ -57,7 +57,7 @@ export const featuretteFields = graphql`
     backgroundHeroImage {
       id
       fluid(maxWidth: 1960, background: "rgb:000000") {
-        ...GatsbyContentfulFluid_tracedSVG
+        ...GatsbyContentfulFluid
       }
 
 
