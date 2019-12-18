@@ -25,10 +25,10 @@ import { DrawerProvider } from 'common/src/contexts/DrawerContext';
 import SEO from 'components/seo';
 import { useProductHome } from "containers/Rentivo/ProductSection/hooks/home";
 import { useFAQGroupsOnHome } from "containers/Rentivo/FaqSection/hooks/home";
-
+import SubNav from 'components/NavSub';
 
 const MarketingLayout = props => {
-  const { title, children } = props
+  const { title, children,subNav } = props
   const [toggleNav, setToggleNav] = React.useState(false)
 
   return (
@@ -41,8 +41,11 @@ const MarketingLayout = props => {
             <Sticky top={0} innerZ={9999} activeClass="sticky-nav-active">
               <DrawerProvider>
                 <Navbar />
+                {subNav && <SubNav {...props} />}
               </DrawerProvider>
+
             </Sticky>
+
 
             {children}
 

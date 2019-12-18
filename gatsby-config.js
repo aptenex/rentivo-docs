@@ -1,5 +1,5 @@
 const config = require('./data/SiteConfig');
-
+const postcssCustomMedia = require('postcss-custom-media');
 const pathPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix;
 const policyAccess = process.env.GATSBY_ENV === 'production' ? [{ userAgent: '*', allow: ['/'] }] : [{ userAgent: '*', disallow: ['/'] }];
 
@@ -65,6 +65,12 @@ module.exports = {
       resolve: `gatsby-plugin-styled-components`,
       options: {
         minify: false, // Breaks styles if not set to false
+      },
+    },
+    {
+      resolve: `gatsby-plugin-postcss`,
+      options: {
+        postCssPlugins: [postcssCustomMedia ]
       },
     },
     'gatsby-plugin-react-helmet',

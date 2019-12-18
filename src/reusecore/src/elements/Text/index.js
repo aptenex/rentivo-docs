@@ -20,8 +20,8 @@ const TextWrapper = styled('p')(
   themed('Text')
 );
 
-const Text = ({ content, ...props }) => (
-  <TextWrapper {...props}>{content}</TextWrapper>
+const Text = ({ content, children, ...props }) => (
+  <TextWrapper {...props}>{ children ?? content}</TextWrapper>
 );
 
 export default Text;

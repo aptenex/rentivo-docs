@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React, {Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Box from 'reusecore/src/elements/Box';
 import Text from 'reusecore/src/elements/Text';
-import Img from 'gatsby-image';
+import Image from 'gatsby-image';
 import Heading from 'reusecore/src/elements/Heading';
 import Button from 'reusecore/src/elements/Button';
 import HrefLink from 'reusecore/src/elements/Link';
@@ -17,8 +17,15 @@ import { base, themed } from 'reusecore/src/elements/base';
 import GlideCarousel from 'common/src/components/GlideCarousel';
 import GlideSlide from 'common/src/components/GlideCarousel/glideSlide';
 import CalloutWrapper from 'components/CalloutWrapper';
+import Row from 'components/Flex/Row'
+import Col from 'components/Flex/Col'
+import classNames from 'components/Flex/classNames';
+import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
+import HubspotForm from 'react-hubspot-form';
 
-import BannerWrapper, {
+
+
+import HeroWrapper, {
   LeadingLabel,
   BannerObject,
 } from './heroSection.style';
@@ -26,17 +33,19 @@ import BannerWrapper, {
 // Glide js options
 
 const HeroSection = ({
-  row,
-  col,
   title,
   backgroundParticles,
   description,
+  hero,
   content,
   template,
-  callout : { childMarkdownRemark : { ...callout } },
+  oversize : oversizeHero,
+  reverse,
+  callout,
   leadingLabelHeader,
   leadingLabelText,
   callToAction,
+  logo,
   image, // is an array
   backgroundHeroImage,
   leadingLabelHeaderStyle,
@@ -45,16 +54,9 @@ const HeroSection = ({
   btnStyle,
   btnWrapperStyle
 }) => {
+  // console.log("!@#@!#@!#@!#", image);
 
-
-  const Image = styled(Img)(
-      {
-
-
-      },
-      base,
-      themed('Image')
-  );
+  const [zoom, setZoom] = useState( { zoom : null } );
 
   const CtaHref = styled(HrefLink)`
     &.btn {
@@ -79,125 +81,174 @@ const HeroSection = ({
     perView: 1,
   };
 
-  const TEMPLATE = {
-    CONTENT_IMAGE : '[Content 1/2, Image 1/2]',
-    IMAGE_CONTENT : '[Image 1/2, Content 1/2]',
-    HERO_C1_I1 : '[Content 1/2] [Image 1/2] (Hero)',
-  };
+  useEffect( () => {
+    try {
+      import('medium-zoom').then(mediumZoom => {
+        // setZoom({zoom :  mediumZoom.default('img') });
+        mediumZoom.default('.zoomable img', { scrollOffset: 0,
+          margin: 40,
+          container: {
+            top: 204
+          },
+          background: '#01b47d'});
+      })
+    } catch (e) {
+      console.log("Couldn't execute from ComponentDidMount:", e);
+    }
+
+    return () => {
+      if(zoom.zoom){
+        zoom.zoom.detach();
+      }
+    }
+  });
   //
   //
   //
+
   const ButtonGroup = () => (
-    <Fragment>
-      { callToAction && callToAction.to &&
-        <CtaLink className="btn btn-primary outlined" to={callToAction.to} >
-          {callToAction.text}
-        </CtaLink>
-      }
-      { callToAction && callToAction.url &&
-        <CtaHref className="btn btn-primary" to={callToAction.url} >
-          {callToAction.text}
-        </CtaHref>
-      }
-    </Fragment>
+      <Fragment>
+        { callToAction && callToAction.to &&
+          <CtaLink className="btn btn-primary outlined" to={callToAction.to} >
+            {callToAction.text}
+          </CtaLink>
+        }
+        { callToAction && callToAction.url &&
+          <CtaHref className="btn btn-primary" to={callToAction.url} >
+            {callToAction.text}
+          </CtaHref>
+        }
+      </Fragment>
   );
-  console.log("3124213123123123",callout);
+
   const UnderlayWrapper = styled('div')``;
 
+  // // classNames('flexRow__column__imageOversized__right') +  ' ' + classNames('flexRow__column__imageOversized')
   const HeroImageColumn = (props) => (
-        <BannerObject {...props}>
-
-            <UnderlayWrapper className='underlay-wrapper'>
-              { backgroundHeroImage && <Image className={'image-underlay'} {...backgroundHeroImage} /> }
-            </UnderlayWrapper>
-            <div className="heroImageCarouselWrapper">
-              <GlideCarousel
-                  options={glideOptions}
-                  buttonWrapperStyle={btnWrapperStyle}
-                  nextButton={
-                    <Button
-                        icon={<i className="flaticon-next" />}
-                        variant="textButton"
-                        aria-label="next"
-                        {...btnStyle}
-                    />
-                  }
-                  prevButton={
-                    <Button
-                        icon={<i className="flaticon-left-arrow" />}
-                        variant="textButton"
-                        aria-label="prev"
-                        {...btnStyle}
-                    />
-                  }
-              >
+      <Fragment>
+        {image.length === 1 ? (
                 <Fragment>
-                  {image.map((node, index) => (
-                      <GlideSlide key={node.id}>
-                        <Fragment>
+                  { image.map((node, index) => (
+                        <Fragment key={node.id}>
+                          { oversizeHero ? <OversizeImage/> :
                           <Image
+                              className={'zoomable'}
                               fluid={node.fluid}
                               alt="Product"
-                          />
+                          /> }
                         </Fragment>
-                      </GlideSlide>
                   ))}
                 </Fragment>
-              </GlideCarousel>
 
+            ) :
+            !oversizeHero && <HeroCarousel/>
+        }
+      </Fragment>
+  );
+  const OversizeImage = (props) => (
+      <Fragment>
+        { [image[0] ].map((node, index) => {
+          return node.fluid.src ? <Image
+            key={index}
+            className={classNames(reverse ? 'flexRow__column__imageOversized__left' : 'flexRow__column__imageOversized__right')}
+            fluid={node.fluid}
+            alt="Product"
+          /> : <ContentfulAsset key={node.id} data={node}/>
+        } ) }
+      </Fragment>
+  );
+  const HeroCarousel = (props) => (
 
-            </div>
-        </BannerObject>
+      <BannerObject {...props}>
+
+        <GlideCarousel
+            options={glideOptions}
+            buttonWrapperStyle={btnWrapperStyle}
+            nextButton={
+              <Button
+                  icon={<i className="flaticon-next" />}
+                  variant="textButton"
+                  aria-label="next"
+                  {...btnStyle}
+              />
+            }
+            prevButton={
+              <Button
+                  icon={<i className="flaticon-left-arrow" />}
+                  variant="textButton"
+                  aria-label="prev"
+                  {...btnStyle}
+              />
+            }
+        >
+          <Fragment>
+            {image.map((node, index) => (
+                <GlideSlide key={node.id}>
+                  <Fragment>
+                    <Image
+                        fluid={node.fluid}
+                        alt="Product"
+                    />
+                  </Fragment>
+                </GlideSlide>
+            ))}
+          </Fragment>
+        </GlideCarousel>
+      </BannerObject>
   );
 
   return (
-    <BannerWrapper>
-
-      { backgroundParticles == 'Default' ? <Particles /> : null }
+    <HeroWrapper className={ hero ? 'hero ' : null }>
 
       <Container>
-        <Box className={"row-wrapper " + ( template === TEMPLATE.IMAGE_CONTENT ? 'template_image_content' : '')} {...row}>
-          { template === TEMPLATE.IMAGE_CONTENT && <HeroImageColumn /> }
-          <Box className="col-wrapper" {...col} >
-            { leadingLabelHeader &&
-              <LeadingLabel>
-                <Text content={leadingLabelHeader} {...leadingLabelHeaderStyle} />
-                { leadingLabelText && <Text content={leadingLabelText} {...leadingLabelTextStyle} /> }
-              </LeadingLabel>
-            }
-            <FeatureBlock
-              title={
-                <Heading content={title} />
+
+        <Row top="xs"  reverse={reverse}>
+            <Col xs={12} md={12} xl={6} >
+
+
+
+
+              { logo && logo.fluid && logo.fluid.src ? <Image
+                  fluid={logo}
+                  alt="Product"
+              /> : logo && logo.file ? <ContentfulAsset className={'featureLogo'} data={logo}/> : null}
+
+              { leadingLabelHeader &&
+                <LeadingLabel>
+                  <Text content={leadingLabelHeader} {...leadingLabelHeaderStyle} />
+                  { leadingLabelText && <Text content={leadingLabelText} {...leadingLabelTextStyle} /> }
+                </LeadingLabel>
               }
-              description={
-                <Text {...description} dangerouslySetInnerHTML={{ __html: content.childMarkdownRemark.html }} />
-              }
-              button={<ButtonGroup />}
-            />
-
-            <CalloutWrapper data={callout} />
 
 
 
-          </Box>
-          { template === TEMPLATE.CONTENT_IMAGE && <HeroImageColumn /> }
-        </Box>
+              <FeatureBlock
+                  title={
+                    <Heading content={title} />
+                  }
+                  description={
+                    content.childMarkdownRemark && <Text {...description} dangerouslySetInnerHTML={{ __html: content.childMarkdownRemark.html }} />
+                  }
+                  button={<ButtonGroup />}
+              />
 
+              { callout && callout.childMarkdownRemark && <CalloutWrapper data={callout.childMarkdownRemark} /> }
 
-
-
+            </Col>
+            <Col xs={12} md={12} xl={6}>
+              <HeroImageColumn />
+            </Col>
+        </Row>
       </Container>
 
-      { (template === TEMPLATE.HERO_C1_I1 || !template) && <HeroImageColumn className={'heroImage'} /> }
-
-
-    </BannerWrapper>
+    </HeroWrapper>
   );
 };
 
 HeroSection.propTypes = {
   title: PropTypes.string,
   btnStyle: PropTypes.object,
+  hero: PropTypes.bool,
   description: PropTypes.object,
   image: PropTypes.array,
   contentStyle: PropTypes.object,
@@ -207,21 +258,16 @@ HeroSection.propTypes = {
   leadingLabelTextStyle: PropTypes.object,
   outlineBtnStyle: PropTypes.object,
   btnWrapperStyle: PropTypes.object,
+  oversizeHero: PropTypes.bool,
+  reverse: PropTypes.bool,
+  logo: PropTypes.object
 };
 
 HeroSection.defaultProps = {
-  row: {
-    flexBox: true,
-    flexWrap: 'wrap',
-    ml: '-15px',
-    mr: '-15px',
-    alignItems: 'center',
-  },
-  col: {
-    pr: '15px',
-    pl: '15px',
-    width: [1, '100%', '100%', '45%'],
-  },
+  oversizeHero :false,
+  logo: null,
+  hero: false, // determines if this is a hero class...
+  reverse: false,
   title: {
     fontSize: ['22px', '34px', '30px', '55px'],
     fontWeight: '700',

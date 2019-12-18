@@ -30,12 +30,14 @@ class Main extends Component {
 
     const contentfulAsset = this.props.data;
 
-    console.log(contentfulAsset, "$################");
+    // console.log(contentfulAsset, "<<<<<<<<<<< $################");
     let asset;
-    if(contentfulAsset.svg){
+    if(contentfulAsset.svg && contentfulAsset.svg.content ){
       asset = <Wrapper className={'svgWrapper'} dangerouslySetInnerHTML={{ __html: contentfulAsset.svg.content}} />
-    } else {
+    } else if( (contentfulAsset.fluid && contentfulAsset.fluid.src ) || contentfulAsset.fixed) {
       asset = <Wrapper className={'imgWrapper'} ><Img {...contentfulAsset} alt={`product image`} /></Wrapper>
+    } else if(contentfulAsset.file && contentfulAsset.file.url ){
+      asset = <Wrapper className={'imgWrapper'} ><img src={contentfulAsset.file.url} alt={`product image`} /></Wrapper>
     }
 
 

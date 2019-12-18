@@ -18,6 +18,8 @@ export const GlobalStyle = createGlobalStyle`
   section {
     position: relative;
   }
+  
+   
 
   .drawer-content-wrapper{
     @media (max-width: 767px) {
@@ -77,8 +79,11 @@ export const GlobalStyle = createGlobalStyle`
           }
         }
       }
-      .navbar_drawer_button button{
+      .navbar_drawer_button {
         width: 100%;
+        a {
+          font-size: 1.2em;
+        }
       }
     }
 
@@ -133,7 +138,9 @@ export const ContentWrapper = styled.div`
   }
 
   .hosting_navbar {
-    position: fixed;
+    z-index: 2;
+    background: white;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;

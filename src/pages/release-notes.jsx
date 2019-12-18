@@ -32,7 +32,6 @@ class ReleaseNotes extends React.Component {
 
   render() {
     const { data, location } = this.props;
-    console.log("ADASDASD", data);
     const { edges } = data.allContentfulReleaseNote;
     const asideLinks = this.getAsideLinks();
     return (

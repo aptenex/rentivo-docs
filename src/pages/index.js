@@ -23,9 +23,13 @@ import { DrawerProvider } from 'common/src/contexts/DrawerContext';
 import SEO from '../components/seo';
 import { useProductHome } from "../containers/Rentivo/ProductSection/hooks/home";
 import { useFAQGroupsOnHome } from "../containers/Rentivo/FaqSection/hooks/home";
+import { getMenuProducts} from '../containers/Rentivo/DesktopNav/DropdownContents/hooks/home';
 import MarketingLayout from "../components/MarketingLayout";
-export default (props) => {
 
+
+
+export default (props) => {
+  const menuProducts = getMenuProducts();
   const productCategory = useProductHome();
   const faqGroups = useFAQGroupsOnHome();
   return (
@@ -34,7 +38,7 @@ export default (props) => {
 
             <ProductSection data={productCategory}  />
 
-            {/*<VisitorSection />*/}
+            <VisitorSection />
             {/*<ServiceSection />*/}
 
             {/*<PricingSection />*/}

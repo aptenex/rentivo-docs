@@ -13,10 +13,14 @@ const LearnDropdownEl = styled.div`
    ${DropdownSection} {
     margin-bottom: 30px;
   }
+  h3 {
+    margin-bottom: 30px;
+  }
 `
 
 const Flex = styled.div`
   display: flex;
+  margin-top: 60px;
   > div:first-of-type {
     margin-right: 40px;
   }
@@ -28,11 +32,25 @@ const LearnDropdown = () => {
     <LearnDropdownEl>
       <DropdownSection data-first-dropdown-section>
         <div>
-          <Heading>Learning and Knowledgebase</Heading>
+          <h3>Learning and Knowledgebase</h3>
           <p>Are you a developer looking to integrate or a customer on the quest of knowledge?</p>
+          <LinkList>
+            <li>
+              <a href="/docs">
+                <Icon /> Knowledge Center
+              </a>
+            </li>
+            <li>
+              <a href="/">
+                <Icon /> Support
+              </a>
+            </li>
+
+          </LinkList>
+
           <Flex>
             <div>
-              <h4>Developers API</h4>
+              <h3>Developers API</h3>
               <LinkList>
                 <li>
                   <a href="/">Channel Connection API</a>
@@ -43,7 +61,7 @@ const LearnDropdown = () => {
               </LinkList>
             </div>
             <div>
-              <h4>Product Knowledgebase</h4>
+              <h3>Knowledgebase</h3>
               <LinkList>
                 <li>
                   <a href="/">Channel Connection</a>
@@ -56,27 +74,7 @@ const LearnDropdown = () => {
           </Flex>
         </div>
       </DropdownSection>
-      <DropdownSection>
-        <Heading>Learning</Heading>
-        <ul>
-          <HeadingLink>
-            <a href="/docs">
-              <Icon /> Knowledge Center
-            </a>
-          </HeadingLink>
-          <HeadingLink>
-            <a href="/">
-              <Icon /> Support
-            </a>
-          </HeadingLink>
-          <HeadingLink>
-            <a href="/">
-              <Icon /> Demo Request
-            </a>
-          </HeadingLink>
 
-        </ul>
-      </DropdownSection>
     </LearnDropdownEl>
   )
 }

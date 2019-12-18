@@ -3,8 +3,13 @@ import { Link } from 'gatsby';
 import './CalloutWrapper.scss';
 import RehypeReact from 'rehype-react';
 import Text from 'reusecore/src/elements/Text';
+import styled from 'styled-components';
 import Check from '-!babel-loader!svg-react-loader?classIdPrefix=coding!./svg/icon-check-green.svg';
 
+const Item = styled('p')`
+  margin-left: 10px;
+  flex-grow: 1;
+`;
 
 const Callout = (props) => {
   // check for empty callout
@@ -16,8 +21,12 @@ const Callout = (props) => {
 
   return (
       <div className={classes}>
-        <Check />
-        {props.children.map(el => el)}
+        <div>
+          <Check />
+        </div>
+        <Item>
+          {props.children.map(el => el)}
+        </Item>
       </div>
   );
 }

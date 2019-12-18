@@ -37,7 +37,12 @@ const FeatureBlockWrapper = styled.div`
       flex-shrink: 0;
     }
   }
-
+  ol {
+    li { 
+      ${fontSize}
+      margin-bottom: 10px;
+    }
+  }
   /* styled system prop support */
   ${display}
   ${width}

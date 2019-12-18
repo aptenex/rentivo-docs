@@ -307,7 +307,6 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           }
 
           const pages = result.data.allContentfulProduct.edges;
-          console.log(pages,"ASdasadasdasdasd");
           pages.forEach((page, index) => {
             createPage({
               path: `/${_.kebabCase(page.node.slug)}`,
@@ -322,7 +321,87 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     )
   });
 
-  return Promise.all([markdownPromise, glossaryPromise, productPromise]);
+  const  integrationPromise = new Promise((resolve, reject) => {
+
+    const integrationPage = path.resolve('src/templates/integration.jsx');
+
+    resolve(
+        graphql(
+            `
+            { 
+              allContentfulIntegration {
+                edges {
+                  node {
+                    id
+                    slug
+                    name
+                  }
+                }
+              }
+            }
+          `
+        ).then(result => {
+          if (result.errors) {
+            reject(result.errors)
+          }
+
+          const pages = result.data.allContentfulIntegration.edges;
+          pages.forEach((page, index) => {
+            createPage({
+              path: `/integrations/${_.kebabCase(page.node.slug)}`,
+              component: integrationPage ,
+              context: {
+                slug: page.node.slug,
+                id: page.node.id,
+              },
+            });
+          })
+        })
+    )
+  });
+
+
+
+  const  partnersPromise = new Promise((resolve, reject) => {
+
+    const partnerPage = path.resolve('src/templates/partner.jsx');
+
+    resolve(
+        graphql(
+            `
+            { 
+              allContentfulPartner{
+                edges {
+                  node {
+                    id
+                    slug
+                    name
+                  }
+                }
+              }
+            }
+          `
+        ).then(result => {
+          if (result.errors) {
+            reject(result.errors)
+          }
+
+          const pages = result.data.allContentfulPartner.edges;
+          pages.forEach((page, index) => {
+            createPage({
+              path: `/partners/${_.kebabCase(page.node.slug)}`,
+              component: partnerPage ,
+              context: {
+                slug: page.node.slug,
+                id: page.node.id,
+              },
+            });
+          })
+        })
+    )
+  });
+
+  return Promise.all([markdownPromise, glossaryPromise, productPromise, integrationPromise, partnersPromise]);
 
 
 };
@@ -330,21 +409,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   if (stage === 'build-javascript') {
     actions.setWebpackConfig({
+      output: {
+        publicPath: '/',
+      },
       module: {
         noParse: /svg/,
         rules: [
-          {
-            test: /\.svg$/,
-            include: /img\/svg/,
-            use: {
-              loader: 'svg-react-loader',
-              options: {
-                classIdPrefix: true
-              }
-            },
-          }
-        ],
-        loaders: [
           {
             test: /\.svg$/,
             exclude: /node_modules/,

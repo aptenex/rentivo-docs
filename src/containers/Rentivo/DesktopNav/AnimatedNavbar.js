@@ -5,7 +5,7 @@ import { Flipper } from "react-flip-toolkit"
 import DropdownContainer from "./DropdownContainer"
 import CompanyDropdown from "./DropdownContents/CompanyDropdown"
 import DevelopersDropdown from "./DropdownContents/DevelopersDropdown"
-import ProductsDropdown from "./DropdownContents/ProductsDropdown"
+import ProductsDropdown  from "./DropdownContents/ProductsDropdown"
 import LearnDropdown from "./DropdownContents/LearnDropdown"
 const navbarConfig = [
   { title: "Products", dropdown: ProductsDropdown },
@@ -77,6 +77,7 @@ export default class AnimatedNavbar extends Component {
         flipKey={currentIndex}
         spring={duration === 300 ? "noWobble" : { stiffness: 10, damping: 10 }}
       >
+
         <Navbar onMouseLeave={this.onMouseLeave}>
           {navbarConfig.map((n, index) => {
             return (

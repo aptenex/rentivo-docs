@@ -37,7 +37,6 @@ const Footer = ({
       }
     }
   `);
-  console.log(Data,"<<<");
   return (
     <FooterWrapper>
       <Container className="footer_container">

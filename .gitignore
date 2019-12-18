@@ -2,6 +2,7 @@
 .jekyll_indextank/
 .rvmrc
 _config.yml
+.idea/
 _config.dev.yml
 _config.deploy.yml
 .bundle

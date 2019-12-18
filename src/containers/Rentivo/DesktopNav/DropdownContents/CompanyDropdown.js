@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from "gatsby"
 import styled from "styled-components"
 import {
   Heading,
@@ -46,7 +47,13 @@ const CalloutText = styled('p')`
 const CalloutHeader = styled(CalloutText)`
   font-size: 24px;  
 `
-
+const Flex = styled.div`
+  display: flex;
+  > div:first-of-type {
+    margin-right: 40px;
+  }
+ 
+`
 
 
 
@@ -57,14 +64,19 @@ const CompanyDropdown = () => {
         <DropdownSection data-first-dropdown-section>
           <ul>
             <HeadingLink>
-              <a href="/">
+              <Link to="/about">
                 <Icon /> About Rentivo
-              </a>
+              </Link>
             </HeadingLink>
             <HeadingLink>
-              <a href="/">
+              <Link to="/partners">
                 <Icon /> Our Partners
-              </a>
+              </Link>
+            </HeadingLink>
+            <HeadingLink>
+              <Link to="/integrations">
+                <Icon /> Our Integrations
+              </Link>
             </HeadingLink>
             <HeadingLink>
               <a href="/">
@@ -79,8 +91,10 @@ const CompanyDropdown = () => {
           {/*<IconRocket />*/}
           <CalloutHeader>Why Rentivo</CalloutHeader>
           <CalloutText>Find out why Rentivo is the preferred choice</CalloutText>
-          <a>Going places together</a>
+          <a href={'/demo-request'}>Going places together</a>
       </WhyCallout>
+
+
 
 
     </CompanyDropdownEl>

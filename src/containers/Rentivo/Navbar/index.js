@@ -53,11 +53,15 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
   `;
 
 
-  const Cta = styled('a')`
+  const Cta = styled('div')`
     float:right;    
-    button {
+    a {
       float: right;
-    }
+      padding-top: 14px;
+      padding-bottom: 14px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }    
     
   `;
 
@@ -80,7 +84,7 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
       <Container>
         <Box {...row}>
           <Logo
-            href="#"
+            href="/"
             logoSrc={LogoImage}
             title="Rentivo"
             logoStyle={logoStyle}
@@ -93,7 +97,7 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
             <CtaSection>
 
               <Cta href="#1" className="navbar_drawer_button">
-                <Button title="DEMO REQUEST" />
+                <a className={'btn btn-primary'} href="/demo-request" title="Get connected with Rentivo and start a conversation">Demo Request</a>
               </Cta>
 
 

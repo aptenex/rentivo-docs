@@ -23,9 +23,15 @@ import { minus } from 'react-icons-kit/entypo/minus';
 import FaqSectionWrapper, {
   SwitchButtonWrapper, SwitchWrapper
 } from './faqSection.style';
-
+import styled from "styled-components";
+const FaqAccordion = styled(Accordion)`
+    width: 100%;
+    > div {
+      width: 100%;
+    }
+  `
 const FaqSection = ({
-  data : D,
+  data : faqData,
   groups,
   active,
   sectionHeader,
@@ -38,16 +44,15 @@ const FaqSection = ({
   button,
 }) => {
 
-  const indexActive = D.distinct.indexOf(active);
+  const indexActive = faqData.distinct.indexOf(active);
 
   const [state, setState] = useState({
-    data: D.group[indexActive].edges, // on load use the first group
+    data: faqData.group[indexActive].edges, // on load use the first group
     active: active,
   });
 
   const data = state.data;
   const activeStatus = state.active;
-  console.log(data);
   return (
     <FaqSectionWrapper id="faq_section">
       <Container>
@@ -55,28 +60,30 @@ const FaqSection = ({
           <Text {...sectionSubTitle} />
           <Heading {...sectionTitle} />
         </Box>
-        <Box {...sectionTitleWrapper}>
-          <SwitchButtonWrapper>
-            { D.distinct.map( (name, index ) => (
-                <Button
-                    title={name}
-                    className={state.active === name ? 'active-item' : ''}
-                    onClick={() =>
-                        setState({
-                          data: D.group[index].edges,
-                          active: name,
-                        })
-                    }
-                />
-                )
-              )
-            }
-          </SwitchButtonWrapper>
-        </Box>
+        {faqData.distinct.length > 1 &&
+          <Box {...sectionTitleWrapper}>
+            <SwitchButtonWrapper>
+              {faqData.distinct.map((name, index) => (
+                      <Button
+                          key={index}
+                          title={name}
+                          className={state.active === name ? 'active-item' : ''}
+                          onClick={() =>
+                              setState({
+                                data: faqData.group[index].edges,
+                                active: name,
+                              })
+                          }
+                      />
+                  ))
+              }
+            </SwitchButtonWrapper>
 
+          </Box>
+        }
 
         <Box className="row">
-          <Accordion>
+          <FaqAccordion>
             <Fragment>
               {data.map(({node:faqItem}, index) => (
                 <AccordionItem key={faqItem.id} expanded={faqItem.expend}>
@@ -104,7 +111,7 @@ const FaqSection = ({
                 </AccordionItem>
               ))}
             </Fragment>
-          </Accordion>
+          </FaqAccordion>
           {/*<Box {...buttonWrapper}>*/}
             {/*<a href="#1">*/}
               {/*<Button {...button} />*/}

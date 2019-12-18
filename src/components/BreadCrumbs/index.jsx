@@ -23,7 +23,6 @@ class BreadCrumbs extends Component {
   getSubPaths() {
     const { location } = this.props;
     const { pathname } = location;
-
     // No matter what, add and object that represents the docs home
     const home = [
       {

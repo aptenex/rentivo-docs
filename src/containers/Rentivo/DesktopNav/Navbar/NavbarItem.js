@@ -24,38 +24,67 @@ const NavbarItemTitle = styled.button`
 `
 
 const NavbarItemEl = styled.li`
-  position: relative;
-  @media(max-width: 1349px){
-    :first-child { 
-      position: static;
-      > div {
-        position: absolute;
-          left: 0;
-          transform: translateX(0%);
-          width: 100vw;
-          right: 100%;
-      }
-    }
-  }
-  @media(min-width: 1350px){
-    :first-child {   
-          ${DropdownRoot} > div:first-child{
-            transform: translateX(-280px);
-          }
-        position: static;
+    position: relative;
+    @media(max-width: 1349px){
+      :first-child {
+          position: static;
         > div {
+            position: absolute;
+            left: 0;
+            transform: translateX(0%);
+            width: 100vw;
+            right: 100%;
+          }
+        }
+    }
+    @media(min-width: 1350px){
+      :first-child {
+        ${DropdownRoot} > div:first-child{
+          transform: translateX(-180px);
+        }
+        position: static;
+      > div {
           width: 100vw;
           transform: translateX(0);
           left: 0px;
-          > div {
+        > div {
             transform: translateX(0);
           }
         }
-      
+  
+      }
     }
-  }
 `
-
+// position: relative;
+// @media(max-width: 1349px){
+//   :first-child {
+//       position: static;
+//     > div {
+//         position: absolute;
+//         left: 0;
+//         transform: translateX(0%);
+//         width: 100vw;
+//         right: 100%;
+//       }
+//     }
+//   }
+// @media(min-width: 1350px){
+//   :first-child {
+//       ${DropdownRoot} > div:first-child{
+//         transform: translateX(-380px);
+//       }
+//       position: static;
+//     > div {
+//         width: 100vw;
+//         transform: translateX(0);
+//         left: 0px;
+//       > div {
+//           transform: translateX(0);
+//         }
+//       }
+//
+//     }
+//   }
 const DropdownSlot = styled.div`
   position: absolute;
   left: 50%;

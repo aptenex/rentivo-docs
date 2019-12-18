@@ -7,7 +7,6 @@ import Heading from 'reusecore/src/elements/Heading';
 import FeatureBlock from 'common/src/components/FeatureBlock';
 import Container from 'common/src/components/UI/Container';
 import ServiceSectionWrapper from './service.style';
-import IconAPI from 'svg/browser_coding.svg';
 
 const ServiceSection = ({
   row,

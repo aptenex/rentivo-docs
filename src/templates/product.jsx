@@ -14,8 +14,31 @@ import withSubNav from '../components/NavSub';
 import Layout from '../components/DocsLayout';
 import './syntax-highlighting.scss';
 import './doc.scss';
-import HeroSection from '../containers/Rentivo/HeroSection/new';
+import HeroSection from '../containers/Rentivo/HeroSection';
 import MarketingLayout from "../components/MarketingLayout";
+import FaqSection from '../containers/Rentivo/FaqSection';
+import mediumZoom from 'medium-zoom'
+
+
+import styled from 'styled-components';
+
+
+import BlobA from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_artur.svg';
+import BlobB from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_barbra.svg';
+import BlobC from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_carol.svg';
+const BlobWrapperA = styled.div`
+  position: absolute;
+  left: -40%;
+`;
+const BlobWrapperB = styled.div`
+  position: absolute;
+  right: 40%;
+`;
+const BlobWrapperC = styled.div`
+  position: absolute;
+  left: -40%;
+`;
+
 
 const renderAst = new RehypeReact({
   createElement: React.createElement,
@@ -58,11 +81,10 @@ class ProductTemplate extends React.Component {
 
   render() {
     const { data, location } = this.props;
-    console.log(data);
+
     const productNode = data.product;
-
+    const { faq : faqGroups}  = data;
     const asideLinks = this.getLinks();
-
     return (
       <MarketingLayout location={location} subNav={true}>
           <SEO postNode={productNode} postType="product" />
@@ -72,16 +94,22 @@ class ProductTemplate extends React.Component {
           }
 
             <HeroSection
+                hero
+                className={'hero'}
                 leadingLabelHeader={'Free Onboarding'}
                 leadingLabelText={'and demo trial'}
                 {...productNode.heroFeaturette}
             />
-            {/*{ productNode.featurettes.map( (feature, index) => (*/}
-                {/*<HeroSection*/}
-                    {/*{...feature}*/}
-                {/*/>*/}
-            {/*))}*/}
-            {/*{renderAst(postNode.htmlAst)}*/}
+            <BlobWrapperB>
+              <BlobC/>
+            </BlobWrapperB>
+            { productNode.featurettes.map( (feature, index) => (
+                ( typeof feature['__typename'] === 'undefined' || feature['__typename'] === 'ContentfulFeaturette' ) &&  <HeroSection key={index} {...feature} />
+            ))}
+
+
+        {/*{ faqGroups.group.length > 0 && <FaqSection  data={faqGroups} groups={"Product"} active={"Product"}  /> }*/}
+
       </MarketingLayout>
     );
   }
@@ -93,69 +121,6 @@ export default ProductTemplate;
 export const pageQuery = graphql`
   
   
-  fragment Featurette on ContentfulFeaturette {
-    id
-    title
-    backgroundParticles
-    content {
-      content
-      childMarkdownRemark {
-        html        
-      }
-    }
-    callout {
-      childMarkdownRemark {
-        id
-        html
-        rawMarkdownBody
-        htmlAst
-      }      
-    }
-    template
-    image {
-      id
-      fluid(maxWidth: 1240, background: "rgb:000000") {
-        ...GatsbyContentfulFluid
-      }
-      ... on ContentfulAsset {
-        svg {
-          content
-          dataURI
-          absolutePath
-          relativePath
-        }
-        file {
-          contentType
-          url
-          fileName
-          contentType
-          details {
-            image {
-              width
-              height
-            }
-          }
-        }
-      }
-    }
-    backgroundHeroImage {
-      id
-      fluid(maxWidth: 1960, background: "rgb:000000") {
-        ...GatsbyContentfulFluid_tracedSVG
-      }
-    
-
-    }
-    callToAction {
-      url
-      to
-      parentBlank
-      text
-    }
-    learnMoreMenu {
-      id
-    }
-  }
   query ProductByID($id: String!) {
     product: contentfulProduct(id: {eq: $id}) {
       id
@@ -167,10 +132,11 @@ export const pageQuery = graphql`
       }
       featurettes {
         ...Featurette
-      }
-      
-      
+      }     
     }
+
+    
+    
   }
   
 `;
