@@ -281,127 +281,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 
 
-  const  productPromise = new Promise((resolve, reject) => {
-
-    const productPage = path.resolve('src/templates/product.jsx');
-
-    resolve(
-        graphql(
-            `
-            { 
-              allContentfulProduct {
-                edges {
-                  node {
-                    id
-                    slug
-                    name
-                    summary
-                  }
-                }
-              }
-            }
-          `
-        ).then(result => {
-          if (result.errors) {
-            reject(result.errors)
-          }
-
-          const pages = result.data.allContentfulProduct.edges;
-          pages.forEach((page, index) => {
-            createPage({
-              path: `/${_.kebabCase(page.node.slug)}`,
-              component: productPage ,
-              context: {
-                slug: page.node.slug,
-                id: page.node.id,
-              },
-            });
-          })
-        })
-    )
-  });
-
-  const  integrationPromise = new Promise((resolve, reject) => {
-
-    const integrationPage = path.resolve('src/templates/integration.jsx');
-
-    resolve(
-        graphql(
-            `
-            { 
-              allContentfulIntegration {
-                edges {
-                  node {
-                    id
-                    slug
-                    name
-                  }
-                }
-              }
-            }
-          `
-        ).then(result => {
-          if (result.errors) {
-            reject(result.errors)
-          }
-
-          const pages = result.data.allContentfulIntegration.edges;
-          pages.forEach((page, index) => {
-            createPage({
-              path: `/integrations/${_.kebabCase(page.node.slug)}`,
-              component: integrationPage ,
-              context: {
-                slug: page.node.slug,
-                id: page.node.id,
-              },
-            });
-          })
-        })
-    )
-  });
 
 
-
-  const  partnersPromise = new Promise((resolve, reject) => {
-
-    const partnerPage = path.resolve('src/templates/partner.jsx');
-
-    resolve(
-        graphql(
-            `
-            { 
-              allContentfulPartner{
-                edges {
-                  node {
-                    id
-                    slug
-                    name
-                  }
-                }
-              }
-            }
-          `
-        ).then(result => {
-          if (result.errors) {
-            reject(result.errors)
-          }
-
-          const pages = result.data.allContentfulPartner.edges;
-          pages.forEach((page, index) => {
-            createPage({
-              path: `/partners/${_.kebabCase(page.node.slug)}`,
-              component: partnerPage ,
-              context: {
-                slug: page.node.slug,
-                id: page.node.id,
-              },
-            });
-          })
-        })
-    )
-  });
-
-  return Promise.all([markdownPromise, glossaryPromise, productPromise, integrationPromise, partnersPromise]);
+  return Promise.all([markdownPromise, glossaryPromise]);
 
 
 };
@@ -409,28 +291,26 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 exports.onCreateWebpackConfig = ({ stage, actions }) => {
   if (stage === 'build-javascript') {
     actions.setWebpackConfig({
-      output: {
-        publicPath: '/',
-      },
+
       module: {
-        noParse: /svg/,
-        rules: [
-          {
-            test: /\.svg$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'svg-react-loader',
-              options: {
-                tag: 'symbol',
-                classIdPrefix: '[name]-[hash:8]__',
-                attrs: {
-                  title: 'example',
-                },
-                name: 'MyIcon',
-              },
-            },
-          }
-        ]
+        // noParse: /svg/,
+        // rules: [
+        //   {
+        //     test: /\.svg$/,
+        //     exclude: /node_modules/,
+        //     use: {
+        //       loader: 'svg-react-loader',
+        //       options: {
+        //         tag: 'symbol',
+        //         classIdPrefix: '[name]-[hash:8]__',
+        //         attrs: {
+        //           title: 'example',
+        //         },
+        //         name: 'MyIcon',
+        //       },
+        //     },
+        //   }
+        // ]
       },
       plugins: [webpackLodashPlugin],
     });

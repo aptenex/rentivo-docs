@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/static/img/svg" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/static/img" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/.cache" />
+      <excludeFolder url="file://$MODULE_DIR$/public" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/agency" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/app" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/appModern" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/appclassic" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/charity" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/crypto" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/global" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/hosting" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/interior" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/portfolio" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/ride" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/saas" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/saasClassic" />
+      <excludeFolder url="file://$MODULE_DIR$/src/common/src/theme/saasModern" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/Agency" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/App" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/AppClassic" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/AppModern" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/Charity" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/Crypto" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/Error" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/Hosting" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/Interior" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/Portfolio" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/Ride" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/Saas" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/SaasClassic" />
+      <excludeFolder url="file://$MODULE_DIR$/src/containers/SaasModern" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="svg" level="project" />
+  </component>
+</module>

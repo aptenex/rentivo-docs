@@ -49,44 +49,44 @@ export default class siteMap extends React.Component {
           </div>
           <div className="m-bottom-4">
             <h3>All Docs</h3>
-            {allDocs.edges.map(doc => (
-              <div key={doc.node.id} className="single-doc m-top-2 m-bottom-2">
-                <div>
-                  <strong>title:</strong>
-                  {' '}
-                  {doc.node.frontmatter.title}
-                </div>
-                <div>
-                  <strong>SEO - meta title:</strong>
-                  {' '}
-                  {doc.node.frontmatter.seo && doc.node.frontmatter.seo.title }
-                </div>
-                <div>
-                  <strong>SEO - meta description:</strong>
-                  {' '}
-                  {doc.node.frontmatter.seo && doc.node.frontmatter.seo.description }
-                </div>
-                <div>
-                  <strong>uri: </strong>
-                  <Link to={doc.node.fields.permalink}>
-                    {doc.node.fields.permalink}
-                    {' '}
-                  </Link>
-                </div>
-                <div>
-                  <strong>category: </strong>
-                  {doc.node.fields.category}
-                </div>
-                <div>
-                  <strong>group: </strong>
-                  {doc.node.fields.group}
-                </div>
-                <div>
-                  <strong>path: </strong>
-                  {doc.node.fileAbsolutePath}
-                </div>
-              </div>
-            ))}
+            {/*{allDocs.edges.map(doc => (*/}
+              {/*<div key={doc.node.id} className="single-doc m-top-2 m-bottom-2">*/}
+                {/*<div>*/}
+                  {/*<strong>title:</strong>*/}
+                  {/*{' '}*/}
+                  {/*{doc.node.frontmatter.title}*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<strong>SEO - meta title:</strong>*/}
+                  {/*{' '}*/}
+                  {/*{doc.node.frontmatter.seo && doc.node.frontmatter.seo.title }*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<strong>SEO - meta description:</strong>*/}
+                  {/*{' '}*/}
+                  {/*{doc.node.frontmatter.seo && doc.node.frontmatter.seo.description }*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<strong>uri: </strong>*/}
+                  {/*<Link to={doc.node.fields.permalink}>*/}
+                    {/*{doc.node.fields.permalink}*/}
+                    {/*{' '}*/}
+                  {/*</Link>*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<strong>category: </strong>*/}
+                  {/*{doc.node.fields.category}*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<strong>group: </strong>*/}
+                  {/*{doc.node.fields.group}*/}
+                {/*</div>*/}
+                {/*<div>*/}
+                  {/*<strong>path: </strong>*/}
+                  {/*{doc.node.fileAbsolutePath}*/}
+                {/*</div>*/}
+              {/*</div>*/}
+            {/*))}*/}
           </div>
         </div>
       </Layout>
