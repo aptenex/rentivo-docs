@@ -1,11 +1,5 @@
-export IconManage from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/wireless_touch_home_smart_home.svg';
-export IconDistribute from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/cloud_distribution.svg';
-export IconEngine from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/store.svg';
-export IconGrow from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/global_care.svg';
-export IconAPI from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/browser_coding.svg';
-export IconDMO from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/global_care.svg';
-export IconLockMan from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/lock_man.svg';
-export IconLock from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/lock.svg';
+export IconLockMan from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/enhancement/lock_man.svg';
+export IconLock from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/enhancement/lock.svg';
 // export IllustrationApartment from 'svg/illustrations/apartment.svg';
 export IllustrationApartment from 'img/illustration/96px/apartment_96px.png';
 export IllustrationOptions from 'img/illustration/96px/options_96px.png';

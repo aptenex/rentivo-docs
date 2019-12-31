@@ -1,5 +1,5 @@
-import React from 'react';
-import { graphql } from 'gatsby';
+import React, {Fragment} from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
 import RehypeReact from 'rehype-react';
 import _ from 'lodash';
 import config from '../../data/SiteConfig';
@@ -14,18 +14,19 @@ import withSubNav from '../components/NavSub';
 import Layout from '../components/DocsLayout';
 import './syntax-highlighting.scss';
 import './doc.scss';
+import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import HeroSection from '../containers/Rentivo/HeroSection';
 import MarketingLayout from "../components/MarketingLayout";
 import FaqSection from '../containers/Rentivo/FaqSection';
+import ProductSection from '../containers/Rentivo/ProductSection';
 import mediumZoom from 'medium-zoom'
-
-
 import styled from 'styled-components';
-
-
 import BlobA from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_artur.svg';
 import BlobB from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_barbra.svg';
 import BlobC from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_carol.svg';
+import FaqList from '../containers/Rentivo/FaqSection/List';
+
+
 const BlobWrapperA = styled.div`
   position: absolute;
   left: -40%;
@@ -66,10 +67,10 @@ class ProductTemplate extends React.Component {
 
   render() {
     const { data, location } = this.props;
-
     const productNode = data.product;
-    const { faq : faqGroups}  = data;
+    const { faqGroups : groups }  = productNode;
     const asideLinks = this.getLinks();
+
     return (
       <MarketingLayout location={location} subNav={true}>
           <SEO postNode={productNode} postType="product" />
@@ -78,22 +79,34 @@ class ProductTemplate extends React.Component {
               : null
           }
 
-            <HeroSection
-                hero
-                className={'hero'}
-                leadingLabelHeader={'Free Onboarding'}
-                leadingLabelText={'and demo trial'}
-                {...productNode.heroFeaturette}
-            />
-            <BlobWrapperB>
-              <BlobC/>
-            </BlobWrapperB>
-            { productNode.featurettes.map( (feature, index) => (
-                ( typeof feature['__typename'] === 'undefined' || feature['__typename'] === 'ContentfulFeaturette' ) &&  <HeroSection key={index} {...feature} />
+          <BlobWrapperB>
+            <BlobC/>
+          </BlobWrapperB>
+
+          { productNode.heroFeaturette.internal.type === 'ContentfulHero' &&
+            <HeroSection {...productNode.heroFeaturette }></HeroSection>
+          }
+
+          { productNode.featurettes.map( (feature, index) => (
+              (
+                feature.internal.type === 'ContentfulFeaturette'  &&  <FeatuetteSection  key={index} {...feature} />
+                || feature.internal.type === 'ContentfulFeatureGallery' &&  <ProductSection columnWidth={feature.columnWidth} key={index} data={feature} />
+                || feature.internal.type === 'ContentfulHero' &&   <HeroSection {...feature }></HeroSection>
+                || feature.internal.type === 'ContentfulFaq' &&   <FaqList sectionTitle={{
+                  content: feature.question,
+                  textAlign: 'center',
+                  fontSize: ['20px', '24px'],
+                  fontWeight: '400',
+                  color: '#0f2137',
+                  letterSpacing: '-0.025em',
+                  mb: '0',
+                }} data={feature.items} />
+              )
             ))}
 
+          {/*{ <FaqSection  data={ useFAQGroupsOnCategories(groups) }  groups={"Product"} active={"Product"}  /> }*/}
 
-        {/*{ faqGroups.group.length > 0 && <FaqSection  data={faqGroups} groups={"Product"} active={"Product"}  /> }*/}
+
 
       </MarketingLayout>
     );
@@ -107,18 +120,23 @@ export const pageQuery = graphql`
   
   
   query ProductByID($id: String!) {
+    
     product: contentfulProduct(id: {eq: $id}) {
       id
       summary
       seoTitle
       seoDescription
       name
-      slug      
+      slug
       heroFeaturette {
         ...Featurette
+        ...Hero
       }
       featurettes {
         ...Featurette
+        ...FeatureGallery
+        ...Hero
+        ...FAQ
       }     
     }
 

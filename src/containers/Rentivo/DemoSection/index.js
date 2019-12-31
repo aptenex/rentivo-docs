@@ -20,7 +20,7 @@ import BannerWrapper, {
 import Arrow from 'common/src/assets/image/rentivo/banner/arrow-200-top-right.png';
 import BannerObject1 from 'common/src/assets/image/saas/banner/bannerObject1.png';
 import DemoForm from '../DemoForm';
-
+import MarcSignatureImage from 'components/Images/MarcSignature';
 
 const SummarySection = styled('section')`
   position: relative;
@@ -83,6 +83,10 @@ const DemoSection = ({
       />
     </Fragment>
   );
+
+  const OnlineNow = () => (
+    <div style={{color:'green'}}>Online now</div>
+  );
   return (
     <BannerWrapper id="banner_section">
       <Container>
@@ -93,6 +97,9 @@ const DemoSection = ({
               <Text content="Customer Success" {...discountAmount} />
               <Text content="demo request" {...discountText} />
             </DiscountLabel>
+
+
+
             <FeatureBlock
                 title={
                   <Heading
@@ -108,7 +115,11 @@ const DemoSection = ({
                 }
 
                 />
-                <ArrowImage src={Arrow} alt="Arrow Pointing to Demo" />
+              <div className={'mt5'}>
+              <MarcSignatureImage />
+              <OnlineNow />
+              </div>
+              <ArrowImage src={Arrow} alt="Arrow Pointing to Demo" />
           </Col>
 
           <Col xl={6}>

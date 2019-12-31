@@ -61,7 +61,7 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
 
   const Cta = styled('div')`
     float:right;  
-    @media (max-width: 767px) {
+    @media (max-width: 990px) {
       margin-right: 20px;
     }  
     a {

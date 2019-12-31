@@ -4,8 +4,132 @@
 import React from 'react';
 import {graphql} from "gatsby";
 export const featuretteFields = graphql`
+  fragment FeatureItem on ContentfulFeatureItemBlock {
+    
+      id
+      title
+      description {
+        childMarkdownRemark {
+          html
+        }
+        description
+      }
 
+      image {
+        fixed(height: 125) {
+          ...GatsbyContentfulFixed_tracedSVG
+        }
+        ... on ContentfulAsset {
+          svg {
+            content # SVG content optimized with SVGO                        
+            dataURI # Optimized SVG as compact dataURI
+            absolutePath #
+            relativePath #
+          }
+          file {
+            contentType
+            url
+            fileName
+            contentType
+            details {
+              image {
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+  }
+  
+  
+  fragment FAQ on ContentfulFaq {
+      internal {
+        type
+      }
+      id
+      question
+      answer {
+        answer
+        childMarkdownRemark {
+          html
+          rawMarkdownBody
+        }
+      }
+      group
+      items {
+        internal {
+          type
+        }
+        id
+        question
+        answer {
+          answer
+          childMarkdownRemark {
+            html
+            rawMarkdownBody
+          }
+        }
+        group       
+      }
+  }
+  
+  fragment FeatureGallery on ContentfulFeatureGallery {
+      internal {
+        type
+      }
+      id
+      slug
+      title
+      columnWidth
+      borderlessItems
+      items {        
+        ...FeatureItem
+      }
+    }
+ 
+  
+  
+  fragment Hero on ContentfulHero {
+    internal {
+      type
+    }
+    id
+    title
+    textLoopAst {
+      id 
+      internal {
+        content
+      }      
+    }
+    features {
+      ...FeatureItem
+    }
+    as
+    lottieJson {
+      file {
+        url
+      }
+    }
+    primaryCallToAction {
+      url
+      to
+      parentBlank
+      text
+    }
+    secondaryCallToAction {
+      url
+      to
+      parentBlank
+      text
+    }
+    tagline
+    
+  }
   fragment Featurette on ContentfulFeaturette {
+    internal {
+      type
+    }
     id
     title
     backgroundParticles

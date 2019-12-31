@@ -1,11 +1,11 @@
 import { useStaticQuery, graphql } from "gatsby"
 import sortBy from "lodash/sortBy"
 
-export const useFAQGroupsOnHome = () => {
-  const { allContentfulFaq } = useStaticQuery(
+export const useFAQGroupsOnCategories = () => {
+  const { allContentfulFaqByCategory } = useStaticQuery(
       graphql`
         query {
-          allContentfulFaq(filter: {group: {regex: "/General|Bill/"}}) {
+          allContentfulFaqByCategory : allContentfulFaq(filter: {group: {regex: "/General|Bill/"}}) {
             distinct(field: group)
             group(field: group) {
               edges {
@@ -24,9 +24,8 @@ export const useFAQGroupsOnHome = () => {
               }
             }
           }
-        }   
+        }
       `
   )
-  return allContentfulFaq;
+  return allContentfulFaqByCategory;
 }
-

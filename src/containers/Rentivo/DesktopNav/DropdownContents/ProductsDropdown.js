@@ -2,22 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import { Icon, DropdownSection, Heading } from "./Components"
 import { ThemeProvider } from 'styled-components';
-// import IconManage from '-!babel-loader!svg-react-loader?classIdPrefix=manage!./svg/wireless_touch_home_smart_home.svg';
-// import IconDistribute from '-!babel-loader!svg-react-loader?classIdPrefix=distribution!./svg/cloud_distribution.svg';
-// import IconEngine from '-!babel-loader!svg-react-loader?classIdPrefix=store!./svg/store.svg';
-// import IconGrow from '-!babel-loader!svg-react-loader?classIdPrefix=care!./svg/global_care.svg';
-// import IconAPI from '-!babel-loader!svg-react-loader?classIdPrefix=coding!./svg/browser_coding.svg';
-// import IconDMO from '-!babel-loader!svg-react-loader?classIdPrefix=dmo!./svg/global_care.svg';
 import ContentfulAsset from '../../../../containers/Rentivo/ContentfulAsset';
-import { IconManage, IconGrow, IconEngine, IconAPI, IconDMO, IconDistribute } from '../../Icons';
 import { StaticQuery, graphql, Link } from "gatsby"
-// const IconManage = styled.div``;
-// import  IconManage from '../../../../../static/img/svg/fire_flame_safety_heat.svg'
-// const IconDistribute = styled.div``;
-// const IconEngine = styled.div``;
-// const IconGrow = styled.div``;
-// const IconAPI = styled.div``;
-// const IconDMO = styled.div``;
 import { getMenuProducts } from './hooks/home';
 
 

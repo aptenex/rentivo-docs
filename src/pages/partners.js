@@ -141,22 +141,24 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulP
                     <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
                 ))}
                 </TagFilter>
-
+                {filteredPartners &&
                 <ListGrid
                     data={filteredPartners}
-                    columnWidth={[1, 1/2, 1/4]} //{[1, 1/2, 1/4]} responsive
+                    columnWidth={[1, 1 / 2, 1 / 4]} //{[1, 1/2, 1/4]} responsive
                     component={({node}) => (
                         <CardPartner>
-                          <Heading fontWeight={400} as={'h2'}  textAlign={'center'}  content={node.name} />
-                          <PartnerImage
+                          <Heading fontWeight={400} as={'h2'} textAlign={'center'} content={node.name}/>
+                          {node.logo && <PartnerImage
                               {...node.logo}
                               alt="Partner"
-                          />
-                          <Summary>{node.summary.summary}</Summary>
-                          {node.heroFeaturette && <LearnMore><Link to={'partners/' + node.slug }>Learn more</Link></LearnMore> }
+                          /> }
+                          {node.summary && <Summary>{node.summary.summary}</Summary> }
+                          {node.heroFeaturette &&
+                          <LearnMore><Link to={'partners/' + node.slug}>Learn more</Link></LearnMore>}
                         </CardPartner>
                     )}
                 />
+                }
               </Container>
 
             </Section>

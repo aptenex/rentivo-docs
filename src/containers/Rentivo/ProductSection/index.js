@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
 import Box from 'reusecore/src/elements/Box';
@@ -12,7 +12,7 @@ import Image from 'gatsby-image';
 const ProductSection = ({
   data,
   row,
-  col,
+  columnWidth,
   sectionHeader,
   sectionTitle,
   sectionSubTitle,
@@ -22,23 +22,40 @@ const ProductSection = ({
   contentStyle,
   blockWrapperStyle
 }) => {
+
+  const getCol = (() => {
+    return {
+      width: eval(columnWidth),
+      borderRight: data.borderlessItems ? null :'1px solid #d2d2d2;',
+      borderBottom: data.borderlessItems ? null : '1px solid #d2d2d2;'
+    };
+  });
+  useEffect(() => {
+    // Figure out col width...
+
+  });
+
   return (
-    <ProductSectionWrapper id="product_section">
+    <ProductSectionWrapper className={'product__section'}>
       <Container>
-        <Box {...sectionHeader}>
-          <Text content={data.title} {...sectionSubTitle} />
-        </Box>
+        {data.title &&
+          <Box {...sectionHeader}>
+            <Text content={data.title} {...sectionSubTitle} />
+          </Box>
+        }
         <Box className="row-wrapper" {...row}>
-          {data.product.map((node, index) => (
-            <Box className="col-item" {...col} key={index}>
+          {data.items.map((node, index) => (
+            <Box className="col-item" {...getCol()} key={index}>
+
               <ProductBlock
                 contentfulAsset={node.image}
+                hasOverlay={data.hasOverlay}
                 wrapperStyle={blockWrapperStyle}
                 iconStyle={iconStyle}
                 contentStyle={contentStyle}
                 title={<Heading content={node.title} {...featureTitle} />}
                 description={
-                  <Text className={'productContent'} content={node.description.description} {...featureDescription} />
+                  node.description && <Text className={'productContent'} content={node.description.description} {...featureDescription} />
                 }
               />
             </Box>
@@ -53,7 +70,8 @@ const ProductSection = ({
 ProductSection.propTypes = {
   sectionHeader: PropTypes.object,
   row: PropTypes.object,
-  col: PropTypes.object,
+  columnWidth: PropTypes.array,
+  columnCount: PropTypes.number,
   sectionTitle: PropTypes.object,
   sectionSubTitle: PropTypes.object,
   featureTitle: PropTypes.object,
@@ -63,6 +81,8 @@ ProductSection.propTypes = {
 // ProductSection default style
 ProductSection.defaultProps = {
   // section header default style
+  columnCount: 3,
+  columnWidth: [1, 1 / 2, 1 / 3, 1 / 3],
   sectionHeader: {
     mb: ['40px', '40px', '40px', '80px'],
   },
@@ -91,11 +111,6 @@ ProductSection.defaultProps = {
     flexWrap: 'wrap',
   },
   // feature col default style
-  col: {
-    width: [1, 1 / 2, 1 / 3, 1 / 3],
-    borderRight: '1px solid #d2d2d2;',
-    borderBottom: '1px solid #d2d2d2;'
-  },
   // feature block wrapper default style
   blockWrapperStyle: {
     p: ['30px', '20px', '20px', '20px'],

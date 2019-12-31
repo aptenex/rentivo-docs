@@ -106,7 +106,7 @@ const ProductBlockWrapper = styled.a`
     }
   }
   
-  &::before {
+  &.hasOverlay::before {
     content: '';
     position: absolute;
     left: 0;
@@ -123,7 +123,7 @@ const ProductBlockWrapper = styled.a`
     z-index: 1; 
   
   }
-  &:hover {
+  &.hasOverlay:hover {
     ::before {
         opacity: 1;
         transition: all 0.3s ease;

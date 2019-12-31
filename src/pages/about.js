@@ -132,7 +132,7 @@ export default (props) => {
                                   text: 'Our largest single customer provides direct bookings for 14k+ properties.'
                                 }
                               ]}
-                              columnWidth={1 / 3} //{[1, 1/2, 1/4]} responsive
+                              columnWidth={[1, 1/2, 1/2,1 / 3]} //{[1, 1/2, 1/4]} responsive
                               component={({heading,text}) => (
                                   <CardNumbers>
                                     <Heading fontWeight={400} as={'h2'}  textAlign={'center'}  content={heading} />

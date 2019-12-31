@@ -68,63 +68,6 @@ export const getMenuProducts = () => {
                     }
                   }
                 }
-                howItWorks {
-                  id
-                }
-                heroFeaturette {
-                  image {
-                    id
-                  }
-                  id
-                  content {
-                    id
-                  }
-                  callout {
-                    id
-                    childMarkdownRemark {
-                      html
-                      htmlAst
-                    }
-                  }
-                  callToAction {
-                    id
-                  }
-                  backgroundParticles
-                  backgroundHeroImage {
-                    id
-                    file {
-                      url
-                      fileName
-                      contentType
-                    }
-                    fixed {
-                      base64
-                      tracedSVG
-                      aspectRatio
-                      width
-                      height
-                      src
-                      srcSet
-                      srcWebp
-                      srcSetWebp
-                    }
-                    fluid {
-                      base64
-                      tracedSVG
-                      aspectRatio
-                      src
-                      srcSet
-                      srcWebp
-                      srcSetWebp
-                      sizes
-                    }
-                    description
-                  }
-                  title
-                  reverse
-                  oversize
-                  
-                }
                 logo {
                   id
                 }

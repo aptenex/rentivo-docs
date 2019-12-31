@@ -1,15 +1,21 @@
 import { useStaticQuery, graphql } from "gatsby"
 export const useProductHome = () => {
-  const { contentfulProductGallery } = useStaticQuery(
+  const { contentfulFeatureGallery } = useStaticQuery(
       graphql`
         query {
-          contentfulProductGallery(slug: {eq: "core-products"}) {            
+          contentfulFeatureGallery(slug: {eq: "core-products"}) {
+                internal {
+                  type
+                }
                 id
                 slug
                 title
-                product {
+                columnWidth
+                items {
                   id
                   title
+                  showTitle
+                  hasOverlay
                   description {
                     childMarkdownRemark {
                       html
@@ -48,5 +54,5 @@ export const useProductHome = () => {
               
       `
   )
-  return contentfulProductGallery
+  return contentfulFeatureGallery
 }

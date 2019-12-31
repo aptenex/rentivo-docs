@@ -32,7 +32,6 @@ const FaqAccordion = styled(Accordion)`
   `
 const FaqSection = ({
   data : faqData,
-  groups,
   active,
   sectionHeader,
   sectionTitle,
@@ -60,7 +59,7 @@ const FaqSection = ({
           <Text {...sectionSubTitle} />
           <Heading {...sectionTitle} />
         </Box>
-        {faqData.distinct.length > 1 &&
+        {faqData.distinct && faqData.distinct.length > 1 &&
           <Box {...sectionTitleWrapper}>
             <SwitchButtonWrapper>
               {faqData.distinct.map((name, index) => (

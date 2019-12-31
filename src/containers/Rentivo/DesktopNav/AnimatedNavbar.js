@@ -13,7 +13,7 @@ const navbarConfig = [
   { title: "Why Rentivo", dropdown: CompanyDropdown },
   { title: "Resources", dropdown: LearnDropdown }
 ]
-
+// Maybe port this to https://github.com/alexkatz/react-tiny-popover#readme
 export default class AnimatedNavbar extends Component {
   state = {
     activeIndices: []

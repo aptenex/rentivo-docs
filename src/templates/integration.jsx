@@ -14,7 +14,7 @@ import withSubNav from '../components/NavSub';
 import Layout from '../components/DocsLayout';
 import './syntax-highlighting.scss';
 import './doc.scss';
-import HeroSection from '../containers/Rentivo/HeroSection';
+import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import MarketingLayout from "../components/MarketingLayout";
 import FaqList from '../containers/Rentivo/FaqSection/List';
 import Text from 'reusecore/src/elements/Text';
@@ -98,7 +98,7 @@ class IntegrationTemplate extends React.Component {
               : null
           }
 
-            <HeroSection
+            <FeatuetteSection
                 hero
                 className={'hero'}
                 leadingLabelHeader={ integrationNode.onboardingSchedule ? 'Onboarding Schedule' : null }
@@ -124,7 +124,7 @@ class IntegrationTemplate extends React.Component {
 
 
             { integrationNode.featurettes.map( (feature, index) => (
-                ( typeof feature['__typename'] === 'undefined' || feature['__typename'] === 'ContentfulFeaturette' ) &&  <HeroSection key={index} {...feature} />
+                ( typeof feature['__typename'] === 'undefined' || feature['__typename'] === 'ContentfulFeaturette' ) &&  <FeatuetteSection key={index} {...feature} />
             ))}
 
 

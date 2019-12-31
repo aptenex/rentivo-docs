@@ -41,10 +41,13 @@ import Image from "gatsby-image";
 import {Link, graphql} from "gatsby";
 import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 import {useScript} from '../components/useScript';
+import Lottie from 'react-lottie';
+
+
 const Section = styled('section')`
   position: relative;  
 `;
-const HeroSection = styled('section')`
+const FeatuetteSection = styled('section')`
   position: relative;
   padding-top: 120px; 
 
@@ -136,6 +139,12 @@ const TagList = styled(TagFilter)`
    }
 `;
 
+const LottieWrapper = styled(Container)`
+svg {
+  margin-top: -5vh;
+}
+`;
+
 export default ({data : { tags : { distinct : tags } } , data : { allContentfulIntegration : { edges : integrations } } }, props) => {
   const faqGroups = useFAQGroupsOnHome();
 
@@ -152,31 +161,32 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulI
         setActiveTag(tag);
       }
   }
-  const [loaded, error] = useScript("https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js");
 
-  useEffect( () => {
-      console.log("MOUNTED");
-  });
-
-  const LottiePlayer = styled('lottie-player')`
-    margin-top: 20px;
-  `;
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    path: "https://assets10.lottiefiles.com/packages/lf20_kojxlZ.json",
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
 
   return (
       <MarketingLayout>
 
-            <HeroSection>
+            <FeatuetteSection>
               <ContainerTop width={'720px'} >
                   <Heading fontWeight={600} textAlign={'center'} as={'h1'} content={'Our Software Integrations'} />
                   <Heading fontWeight={400}  textAlign={'center'}  as={'h3'} content={'We are constantly adding new integrations. Here is who we already connect with.'} />
 
               </ContainerTop>
-              <Container width={'1720px'}>
-                <lottie-player src={"https://assets10.lottiefiles.com/packages/lf20_kojxlZ.json"}
-                              background={"transparent"}  speed={"1"}  style={{ display: 'block', marginTop: '-10%', zIndex: 1, width: '100%', minHeight: '250px'}}  loop autoplay >
-                </lottie-player>
-              </Container>
-            </HeroSection>
+              <LottieWrapper width={'1720px'}>
+                <Lottie options={defaultOptions}
+                                        height={'60vh'}
+                                        width={'80vw'}
+                />
+              </LottieWrapper>
+            </FeatuetteSection>
             <Section>
 
 
@@ -228,9 +238,6 @@ export const query = graphql`
           id
           slug
           name
-          heroFeaturette {
-            id
-          }
           tags
           logo {
             id

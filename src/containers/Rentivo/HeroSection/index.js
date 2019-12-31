@@ -14,37 +14,49 @@ import {fontFamily, fontWeight, letterSpacing, lineHeight, textAlign, themeGet} 
 import colors from 'common/src/theme/rentivo/colors';
 import styled from "styled-components"
 import { base, themed } from 'reusecore/src/elements/base';
-import GlideCarousel from 'common/src/components/GlideCarousel';
-import GlideSlide from 'common/src/components/GlideCarousel/glideSlide';
 import CalloutWrapper from 'components/CalloutWrapper';
 import Row from 'components/Flex/Row'
 import Col from 'components/Flex/Col'
 import classNames from 'components/Flex/classNames';
 import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 import HubspotForm from 'react-hubspot-form';
+import HeroWrapper from './heroSection.style';
+import RehypeReact from "rehype-react";
+import CodeGroup from '../../../componentsMarkdown/CodeGroup';
+import TextLoop from "react-text-loop";
+import Lottie from 'react-lottie';
+import Card from 'reusecore/src/elements/Card';
+import ListGrid from 'reusecore/src/elements/ListGrid';
+import IconCheck from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/enhancement/check_sm.svg';
 
-
-
-import HeroWrapper, {
-  LeadingLabel,
-  BannerObject,
-} from './heroSection.style';
-
+const renderAst = new RehypeReact({
+  createElement: React.createElement,
+  components: {
+    TextLoop: TextLoop
+  },
+}).Compiler;
 // Glide js options
+
 
 const HeroSection = ({
   title,
   backgroundParticles,
   description,
   hero,
+  as,
+  textLoopAst,
+  tagline,
   content,
   template,
+  lottieJson,
+  features,
   oversize : oversizeHero,
   reverse,
   callout,
   leadingLabelHeader,
   leadingLabelText,
-  callToAction,
+  primaryCallToAction : callToAction,
+  secondaryCallToAction,
   logo,
   image, // is an array
   backgroundHeroImage,
@@ -54,16 +66,23 @@ const HeroSection = ({
   btnStyle,
   btnWrapperStyle
 }) => {
-  // console.log("!@#@!#@!#@!#", image);
 
-  const [zoom, setZoom] = useState( { zoom : null } );
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    path: (lottieJson && lottieJson.file) ? lottieJson.file.url : null,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
   const CtaHref = styled(HrefLink)`
     &.btn {
       padding-top: 14px;
       padding-bottom: 14px;
       font-weight: bold;
       font-size: 1.1em;
+      margin-right: 10px;
     }
   `;
   const CtaLink = styled(Link)`
@@ -72,39 +91,9 @@ const HeroSection = ({
       padding-bottom: 14px;
       font-weight: bold;
       font-size: 1.1em;
+      margin-right: 10px;
     }
   `;
-
-  const glideOptions = {
-    type: 'carousel',
-    autoplay: 8000,
-    perView: 1,
-  };
-
-  useEffect( () => {
-    try {
-      import('medium-zoom').then(mediumZoom => {
-        // setZoom({zoom :  mediumZoom.default('img') });
-        mediumZoom.default('.zoomable img', { scrollOffset: 0,
-          margin: 40,
-          container: {
-            top: 204
-          },
-          background: '#01b47d'});
-      })
-    } catch (e) {
-      console.log("Couldn't execute from ComponentDidMount:", e);
-    }
-
-    return () => {
-      if(zoom.zoom){
-        zoom.zoom.detach();
-      }
-    }
-  });
-  //
-  //
-  //
 
   const ButtonGroup = () => (
       <Fragment>
@@ -118,126 +107,74 @@ const HeroSection = ({
             {callToAction.text}
           </CtaHref>
         }
-      </Fragment>
-  );
-
-  const UnderlayWrapper = styled('div')``;
-
-  // // classNames('flexRow__column__imageOversized__right') +  ' ' + classNames('flexRow__column__imageOversized')
-  const HeroImageColumn = (props) => (
-      <Fragment>
-        {image.length === 1 ? (
-                <Fragment>
-                  { image.map((node, index) => (
-                        <Fragment key={node.id}>
-                          { oversizeHero ? <OversizeImage/> :
-                          <Image
-                              className={'zoomable'}
-                              fluid={node.fluid}
-                              alt="Product"
-                          /> }
-                        </Fragment>
-                  ))}
-                </Fragment>
-
-            ) :
-            !oversizeHero && <HeroCarousel/>
+       
+        { secondaryCallToAction && secondaryCallToAction.to &&
+          <CtaLink className="btn btn-secondary outlined" to={secondaryCallToAction.to} >
+            {secondaryCallToAction.text}
+          </CtaLink>
         }
+        { secondaryCallToAction && secondaryCallToAction.url &&
+          <CtaHref className="btn btn-secondary" to={secondaryCallToAction.url} >
+            {secondaryCallToAction.text}
+          </CtaHref>
+        }
+
+
       </Fragment>
   );
-  const OversizeImage = (props) => (
-      <Fragment>
-        { [image[0] ].map((node, index) => {
-          return node.fluid.src ? <Image
-            key={index}
-            className={classNames(reverse ? 'flexRow__column__imageOversized__left' : 'flexRow__column__imageOversized__right')}
-            fluid={node.fluid}
-            alt="Product"
-          /> : <ContentfulAsset key={node.id} data={node}/>
-        } ) }
-      </Fragment>
-  );
-  const HeroCarousel = (props) => (
-
-      <BannerObject {...props}>
-
-        <GlideCarousel
-            options={glideOptions}
-            buttonWrapperStyle={btnWrapperStyle}
-            nextButton={
-              <Button
-                  icon={<i className="flaticon-next" />}
-                  variant="textButton"
-                  aria-label="next"
-                  {...btnStyle}
-              />
-            }
-            prevButton={
-              <Button
-                  icon={<i className="flaticon-left-arrow" />}
-                  variant="textButton"
-                  aria-label="prev"
-                  {...btnStyle}
-              />
-            }
-        >
-          <Fragment>
-            {image.map((node, index) => (
-                <GlideSlide key={node.id}>
-                  <Fragment>
-                    <Image
-                        fluid={node.fluid}
-                        alt="Product"
-                    />
-                  </Fragment>
-                </GlideSlide>
-            ))}
-          </Fragment>
-        </GlideCarousel>
-      </BannerObject>
-  );
-
+  const CardNumbers = styled(Card)`
+    padding: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    background: #f2f2f2;
+    svg {      
+      width: 42px;
+      margin-right: 15px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+  `
+  const UnderlayWrapper = styled('div')``;
+  const Tagline = styled(Text)``;
   return (
     <HeroWrapper className={ hero ? 'hero ' : null }>
 
       <Container>
 
-        <Row top="xs"  reverse={reverse}>
-            <Col xs={12} md={12} xl={6} >
+        <Row top="xs" >
+            <Col xs={12} >
+              <Container  width={'960px'}>
+                {/*https://gist.github.com/Kalyse/922cb05b7c9e08e43e39f73538169d77*/}
+                <Heading as={as} {...title} >{title}</Heading>
+                { textLoopAst && textLoopAst.internal && renderAst( JSON.parse( textLoopAst.internal.content ) ) }
+                <Tagline className={'tagline'}>{tagline}</Tagline>
 
-
-
-
-              { logo && logo.fluid && logo.fluid.src ? <Image
-                  fluid={logo}
-                  alt="Product"
-              /> : logo && logo.file ? <ContentfulAsset className={'featureLogo'} data={logo}/> : null}
-
-              { leadingLabelHeader &&
-                <LeadingLabel>
-                  <Text content={leadingLabelHeader} {...leadingLabelHeaderStyle} />
-                  { leadingLabelText && <Text content={leadingLabelText} {...leadingLabelTextStyle} /> }
-                </LeadingLabel>
-              }
-
-
-
-              <FeatureBlock
-                  title={
-                    <Heading content={title} />
-                  }
-                  description={
-                    content.childMarkdownRemark && <Text {...description} dangerouslySetInnerHTML={{ __html: content.childMarkdownRemark.html }} />
-                  }
-                  button={<ButtonGroup />}
-              />
-
-              { callout && callout.childMarkdownRemark && <CalloutWrapper data={callout.childMarkdownRemark} /> }
-
+                <ButtonGroup />
+              </Container>
             </Col>
-            <Col xs={12} md={12} xl={6}>
-              <HeroImageColumn />
-            </Col>
+
+
+          {features && <ListGrid
+              data={features}
+              columnWidth={[1, 1/2, 1/2,1 / 3]} //{[1, 1/2, 1/4]} responsive
+              component={({title : heading, description : { description }}) => (
+                  <CardNumbers>
+                    <IconCheck />
+                    <div>
+                      <Heading fontWeight={600} as={'h4'}  textAlign={'left'}  content={heading} />
+                      <Text>{description}</Text>
+                    </div>
+                  </CardNumbers>
+              )}
+          /> }
+
+          { lottieJson && <Lottie options={defaultOptions}
+                    height={400}
+                    width={400}
+            /> }
         </Row>
       </Container>
 
@@ -247,29 +184,24 @@ const HeroSection = ({
 
 HeroSection.propTypes = {
   title: PropTypes.string,
+  as : PropTypes.string,
+  tagline : PropTypes.string,
   btnStyle: PropTypes.object,
   hero: PropTypes.bool,
   description: PropTypes.object,
   image: PropTypes.array,
+  features: PropTypes.array,
   contentStyle: PropTypes.object,
-  leadingLabelHeader: PropTypes.string,
-  leadingLabelText: PropTypes.string,
-  leadingLabelHeaderStyle: PropTypes.object,
-  leadingLabelTextStyle: PropTypes.object,
   outlineBtnStyle: PropTypes.object,
   btnWrapperStyle: PropTypes.object,
-  oversizeHero: PropTypes.bool,
-  reverse: PropTypes.bool,
-  logo: PropTypes.object
 };
 
 HeroSection.defaultProps = {
-  oversizeHero :false,
-  logo: null,
   hero: false, // determines if this is a hero class...
   reverse: false,
+  as: 'h2',
   title: {
-    fontSize: ['22px', '34px', '30px', '55px'],
+    fontSize: ['22px', '34px', '30px', '635px'],
     fontWeight: '700',
     color: '#0f2137',
     letterSpacing: '-0.025em',
@@ -289,21 +221,7 @@ HeroSection.defaultProps = {
     color: '#01c88b',
     ml: '18px',
   },
-  leadingLabelHeaderStyle: {
-    fontSize: '14px',
-    color: colors.primary,
-    mb: 0,
-    as: 'span',
-    mr: '0.4em',
-    fontWeight: 700,
-  },
-  leadingLabelTextStyle: {
-    fontSize: ['13px', '14px'],
-    color: '#0f2137',
-    mb: 0,
-    as: 'span',
-    fontWeight: 500,
-  },
+
   // glide slider nav controls style
   btnWrapperStyle: {
     position: 'absolute',

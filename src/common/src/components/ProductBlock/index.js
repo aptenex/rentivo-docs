@@ -17,6 +17,7 @@ const ProductBlock = ({
   contentfulAsset,
   title,
   button,
+  hasOverlay,
   description,
   iconPosition,
   additionalContent,
@@ -28,7 +29,9 @@ const ProductBlock = ({
 }) => {
   // Add all classs to an array
   const addAllClasses = ['product__block'];
-
+  if(hasOverlay && description){
+    addAllClasses.push(`hasOverlay`);
+  }
   // Add icon position class
   if (iconPosition) {
     addAllClasses.push(`icon_${iconPosition}`);
@@ -46,7 +49,7 @@ const ProductBlock = ({
       {...props}
       href={'#'}
     >
-      <ContentfulAsset data={contentfulAsset}/>
+      { contentfulAsset && <ContentfulAsset data={contentfulAsset}/> }
 
 
       {title || description || button ? (
@@ -59,10 +62,12 @@ const ProductBlock = ({
               </ButtonWrapper>
             )}
           </ContentWrapper>
-          <OverlayWrapper className={'overlayContentWrapper'}  {...contentStyle}>
-            {title}
-            {description}
-          </OverlayWrapper>
+          {hasOverlay && description &&
+            <OverlayWrapper className={'overlayContentWrapper'}  {...contentStyle}>
+              {title}
+              {description}
+            </OverlayWrapper>
+          }
           {additionalContent}
         </Fragment>
       ) : (
@@ -102,10 +107,13 @@ ProductBlock.propTypes = {
   /** btnWrapperStyle prop contain these style system props: display, space, alignItems,
    * flexDirection and justifyContent. */
   btnWrapperStyle: PropTypes.object,
+
+  hasOverlay: PropTypes.bool
 };
 
 ProductBlock.defaultProps = {
   iconPosition: 'top',
+  hasOverlay : true
 };
 
 export default ProductBlock;

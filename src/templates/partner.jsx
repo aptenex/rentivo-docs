@@ -14,7 +14,7 @@ import withSubNav from '../components/NavSub';
 import Layout from '../components/DocsLayout';
 import './syntax-highlighting.scss';
 import './doc.scss';
-import HeroSection from '../containers/Rentivo/HeroSection';
+import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import MarketingLayout from "../components/MarketingLayout";
 import FaqList from '../containers/Rentivo/FaqSection/List';
 import Text from 'reusecore/src/elements/Text';
@@ -112,7 +112,7 @@ class PartnerTemplate extends React.Component {
           }
 
           { partnerNode.heroFeaturette &&
-            <HeroSection
+            <FeatuetteSection
                 hero
                 className={'hero'}
                 leadingLabelHeader={null}
@@ -142,11 +142,11 @@ class PartnerTemplate extends React.Component {
 
 
         {partnerNode.featurettes &&partnerNode.featurettes.map( (feature, index) => (
-            ( typeof feature['__typename'] === 'undefined' || feature['__typename'] === 'ContentfulFeaturette' ) &&  <HeroSection key={index} {...feature} />
+            ( typeof feature['__typename'] === 'undefined' || feature['__typename'] === 'ContentfulFeaturette' ) &&  <FeatuetteSection key={index} {...feature} />
         ))}
 
 
-        { partnerNode.faq && partnerNode.faq.length > 0 && <FaqList  data={partnerNode.faq}   /> }
+        { partnerNode.faq && partnerNode.faq.length > 0 && <FaqList data={partnerNode.faq}   /> }
 
         <SummarySection>
           <Container  width={'820px'}>

@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 const ProductSectionWrapper = styled.section`
   padding: 80px 0 0px 0;
+  & + section.product__section {
+    padding: 10px 0 0 0;
+  }
   @media (max-width: 990px) {
     padding: 60px 0 60px 0;
   }

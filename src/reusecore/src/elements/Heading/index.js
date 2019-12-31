@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
+  fontSize,
   fontFamily,
   fontWeight,
   textAlign,
@@ -20,11 +21,12 @@ const HeadingWrapper = styled('p')(
   themed('Heading')
 );
 
-const Heading = ({ content, ...props }) => (
-  <HeadingWrapper {...props}>{content}</HeadingWrapper>
+const Heading = ({ content, children, ...props }) => (
+  <HeadingWrapper {...props}>{ children ?? content}</HeadingWrapper>
 );
 
 export default Heading;
+
 
 Heading.propTypes = {
   content: PropTypes.string,
