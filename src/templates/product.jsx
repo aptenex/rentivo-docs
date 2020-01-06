@@ -86,6 +86,9 @@ class ProductTemplate extends React.Component {
           { productNode.heroFeaturette.internal.type === 'ContentfulHero' &&
             <HeroSection {...productNode.heroFeaturette }></HeroSection>
           }
+          { productNode.heroFeaturette.internal.type === 'ContentfulFeaturette' &&
+            <FeatuetteSection   {...productNode.heroFeaturette } />
+          }
 
           { productNode.featurettes.map( (feature, index) => (
               (
@@ -128,8 +131,7 @@ export const pageQuery = graphql`
       seoDescription
       name
       slug
-      heroFeaturette {
-        ...Featurette
+      heroFeaturette {        
         ...Hero
       }
       featurettes {

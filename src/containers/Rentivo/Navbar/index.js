@@ -74,10 +74,6 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
     
   `;
 
-  const AnimatedNavbarExtended = styled(AnimatedNavbar)`
-      display: none !important;
-      background: red;
-  `;
 
   const { state, dispatch } = useContext(DrawerContext);
 
@@ -101,7 +97,7 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
 
           <Box {...menuWrapper}>
             <div  className="animated_navbar">
-              <AnimatedNavbarExtended  duration={ 300 } />
+              <AnimatedNavbar  duration={ 300 } />
             </div>
             <CtaSection>
 

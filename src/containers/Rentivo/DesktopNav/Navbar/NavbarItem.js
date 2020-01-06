@@ -26,7 +26,7 @@ const NavbarItemTitle = styled.button`
 const NavbarItemEl = styled.li`
     position: relative;
     @media(max-width: 1349px){
-      :first-child {
+      AAAAA:first-child {
           position: static;
         > div {
             position: absolute;
@@ -38,7 +38,7 @@ const NavbarItemEl = styled.li`
         }
     }
     @media(min-width: 1350px){
-      :first-child {
+      AAAAA:first-child {
         ${DropdownRoot} > div:first-child{
           transform: translateX(-180px);
         }
@@ -90,8 +90,6 @@ const DropdownSlot = styled.div`
   left: 50%;
   transform: translateX(-50%);
   perspective: 1500px;
-  
- 
   
 `
 

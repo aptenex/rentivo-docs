@@ -1,6 +1,9 @@
 import React from "react"
 import {Link} from "gatsby"
 import styled from "styled-components"
+import { getMenuProducts } from './hooks/home';
+import ContentfulAsset from '../../../../containers/Rentivo/ContentfulAsset';
+
 import {
   Heading,
   HeadingLink,
@@ -11,13 +14,14 @@ import {
 // import IconTogether from  '-!babel-loader!svg-react-loader?classIdPrefix=dmo!svg/doodles/rockets_people_person_avatar.svg';
 
 const CompanyDropdownEl = styled.div`
-  width: 50rem;
+  width: 40rem;
   display: flex; 
 `
 
 
 const Col = styled.div`
  flex-grow: 1;
+ min-width: 15rem;
 `
 
 // const IconRocket = styled(IconTogether)`
@@ -57,7 +61,133 @@ const Flex = styled.div`
 
 
 
+const Integrations = styled(Col)`
+  background: #f2f2f2;
+  margin: 0px -40px -40px 20px;
+  position: relative;
+  min-width: 12rem;
+   ul, li {
+    margin: 0;
+    padding: 0px;
+  }
+  svg {
+    position: relative;
+    top: 6px;
+    left: 12px;
+  }
+`
+
+const SectionHeader = styled.h4`  
+  height: 38px;
+  margin-bottom: 20px;
+`
+
+const ProductIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  margin-right: 30px;
+  border-radius: 100%;
+  
+  > div {
+    width: 32px;
+    svg {
+      width: 48px;  
+    }
+  }
+`
+
+const IntegrationIcon = styled(ProductIcon)`
+   width: 24px;
+  height: 24px;
+  margin-right: 30px;
+  border-radius: 100%;
+  
+  > div {
+    width: 32px;
+    svg {
+      width: 24px;
+      height: 24px;  
+    }
+  }
+`;
+
+const ProductLink = styled(Link)`
+  display: flex;
+  padding: 3px 0px 2px 0px;
+  width: 100%;
+  border-radius: 4px;
+  &:hover {
+    background: #dbf1ff42
+    background: rgba(0,0,0,0.02);
+    ;
+  }
+`;
+
+const SubProductsList = styled.ul`
+  li {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    margin-right: 1rem;
+    width: 3.2rem;
+    display: block;
+  }
+  a {
+    color: var(--dark-grey);
+  }
+  
+`
+
+const ProductsSection = styled.ul`
+  li {
+    display: flex;
+    min-width: 680px;
+    width: 100%;
+    div p {
+      margin-top: 0;
+      margin-bottom: 0rem;
+    }
+  }
+  
+`
+
+const Text = styled.p`
+  color: #546b81
+  font-weight: bold;
+`;
+
+const DemoRequest = styled.div`
+    display:flex;
+    
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--spacer);
+    padding-top: var(--spacer);
+    margin-top: 25px;
+  h3 {
+    margin-bottom: 0;
+  }
+`
+
+const AllIntegrations = styled(Link)`
+font-weight: bold;
+ display: flex;
+ font-size: 1.2em;
+ padding: 10px;
+  width: 100%;
+  border-radius: 4px;
+  &:hover {
+    background: #dbf1ff42
+    background: rgba(0,0,0,0.02);
+    ;
+  }
+
+`
+
+
 const CompanyDropdown = () => {
+  const { allContentfulProduct, allContentfulIntegration } = getMenuProducts();
   return (
     <CompanyDropdownEl>
       <Col>
@@ -89,9 +219,33 @@ const CompanyDropdown = () => {
       </Col>
       <WhyCallout>
           {/*<IconRocket />*/}
-          <CalloutHeader>Why Rentivo</CalloutHeader>
+          <CalloutHeader>Our Integrations</CalloutHeader>
           <CalloutText>Find out why Rentivo is the preferred choice</CalloutText>
-          <a href={'/demo-request'}>Going places together</a>
+          <Integrations>
+            <DropdownSection data-first-dropdown-section>
+              <ProductsSection>
+                { allContentfulIntegration.edges.map( ( {node}, index) => (
+                    <li key={index}>
+                      <ProductLink to={'integrations/' + node.slug}>
+                        <div>
+                          <IntegrationIcon>
+                            <ContentfulAsset data={node.tileIcon}/>
+                          </IntegrationIcon>
+                        </div>
+                        <div>
+                          <Heading >{ node.name }</Heading>
+                        </div>
+                      </ProductLink>
+
+                    </li>
+                ))}
+
+
+              </ProductsSection>
+              <AllIntegrations to={'/integrations'}>View All Integrations</AllIntegrations>
+            </DropdownSection>
+
+          </Integrations>
       </WhyCallout>
 
 

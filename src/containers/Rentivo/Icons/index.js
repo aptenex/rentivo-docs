@@ -1,5 +1,9 @@
 export IconLockMan from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/enhancement/lock_man.svg';
 export IconLock from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/enhancement/lock.svg';
+
+export ConnectorTopLeftBottomRight from 'img/ui/top_left_join_bottom_right.png';
+export ConnectorTopJoinBottom from 'img/ui/top_join_bottom.png';
+
 // export IllustrationApartment from 'svg/illustrations/apartment.svg';
 export IllustrationApartment from 'img/illustration/96px/apartment_96px.png';
 export IllustrationOptions from 'img/illustration/96px/options_96px.png';

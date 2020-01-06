@@ -29,6 +29,7 @@ import Card from 'reusecore/src/elements/Card';
 import ListGrid from 'reusecore/src/elements/ListGrid';
 import IconCheck from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/enhancement/check_sm.svg';
 
+
 const renderAst = new RehypeReact({
   createElement: React.createElement,
   components: {
@@ -151,11 +152,11 @@ const HeroSection = ({
                 <Heading as={as} {...title} >{title}</Heading>
                 { textLoopAst && textLoopAst.internal && renderAst( JSON.parse( textLoopAst.internal.content ) ) }
                 <Tagline className={'tagline'}>{tagline}</Tagline>
-
                 <ButtonGroup />
               </Container>
-            </Col>
 
+
+            </Col>
 
           {features && <ListGrid
               data={features}
@@ -175,6 +176,8 @@ const HeroSection = ({
                     height={400}
                     width={400}
             /> }
+
+
         </Row>
       </Container>
 

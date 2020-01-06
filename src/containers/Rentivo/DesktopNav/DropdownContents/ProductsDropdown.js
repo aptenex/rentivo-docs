@@ -18,17 +18,10 @@ const ProductsDropdownEl = styled.div`
     margin: 0;
     padding: 0px;
   }
-  @media (min-width:1349px) {
-    max-width: 70rem !important;
-  }
-  
-  
-  @media (max-width:1349px) {
+ 
     position: relative;
     flex-direction: column;
-    width: 100vw;
-    transform: translateX(0%)
-  }
+  
 `
 
 
@@ -146,6 +139,7 @@ const AllIntegrations = styled(Link)`
 margin-top: 10px;
 font-weight: bold;
  display: flex;
+ font-size: 1.2em;
   padding: 10px;
   width: 100%;
   border-radius: 4px;
@@ -183,74 +177,6 @@ export default () => {
 
               </li>
             ))}
-            {/*<li>*/}
-              {/*<div>*/}
-                {/*<Logo >*/}
-                  {/*<IconManage/>*/}
-                {/*</Logo>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-                {/*<Heading color="blue">Manage</Heading>*/}
-                {/*<p>A complete end-to-end solution for short-term property management</p>*/}
-              {/*</div>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-              {/*<div>*/}
-                {/*<Logo >*/}
-                  {/*<IconDistribute/>*/}
-                {/*</Logo>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-                {/*<Heading color="blue">Channel Distribution</Heading>*/}
-                {/*<p>Reach and automate Airbnb, HomeAway, Booking.com (and more)</p>*/}
-              {/*</div>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-              {/*<div>*/}
-                {/*<Logo >*/}
-                  {/*<IconEngine/>*/}
-                {/*</Logo>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-                {/*<Heading color="blue">Booking Engine</Heading>*/}
-                {/*<p>Create your own booking marketplace for direct opportunities</p>*/}
-              {/*</div>*/}
-            {/*</li>*/}
-
-            {/*<li>*/}
-              {/*<div>*/}
-                {/*<Logo >*/}
-                  {/*<IconGrow/>*/}
-                {/*</Logo>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-                {/*<Heading color="blue">Grow and Acquire</Heading>*/}
-                {/*<p>A complete end-to-end solution for short-term property management</p>*/}
-              {/*</div>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-              {/*<div>*/}
-                {/*<Logo >*/}
-                  {/*<IconAPI/>*/}
-                {/*</Logo>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-                {/*<Heading color="blue">APIs as a Service</Heading>*/}
-                {/*<p>Reach and automate Airbnb, HomeAway, Booking.com (and more)</p>*/}
-              {/*</div>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-              {/*<div>*/}
-                {/*<Logo >*/}
-                  {/*<IconDMO/>*/}
-                {/*</Logo>*/}
-              {/*</div>*/}
-              {/*<div>*/}
-                {/*<Heading color="blue">DMO</Heading>*/}
-                {/*<p>Create a destination marketing website for your organisation.</p>*/}
-              {/*</div>*/}
-            {/*</li>*/}
-
           </ProductsSection>
           <DemoRequest>
             <Heading >
@@ -263,31 +189,7 @@ export default () => {
 
 
       </Col>
-      <Integrations>
-        <DropdownSection data-first-dropdown-section>
-          <SectionHeader>Integrations</SectionHeader>
-          <ProductsSection>
-            { allContentfulIntegration.edges.map( ( {node}, index) => (
-                <li key={index}>
-                  <ProductLink to={'integrations/' + node.slug}>
-                    <div>
-                      <IntegrationIcon>
-                        <ContentfulAsset data={node.tileIcon}/>
-                      </IntegrationIcon>
-                    </div>
-                    <div>
-                      <Heading >{ node.name }</Heading>
-                    </div>
-                  </ProductLink>
 
-                </li>
-            ))}
-            <li><AllIntegrations to={'/integrations'}>View All Integrations</AllIntegrations></li>
-
-          </ProductsSection>
-        </DropdownSection>
-
-      </Integrations>
     </ProductsDropdownEl>
   )
 }

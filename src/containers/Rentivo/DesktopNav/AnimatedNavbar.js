@@ -7,14 +7,20 @@ import CompanyDropdown from "./DropdownContents/CompanyDropdown"
 import DevelopersDropdown from "./DropdownContents/DevelopersDropdown"
 import ProductsDropdown  from "./DropdownContents/ProductsDropdown"
 import LearnDropdown from "./DropdownContents/LearnDropdown"
+import PropTypes from 'prop-types';
+import onClickOutside from "react-onclickoutside";
+
 const navbarConfig = [
   { title: "Products", dropdown: ProductsDropdown },
   // { title: "Developers", dropdown: DevelopersDropdown },
   { title: "Why Rentivo", dropdown: CompanyDropdown },
   { title: "Resources", dropdown: LearnDropdown }
 ]
+
+
+
 // Maybe port this to https://github.com/alexkatz/react-tiny-popover#readme
-export default class AnimatedNavbar extends Component {
+class AnimatedNavbar extends Component {
   state = {
     activeIndices: []
   }
@@ -48,7 +54,7 @@ export default class AnimatedNavbar extends Component {
     })
     this.animatingOutTimeout = setTimeout(
       this.resetDropdownState,
-      this.props.duration
+      1400
     )
   }
 
@@ -78,30 +84,32 @@ export default class AnimatedNavbar extends Component {
         spring={duration === 300 ? "noWobble" : { stiffness: 10, damping: 10 }}
       >
 
-        <Navbar onMouseLeave={this.onMouseLeave}>
-          {navbarConfig.map((n, index) => {
-            return (
-              <NavbarItem
-                key={n.title}
-                title={n.title}
-                index={index}
-                onMouseEnter={this.onMouseEnter}
-              >
-                {currentIndex === index && (
-                  <DropdownContainer
-                    direction={direction}
-                    animatingOut={this.state.animatingOut}
-                    duration={duration}
-                  >
-                    <CurrentDropdown />
-                    {PrevDropdown && <PrevDropdown />}
-                  </DropdownContainer>
-                )}
-              </NavbarItem>
-            )
-          })}
-        </Navbar>
+          <Navbar onMouseLeave={this.onMouseLeave}>
+            {navbarConfig.map((n, index) => {
+              return (
+                <NavbarItem
+                  key={n.title}
+                  title={n.title}
+                  index={index}
+                  onMouseEnter={this.onMouseEnter}
+                >
+                  {currentIndex === index && (
+                    <DropdownContainer
+                      direction={direction}
+                      animatingOut={this.state.animatingOut}
+                      duration={duration}
+                    >
+                      <CurrentDropdown />
+                      {PrevDropdown && <PrevDropdown />}
+                    </DropdownContainer>
+                  )}
+                </NavbarItem>
+              )
+            })}
+          </Navbar>
       </Flipper>
     )
   }
 }
+
+export default  AnimatedNavbar;

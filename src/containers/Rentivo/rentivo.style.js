@@ -147,6 +147,10 @@ export const ContentWrapper = styled.div`
     transition: 0.35s ease-in-out;
     padding: 15px 0;
     .animated_navbar {
+      
+      @media (min-width: 1220px) {
+        margin-left: 120px;
+      }
        @media (max-width: 990px) {
         display: none;
       }

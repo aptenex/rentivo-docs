@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import { graphql } from 'gatsby';
+import {graphql, Link} from 'gatsby';
 import RehypeReact from 'rehype-react';
 import _ from 'lodash';
 import config from '../../data/SiteConfig';
@@ -14,7 +14,8 @@ import withSubNav from '../components/NavSub';
 import Layout from '../components/DocsLayout';
 import './syntax-highlighting.scss';
 import './doc.scss';
-import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
+import FeaturetteSection from '../containers/Rentivo/FeaturetteSection';
+import HeroSection from '../containers/Rentivo/HeroSection';
 import MarketingLayout from "../components/MarketingLayout";
 import FaqList from '../containers/Rentivo/FaqSection/List';
 import Text from 'reusecore/src/elements/Text';
@@ -25,7 +26,11 @@ import Image from 'gatsby-image';
 import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 import DemoForm from 'containers/Rentivo/DemoForm';
 import HubspotForm from "react-hubspot-form";
-
+import Row from 'components/Flex/Row'
+import Col from 'components/Flex/Col'
+import Card from 'reusecore/src/elements/Card';
+import LogoImage from 'common/src/assets/image/rentivo-logo.png';
+import { ConnectorTopLeftBottomRight, ConnectorTopJoinBottom  } from '../containers/Rentivo/Icons';
 const renderAst = new RehypeReact({
   createElement: React.createElement,
   components: {
@@ -56,6 +61,48 @@ const SummaryContent = styled('div')`
     }
 `;
 
+const CardWrapper = styled(Card)`
+    padding: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    background: #f2f2f2;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    svg {      
+      width: 42px;
+      margin-right: 15px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+  `
+
+const ConnectorJoinImage = styled('img')`
+top: -15px;
+margin: 0 auto;
+position: relative;
+z-index: 1;
+transform: rotate(90deg) translateX(35px) translateY(-20px);
+`;
+const ConnectorImage = styled('img')`
+position: relative;
+top: -25px;
+left: 23%;
+margin-bottom: -120px;
+z-index:-1;
+`;
+
+const HeroWrapper = styled('div')`
+  > section {
+    padding-bottom: 0px !important;
+  }
+`;
+
 class IntegrationTemplate extends React.Component {
   getLinks() {
     const { data } = this.props;
@@ -68,6 +115,14 @@ class IntegrationTemplate extends React.Component {
       link.id = header.properties.id;
       return link;
     });
+  }
+
+  getImage(logo){
+
+    if(logo &&  logo.fluid && logo.fluid.src ){
+      return logo.fluid;
+    }
+    return logo.svg;
   }
 
   getRepoLink() {
@@ -97,35 +152,63 @@ class IntegrationTemplate extends React.Component {
               ? (<AsideMenu asideLinks={this.getLinks()} />)
               : null
           }
+            <HeroWrapper>
+              <HeroSection title={integrationNode.title} tagline={integrationNode.tagline} image={ integrationNode.logo } />
+            </HeroWrapper>
+            <Container  width={'720px'}>
+              <Row top="xs" >
+                <Col xs={6} >
+                  <CardWrapper>
+                    {integrationNode.logo && <ContentfulAsset data={integrationNode.logo} /> }
+                  </CardWrapper>
+                </Col>
+                <Col xs={6} >
+                  <CardWrapper>
+                    <img
+                        src={LogoImage}
+                        title="Rentivo"
+                    />
+                  </CardWrapper>
+                </Col>
 
-            <FeatuetteSection
-                hero
-                className={'hero'}
-                leadingLabelHeader={ integrationNode.onboardingSchedule ? 'Onboarding Schedule' : null }
-                leadingLabelText={ integrationNode.onboardingSchedule }
-                logo={integrationNode.logo}
-                {...integrationNode.heroFeaturette}
-            />
+                <ConnectorImage src={ConnectorTopLeftBottomRight} />
+
+              </Row>
+            </Container>
 
 
-            <SummarySection>
-              <Container width={'720px'}>
-                { integrationNode.logo &&  integrationNode.logo.fluid &&  integrationNode.logo.fluid.src ? <Image
-                    fluid={ integrationNode.logo}
-                    alt="Product"
-                /> :  integrationNode.logo &&  integrationNode.logo.file ? <ContentfulAsset className={'featureLogo'} data={ integrationNode.logo}/> : null}
-                <Text content={integrationNode.webAddress}/>
-                <SummaryContent
-                    dangerouslySetInnerHTML={{ __html: integrationNode.summary.childMarkdownRemark.html }}
-                />
-              </Container>
-            </SummarySection>
+            { integrationNode.heroFeaturette &&
+              integrationNode.heroFeaturette.internal.type === 'ContentfulHero' &&
+              <HeroSection {...integrationNode.heroFeaturette }></HeroSection>
+            }
+            { integrationNode.heroFeaturette &&
+              integrationNode.heroFeaturette.internal.type === 'ContentfulFeaturette' &&
+              <FeaturetteSection
+                  hero
+                  className={'hero'}
+                  leadingLabelHeader={ integrationNode.onboardingSchedule ? 'Onboarding Schedule' : null }
+                  leadingLabelText={ integrationNode.onboardingSchedule }
+                  logo={integrationNode.logo}
+                  {...integrationNode.heroFeaturette}
+              />
+            }
 
-
-
-            { integrationNode.featurettes.map( (feature, index) => (
-                ( typeof feature['__typename'] === 'undefined' || feature['__typename'] === 'ContentfulFeaturette' ) &&  <FeatuetteSection key={index} {...feature} />
+            { integrationNode.featurettes && integrationNode.featurettes.map( (feature, index) => (
+                ( typeof feature['__typename'] === 'undefined' || feature['__typename'] === 'ContentfulFeaturette' ) &&  <FeaturetteSection key={index} {...feature} />
             ))}
+
+        <SummarySection>
+          <Container width={'720px'}>
+            { integrationNode.logo &&  integrationNode.logo.fluid &&  integrationNode.logo.fluid.src ? <Image
+                fluid={ integrationNode.logo}
+                alt="Product"
+            /> :  integrationNode.logo &&  integrationNode.logo.file ? <ContentfulAsset className={'featureLogo'} data={ integrationNode.logo}/> : null}
+            <Text content={integrationNode.webAddress}/>
+            <SummaryContent
+                dangerouslySetInnerHTML={{ __html: integrationNode.summary.childMarkdownRemark.html }}
+            />
+          </Container>
+        </SummarySection>
 
 
         { integrationNode.faq.length > 0 && <FaqList  data={integrationNode.faq}   /> }
@@ -150,7 +233,12 @@ export const pageQuery = graphql`
   
   query IntegrationByID($id: String!) {
     integration: contentfulIntegration(id: {eq: $id}) {
+      internal {
+        type
+      }
       id
+      title
+      tagline
       name
       slug
       seoTitle
@@ -207,6 +295,7 @@ export const pageQuery = graphql`
       }
       heroFeaturette {
         ...Featurette
+        ...Hero
       }
       featurettes {
         ...Featurette
