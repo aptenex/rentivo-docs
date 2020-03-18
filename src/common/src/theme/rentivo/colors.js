@@ -9,6 +9,7 @@ const colors = {
   inactiveButton: '#b7dbdd', // 6
   inactiveIcon: '#EBEBEB', // 7
   primary: '#01c88b', // 8
+  primaryDark: '#01855d', // 8
   primaryHover: '#01a975', // 9
   secondary: '#012837', // 10
   secondaryHover: '#FF282F', // 11

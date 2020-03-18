@@ -10,14 +10,16 @@ class MainLayout extends Component {
     };
   }
 
-  componentWillMount() {
-    axios.get('https://3tgl2vf85cht.statuspage.io/api/v2/status.json')
-      .then(res => {
-        this.setState({
-          status: res.data,
-        });
-      })
-      .catch(error => console.log(error));
+  componentDidMount() {
+    // this.setState({"status" : {"page":{"id":"17tj22rsgn9f","name":"Rentivo","url":"https://rentivo.statuspage.io","time_zone":"Etc/UTC","updated_at":"2020-03-18T11:24:05.263Z"},"status":{"indicator":"minor","description":"Partially Degraded Service"}}});
+    // Not using StatusPage.io just yet.
+    // axios.get('https://17tj22rsgn9f.statuspage.io/api/v2/status.json')
+    //   .then(res => {
+    //     this.setState({
+    //       status: res.data,
+    //     });
+    //   })
+    //   .catch(error => console.log(error));
   }
 
   render() {

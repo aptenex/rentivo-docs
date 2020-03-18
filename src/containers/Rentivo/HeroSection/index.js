@@ -149,7 +149,7 @@ const HeroSection = ({
             <Col xs={12} >
               <Container  width={'960px'}>
                 {/*https://gist.github.com/Kalyse/922cb05b7c9e08e43e39f73538169d77*/}
-                <Heading as={as} {...title} >{title}</Heading>
+                <Heading as={as || 'h2'} {...title} >{title}</Heading>
                 { textLoopAst && textLoopAst.internal && renderAst( JSON.parse( textLoopAst.internal.content ) ) }
                 <Tagline className={'tagline'}>{tagline}</Tagline>
                 <ButtonGroup />
@@ -161,12 +161,12 @@ const HeroSection = ({
           {features && <ListGrid
               data={features}
               columnWidth={[1, 1/2, 1/2,1 / 3]} //{[1, 1/2, 1/4]} responsive
-              component={({title : heading, description : { description }}) => (
-                  <CardNumbers>
+              component={( feature) => (
+                  <CardNumbers key={feature.id}>
                     <IconCheck />
                     <div>
-                      <Heading fontWeight={600} as={'h4'}  textAlign={'left'}  content={heading} />
-                      <Text>{description}</Text>
+                      <Heading fontWeight={600} as={'h4'}  textAlign={'left'}  content={feature.title} />
+                      <Text>{feature.description && feature.description.description}</Text>
                     </div>
                   </CardNumbers>
               )}

@@ -39,6 +39,19 @@ module.exports = {
       }
     },
     {
+      resolve: `gatsby-plugin-intl`,
+      options: {
+        // language JSON resource path
+        path: `${__dirname}/src/intl`,
+        // supported language
+        languages: [`en`, `fr`],
+        // language file path
+        defaultLanguage: `en`,
+        // option to redirect to `/en` when connecting `/`
+        redirect: false,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-module-resolver',
       options: {
         root: './src', // <- will be used as a root dir
@@ -134,6 +147,12 @@ module.exports = {
       },
     },
     {
+      resolve: "gatsby-plugin-anchor-links",
+      options: {
+        offset: 600
+      }
+    },
+    {
       resolve: 'gatsby-plugin-nprogress',
       options: {
         color: config.themeColor,
@@ -142,8 +161,16 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-google-tagmanager',
       options: {
-        id: 'XXXX',
+        id: 'GTM-TSD8N5P',
         includeInDevelopment: true,
+        // datalayer to be set before GTM is loaded
+        // should be a stringified object or object
+        // Defaults to null
+        defaultDataLayer: function() {
+          return {
+            pageType: window.pageType,
+          }
+        },
       },
     },
     {

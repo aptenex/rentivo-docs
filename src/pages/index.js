@@ -25,10 +25,9 @@ import { useProductHome } from "../containers/Rentivo/ProductSection/hooks/home"
 import { useFAQGroupsOnHome } from "../containers/Rentivo/FaqSection/hooks/home";
 import { getMenuProducts} from '../containers/Rentivo/DesktopNav/DropdownContents/hooks/home';
 import MarketingLayout from "../components/MarketingLayout";
+import { injectIntl, Link, FormattedMessage } from "gatsby-plugin-intl"
 
-
-
-export default (props) => {
+export default injectIntl( (props) => {
   const menuProducts = getMenuProducts();
   const productCategory = useProductHome();
   const faqGroups = useFAQGroupsOnHome();
@@ -37,7 +36,6 @@ export default (props) => {
             <BannerSection />
 
             <ProductSection data={productCategory}  />
-
             <VisitorSection />
             {/*<ServiceSection />*/}
 
@@ -52,4 +50,4 @@ export default (props) => {
             <IntegrationFlipchart />
       </MarketingLayout>
   );
-};
+});

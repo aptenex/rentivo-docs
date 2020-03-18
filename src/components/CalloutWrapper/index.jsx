@@ -6,9 +6,13 @@ import Text from 'reusecore/src/elements/Text';
 import styled from 'styled-components';
 import Check from '-!babel-loader!svg-react-loader?classIdPrefix=coding!./svg/icon-check-green.svg';
 
-const Item = styled('p')`
+const Item = styled('span')`
   margin-left: 10px;
-  flex-grow: 1;
+  flex-grow: 1;    
+`;
+const CheckWrapper = styled('span')`
+  margin-left: 10px;
+  margin-top: -5px;
 `;
 
 const Callout = (props) => {
@@ -20,14 +24,14 @@ const Callout = (props) => {
   const classes = `callout callout--${props.type}`;
 
   return (
-      <div className={classes}>
-        <div>
+      <span className={classes}>
+        <CheckWrapper>
           <Check />
-        </div>
+        </CheckWrapper>
         <Item>
           {props.children.map(el => el)}
         </Item>
-      </div>
+      </span>
   );
 }
 
@@ -43,13 +47,13 @@ const renderAst = new RehypeReact({
   },
 }).Compiler;
 
-const CalloutWrapper = ({data}) =>
 
-  (
-      <div className="callout-wrapper">
-        {renderAst(data.htmlAst)}
-      </div>
-  );
+const CalloutWrapper = ({data}) =>
+(
+    <div className="callout-wrapper">
+      {renderAst(data.htmlAst)}
+    </div>
+);
 
 
 

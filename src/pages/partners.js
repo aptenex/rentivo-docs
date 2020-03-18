@@ -40,6 +40,10 @@ import Col from 'components/Flex/Col'
 import Image from "gatsby-image";
 import {Link, graphql} from "gatsby";
 import './partners.css';
+import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faChevronRight, faExternalLinkAlt} from '@fortawesome/pro-duotone-svg-icons'
+
 
 const Section = styled('section')`
   position: relative;
@@ -54,7 +58,10 @@ const CardPartner = styled(Card)`
   padding: 30px;
   background: white;
   margin-bottom: 20px;
-  text-align: center;
+  h2 {
+    font-size: 1rem;
+    color: #AAA;
+  }
 `
 
 const PartnerImage = styled(Image)`
@@ -66,8 +73,11 @@ const LearnMore = styled(Text)`
 text-align: right;
 `
 
-const Summary = styled('p')``;
-
+const Summary = styled('p')`
+  
+  clear: both;
+  text-align: left;
+`;
 const TagFilter = styled('ul')`
   font-size: 1.3em;
   display: inline-flex;
@@ -99,6 +109,32 @@ const TagFilter = styled('ul')`
     }
     
   }
+`;
+
+const PartnerLink = styled('a')`
+float:right;
+margin-bottom: 10px;
+margin-top: -15px;
+color: #666;
+`;
+
+const TagList = styled(TagFilter)`
+  font-size: 0.9em;
+  display: inline-flex;  
+  text-align: left;
+    clear:both;
+    margin-bottom: 10px;
+    margin-top: 5px;
+  li {    
+    padding: 7px 12px;
+    border: 1px solid #01b47d;    ;
+    border-radius: 20px;
+  }
+   @media (max-width: 768px) {
+      flex-direction: row;
+      width: auto;
+      li { margin-bottom: 3px;}    
+   }
 `;
 
 export default ({data : { tags : { distinct : tags } } , data : { allContentfulPartner : { edges : partners } } }, props) => {
@@ -147,11 +183,29 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulP
                     columnWidth={[1, 1 / 2, 1 / 4]} //{[1, 1/2, 1/4]} responsive
                     component={({node}) => (
                         <CardPartner>
-                          <Heading fontWeight={400} as={'h2'} textAlign={'center'} content={node.name}/>
-                          {node.logo && <PartnerImage
-                              {...node.logo}
-                              alt="Partner"
-                          /> }
+                          <Heading fontWeight={400} as={'h2'}  textAlign={'right'}  content={node.name} />
+                          { node.slug ? <div /> : <div><PartnerLink rel={"nofollow"} href={node.webAddress} target={"_blank"} >
+                            Website
+                            <span> </span><FontAwesomeIcon icon={faExternalLinkAlt} />
+                          </PartnerLink>
+                          </div>}
+
+                          { node.logo && ( node.slug &&
+                              <Link to={'integrations/' + node.slug }>
+                                <ContentfulAsset className={'featureLogo'} data={node.logo}/>
+                              </Link> ) ||
+                            node.logo && <ContentfulAsset className={'featureLogo'} data={node.logo}/>
+                          }
+
+
+
+                          <TagList>
+                            {node.tags && node.tags.map( (tag, index) => (
+                                <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
+                            ))}
+                          </TagList>
+
+
                           {node.summary && <Summary>{node.summary.summary}</Summary> }
                           {node.heroFeaturette &&
                           <LearnMore><Link to={'partners/' + node.slug}>Learn more</Link></LearnMore>}
@@ -188,6 +242,26 @@ export const query = graphql`
             id
             fixed(height: 75) {
               ...GatsbyContentfulFixed_tracedSVG
+            }
+            ... on ContentfulAsset {
+              svg {
+                content
+                dataURI
+                absolutePath
+                relativePath
+              }
+              file {
+                contentType
+                url
+                fileName
+                contentType
+                details {
+                  image {
+                    width
+                    height
+                  }
+                }
+              }
             }
           }
           summary {

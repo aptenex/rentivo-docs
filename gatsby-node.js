@@ -370,7 +370,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         graphql(
             `
             {
-              allContentfulPartner{
+              allContentfulPartner(filter: {slug: {ne: null}}) {
                 edges {
                   node {
                     id
@@ -380,6 +380,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                 }
               }
             }
+
           `
         ).then(result => {
           if (result.errors) {

@@ -1,4 +1,4 @@
-import React from "react"
+  import React from "react"
 import styled from "styled-components"
 import { Icon, DropdownSection, Heading } from "./Components"
 import { ThemeProvider } from 'styled-components';
@@ -13,14 +13,18 @@ const ProductsDropdownEl = styled.div`
   
   max-width: 100vw !important; 
   display: flex;
-  margin: -20px; 
+  margin: -20px;
+  position: relative;
+  flex-direction: column; 
   ul, li {
     margin: 0;
     padding: 0px;
+    h3 {
+      margin-bottom: -6px;
+    }
   }
- 
-    position: relative;
-    flex-direction: column;
+  
+   
   
 `
 

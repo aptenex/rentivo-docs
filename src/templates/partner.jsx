@@ -28,7 +28,6 @@ import HubspotForm from "react-hubspot-form";
 import { Link } from 'gatsby';
 import SubNav from '../components/NavSub';
 
-
 const renderAst = new RehypeReact({
   createElement: React.createElement,
   components: {

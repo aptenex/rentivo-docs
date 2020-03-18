@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
 import Box from 'reusecore/src/elements/Box';
@@ -7,7 +7,7 @@ import Heading from 'reusecore/src/elements/Heading';
 import Logo from 'reusecore/src/elements/UI/Logo';
 import Container from 'common/src/components/UI/Container';
 import FooterWrapper, { List, ListItem } from './footer.style';
-
+import Link from 'gatsby-link';
 import LogoImage from 'common/src/assets/image/rentivo-logo.png';
 
 const Footer = ({
@@ -29,6 +29,7 @@ const Footer = ({
             menuItems {
               text
               url
+              to
               parentBlank
               id
             }
@@ -45,10 +46,9 @@ const Footer = ({
             <Logo
               href="#"
               logoSrc={LogoImage}
-              title="Hosting"
+              title="Rentivo Logo"
               logoStyle={logoStyle}
             />
-            <Text content="hello@rentivo.com" {...textStyle} />
           </Box>
           {/* End of footer logo column */}
           <Box {...colTwo}>
@@ -58,9 +58,17 @@ const Footer = ({
                 <List>
                   {node.menuItems.map((item, index) => (
                     <ListItem key={`footer-list-item-${item.id}`}>
-                      <a href={item.url} className="ListItem">
-                        {item.text}
-                      </a>
+                      { item && item.to &&
+                        <Link to={item.to} className="ListItem">
+                          {item.text}
+                        </Link>
+                      }
+                      { item && item.url &&
+                        <a href={item.url} className="ListItem">
+                          {item.text}
+                        </a>
+                      }
+                     
                     </ListItem>
                   ))}
                 </List>

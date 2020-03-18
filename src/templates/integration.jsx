@@ -31,6 +31,12 @@ import Col from 'components/Flex/Col'
 import Card from 'reusecore/src/elements/Card';
 import LogoImage from 'common/src/assets/image/rentivo-logo.png';
 import { ConnectorTopLeftBottomRight, ConnectorTopJoinBottom  } from '../containers/Rentivo/Icons';
+import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
+import FaqSection from '../containers/Rentivo/FaqSection';
+import ProductSection from '../containers/Rentivo/ProductSection';
+
+
+
 const renderAst = new RehypeReact({
   createElement: React.createElement,
   components: {
@@ -193,8 +199,21 @@ class IntegrationTemplate extends React.Component {
               />
             }
 
-            { integrationNode.featurettes && integrationNode.featurettes.map( (feature, index) => (
-                ( typeof feature['__typename'] === 'undefined' || feature['__typename'] === 'ContentfulFeaturette' ) &&  <FeaturetteSection key={index} {...feature} />
+            { integrationNode.featurettes.map( (feature, index) => (
+                (
+                    feature.internal.type === 'ContentfulFeaturette'  &&  <FeatuetteSection  key={index} {...feature} />
+                    || feature.internal.type === 'ContentfulFeatureGallery' &&  <ProductSection columnWidth={eval(feature.columnWidth)} key={index} data={feature} />
+                    || feature.internal.type === 'ContentfulHero' &&   <HeroSection {...feature }></HeroSection>
+                    || feature.internal.type === 'ContentfulFaq' &&   <FaqList sectionTitle={{
+                      content: feature.question,
+                      textAlign: 'center',
+                      fontSize: ['20px', '24px'],
+                      fontWeight: '400',
+                      color: '#0f2137',
+                      letterSpacing: '-0.025em',
+                      mb: '0',
+                    }} data={feature.items} />
+                )
             ))}
 
         <SummarySection>
@@ -211,7 +230,7 @@ class IntegrationTemplate extends React.Component {
         </SummarySection>
 
 
-        { integrationNode.faq.length > 0 && <FaqList  data={integrationNode.faq}   /> }
+        { integrationNode.faq && integrationNode.faq.length > 0 && <FaqList  data={integrationNode.faq}   /> }
 
         <SummarySection>
           <Container  width={'820px'}>
@@ -295,10 +314,10 @@ export const pageQuery = graphql`
       }
       heroFeaturette {
         ...Featurette
-        ...Hero
       }
       featurettes {
         ...Featurette
+        ...Hero
       }     
     }
 

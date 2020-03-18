@@ -8,6 +8,7 @@ import ProductBlock from 'common/src/components/ProductBlock';
 import Container from 'common/src/components/UI/Container';
 import ProductSectionWrapper from './productSection.style';
 import Image from 'gatsby-image';
+import { injectIntl, Link, FormattedMessage } from "gatsby-plugin-intl"
 
 const ProductSection = ({
   data,
@@ -140,7 +141,7 @@ ProductSection.defaultProps = {
     fontWeight: '400',
     color: '#0f2137',
     lineHeight: '1.5',
-    mb: ['10px', '10px', '10px', '20px'],
+    mb: ['10px', '10px', '10px', '10px'],
     letterSpacing: '-0.020em',
   },
   // feature description default style

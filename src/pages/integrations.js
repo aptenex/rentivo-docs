@@ -42,7 +42,8 @@ import {Link, graphql} from "gatsby";
 import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 import {useScript} from '../components/useScript';
 import Lottie from 'react-lottie';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronRight } from '@fortawesome/pro-duotone-svg-icons'
 
 const Section = styled('section')`
   position: relative;  
@@ -69,6 +70,17 @@ const CardIntegration = styled(Card)`
   background: white;
   margin-bottom: 20px;
   text-align: center;
+  .featureLogo {
+    float: left;
+    margin-bottom: 5px;
+  }
+  h2 {
+    font-size: 1rem;
+    color: #ccc;
+  }
+  img, svg {
+    max-width: 180px;
+  }
 `
 
 const IntegrationImage = styled(Image)`
@@ -76,11 +88,36 @@ const IntegrationImage = styled(Image)`
   margin-bottom: 20px;
   text-align: center;
 `
-const LearnMore = styled(Text)`
+const LearnMoreLink = styled(Link)`
 text-align: right;
+float:right;
+margin-bottom: 20px;
+ position: relative;
+ &:hover { 
+ text-decoration: underline !important;
+ }
+ svg {
+  opacity: 0;
+  transition: all .5s ease-in-out;
+  transform: scale(5);
+  position: absolute;
+      right: 40px;
+      bottom: 80px;
+ }
+ &:hover {
+    svg {
+      opacity: 0.14;
+      transform: scale(12);
+      
+   }
+ }
 `
 
-const Summary = styled('p')``;
+const Summary = styled('p')`
+  
+  clear: both;
+  text-align: left;
+`;
 
 
 const TagFilter = styled('ul')`
@@ -126,7 +163,9 @@ const TagList = styled(TagFilter)`
   font-size: 0.9em;
   display: inline-flex;  
   text-align: left;
-    
+    clear:both;
+    float:left;
+    margin-bottom: 10px;
   li {    
     padding: 7px 12px;
     border: 1px solid #01b47d;    ;
@@ -180,15 +219,14 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulI
                   <Heading fontWeight={400}  textAlign={'center'}  as={'h3'} content={'We are constantly adding new integrations. Here is who we already connect with.'} />
 
               </ContainerTop>
-              <LottieWrapper width={'1720px'}>
+              <LottieWrapper width={'1420px'}>
                 <Lottie options={defaultOptions}
-                                        height={'60vh'}
-                                        width={'80vw'}
+                                        height={'40vh'}
+                                        width={'60vw'}
                 />
               </LottieWrapper>
             </FeatuetteSection>
             <Section>
-
 
               <Container width={'1940px'}>
                 <TagFilter>
@@ -203,17 +241,28 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulI
                     columnWidth={[1, 1/2, 1/2, 1/3]} //{[1, 1/2, 1/4]} responsive
                     component={({node}) => (
                         <CardIntegration>
-                          <Heading fontWeight={400} as={'h2'}  textAlign={'center'}  content={node.name} />
-                          { ( node.heroFeaturette && <Link to={'integrations/' + node.slug }>
-                            <ContentfulAsset className={'featureLogo'} data={node.logo}/>
-                          </Link> ) || <ContentfulAsset className={'featureLogo'} data={node.logo}/> }
+
+
+                          { ( node.slug &&  <Link to={'integrations/' + node.slug }>
+                                              <ContentfulAsset className={'featureLogo'} data={node.logo}/>
+                                            </Link> ) ||
+                                            <ContentfulAsset className={'featureLogo'} data={node.logo}/> }
+
+                          <Heading fontWeight={400} as={'h2'}  textAlign={'right'}  content={node.name} />
+
+
                           <TagList>
                             {node.tags && node.tags.map( (tag, index) => (
                                 <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
                             ))}
                           </TagList>
-                          <Summary>{node.summary.summary}</Summary>
-                          {node.heroFeaturette && <LearnMore><Link to={'integrations/' + node.slug }>Learn more</Link></LearnMore> }
+                          { node.summary && <Summary>{node.summary.summary}</Summary> }
+
+                          {node.slug &&
+                          <LearnMoreLink to={'integrations/' + node.slug }>
+                              Learn more
+                              <FontAwesomeIcon icon={faChevronRight} />
+                          </LearnMoreLink> }
                         </CardIntegration>
                     )}
                 />

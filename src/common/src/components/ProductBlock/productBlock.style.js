@@ -194,6 +194,7 @@ const OverlayWrapper = styled(ContentWrapper)`
   p { 
     color: white;
     font-size: 1.1rem;
+    line-height: 1.5rem;
     font-weight: bold;
    }
 `;

@@ -13,12 +13,13 @@ import CodeGroup from '../componentsMarkdown/CodeGroup';
 import withSubNav from '../components/NavSub';
 import Layout from '../components/DocsLayout';
 import './syntax-highlighting.scss';
-import './doc.scss';
+import './product.scss';
 import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import HeroSection from '../containers/Rentivo/HeroSection';
 import MarketingLayout from "../components/MarketingLayout";
 import FaqSection from '../containers/Rentivo/FaqSection';
 import ProductSection from '../containers/Rentivo/ProductSection';
+import CaseStudySection from '../containers/Rentivo/CaseStudySection';
 import mediumZoom from 'medium-zoom'
 import styled from 'styled-components';
 import BlobA from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_artur.svg';
@@ -73,41 +74,46 @@ class ProductTemplate extends React.Component {
 
     return (
       <MarketingLayout location={location} subNav={true}>
-          <SEO postNode={productNode} postType="product" />
-          { asideLinks.length > 0
-              ? (<AsideMenu asideLinks={this.getLinks()} />)
-              : null
-          }
+        <SEO postNode={productNode} postType="product" />
+        { asideLinks.length > 0
+            ? (<AsideMenu asideLinks={this.getLinks()} />)
+            : null
+        }
 
-          <BlobWrapperB>
-            <BlobC/>
-          </BlobWrapperB>
+        <BlobWrapperB>
+          <BlobC/>
+        </BlobWrapperB>
 
-          { productNode.heroFeaturette.internal.type === 'ContentfulHero' &&
-            <HeroSection {...productNode.heroFeaturette }></HeroSection>
-          }
-          { productNode.heroFeaturette.internal.type === 'ContentfulFeaturette' &&
-            <FeatuetteSection   {...productNode.heroFeaturette } />
-          }
+        { productNode.heroFeaturette.internal.type === 'ContentfulHero' &&
+          <HeroSection {...productNode.heroFeaturette }></HeroSection>
+        }
+        { productNode.heroFeaturette.internal.type === 'ContentfulFeaturette' &&
+          <FeatuetteSection   {...productNode.heroFeaturette } />
+        }
 
-          { productNode.featurettes.map( (feature, index) => (
-              (
-                feature.internal.type === 'ContentfulFeaturette'  &&  <FeatuetteSection  key={index} {...feature} />
-                || feature.internal.type === 'ContentfulFeatureGallery' &&  <ProductSection columnWidth={feature.columnWidth} key={index} data={feature} />
-                || feature.internal.type === 'ContentfulHero' &&   <HeroSection {...feature }></HeroSection>
-                || feature.internal.type === 'ContentfulFaq' &&   <FaqList sectionTitle={{
-                  content: feature.question,
-                  textAlign: 'center',
-                  fontSize: ['20px', '24px'],
-                  fontWeight: '400',
-                  color: '#0f2137',
-                  letterSpacing: '-0.025em',
-                  mb: '0',
-                }} data={feature.items} />
-              )
-            ))}
+        { productNode.featurettes.map( (feature, index) => (
+            (
+              feature.internal.type === 'ContentfulFeaturette'  &&  <FeatuetteSection  key={index} {...feature} />
+              || feature.internal.type === 'ContentfulFeatureGallery' &&  <ProductSection columnWidth={eval(feature.columnWidth)} key={index} data={feature} />
+              || feature.internal.type === 'ContentfulHero' &&   <HeroSection key={index} {...feature }></HeroSection>
+              || feature.internal.type === 'ContentfulFaq' &&   <FaqList key={index} sectionTitle={{
+                content: feature.question,
+                textAlign: 'center',
+                fontSize: ['20px', '24px'],
+                fontWeight: '400',
+                color: '#0f2137',
+                letterSpacing: '-0.025em',
+                mb: '0',
+              }} data={feature.items} />
+            )
+          ))
+        }
 
-          {/*{ <FaqSection  data={ useFAQGroupsOnCategories(groups) }  groups={"Product"} active={"Product"}  /> }*/}
+        {
+          <CaseStudySection caseStudies={productNode.caseStudies} />
+        }
+
+        {/*{ <FaqSection  data={ useFAQGroupsOnCategories(groups) }  groups={"Product"} active={"Product"}  /> }*/}
 
 
 
@@ -133,13 +139,49 @@ export const pageQuery = graphql`
       slug
       heroFeaturette {        
         ...Hero
-      }
+      }      
       featurettes {
         ...Featurette
         ...FeatureGallery
         ...Hero
         ...FAQ
-      }     
+      }
+      caseStudies {
+        logo {
+          id
+          fixed(height: 75) {
+            ...GatsbyContentfulFixed_tracedSVG
+          }
+          ... on ContentfulAsset {
+            svg {
+              content
+              dataURI
+              absolutePath
+              relativePath
+            }
+            file {
+              contentType
+              url
+              fileName
+              contentType
+              details {
+                image {
+                  width
+                  height
+                }
+              }
+            }
+          }
+        }
+        title
+        website
+        summary
+        studyBackground {
+          fluid(maxWidth: 420, background: "rgb:000000") {
+            ...GatsbyContentfulFluid_tracedSVG
+          }
+        }
+      }
     }
 
     

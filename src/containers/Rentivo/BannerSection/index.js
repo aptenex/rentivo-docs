@@ -18,6 +18,7 @@ import BannerWrapper, {
 
 import BannerObject1 from 'common/src/assets/image/saas/banner/bannerObject1.png';
 import BannerHeroImage from 'common/src/assets/image/rentivo/banner/software_bg.png';
+import { injectIntl, Link, FormattedMessage } from "gatsby-plugin-intl"
 
 const BannerSection = ({
   row,
@@ -28,6 +29,7 @@ const BannerSection = ({
   discountText,
   discountAmount,
   outlineBtnStyle,
+  intl
 }) => {
 
 
@@ -61,7 +63,7 @@ const BannerSection = ({
             <FeatureBlock
               title={
                 <Heading
-                  content="Get more bookings and manage your rentals quicker."
+                  content={intl.formatMessage({id: "index_landing_hero_title"})}
                   {...title}
                 />
               }
@@ -155,4 +157,4 @@ BannerSection.defaultProps = {
   },
 };
 
-export default BannerSection;
+export default injectIntl(BannerSection);

@@ -8,6 +8,7 @@ import Heading from 'reusecore/src/elements/Heading';
 import Container from 'common/src/components/UI/Container';
 import GlideCarousel from 'common/src/components/GlideCarousel';
 import GlideSlide from 'common/src/components/GlideCarousel/glideSlide';
+import { injectIntl, FormattedMessage } from "gatsby-plugin-intl"
 
 import {
   TestimonialSlideWrapper,
@@ -29,7 +30,7 @@ const TestimonialSection = ({
 }) => {
   const Data = useStaticQuery(graphql`
     query {
-      allContentfulTestimonial {
+      allContentfulTestimonial(filter: {node_locale: {glob: "en*"}}) {
         edges {
           node {
             id
@@ -53,7 +54,7 @@ const TestimonialSection = ({
       }
     }
   `);
-  console.log(Data);
+  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", Data);
   const carouselOptions = {
     type: 'carousel',
     autoplay: 6000,
@@ -92,7 +93,7 @@ const TestimonialSection = ({
                       <AuthorInfo>
                         <AuthorImage>
                           <Image
-                            fluid={node.avatar.fluid}
+                            {...node.avatar}
                             alt={`reviewer-image`}
                           />
                         </AuthorImage>
@@ -172,4 +173,4 @@ TestimonialSection.defaultProps = {
   },
 };
 
-export default TestimonialSection;
+export default injectIntl(TestimonialSection);

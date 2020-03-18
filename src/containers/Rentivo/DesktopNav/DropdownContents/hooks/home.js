@@ -5,7 +5,7 @@ export const getMenuProducts = () => {
   const data = useStaticQuery(
       graphql`
         query {
-          allContentfulProduct(filter: {pinnedProduct: {eq: true}}) {
+          allContentfulProduct(filter: { node_locale: {glob: "en*"}, pinnedProduct: {eq: true}}) {
             edges {
               node {
                 id
@@ -40,7 +40,7 @@ export const getMenuProducts = () => {
           }
 
 
-          allContentfulIntegration(filter: {type: {eq: "Channel"}}) {
+          allContentfulIntegration(filter: { node_locale: {glob: "en*"}, type: {eq: "Channel"}}) {
             edges {
               node {
                 id

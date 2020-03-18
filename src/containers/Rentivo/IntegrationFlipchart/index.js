@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Flipper, Flipped } from "react-flip-toolkit"
 import styled from "styled-components"
-
+import Link from 'gatsby-link';
 const letters = "RentivoAirbnbExpediaCtripHomeAway".split("");
 
 const entries = [
@@ -93,7 +93,7 @@ export default class IntegrationFlipchart extends Component {
           <main onClick={() => this.setState({ expanded: !this.state.expanded })}>
             <Expanded data={data} />
           </main>
-          <Center>Learn more about all of our channel integrations</Center>
+          <Center>Learn more about all of our <Link to="/channel-management">channel integrations</Link></Center>
         </Flipper>
     );
   }
@@ -106,7 +106,7 @@ const Word = ({ word }) => {
           const letter = letters[index];
           const flipId = `letter-${index}`;
           return (
-              <Flipped flipId={flipId}>
+              <Flipped key={flipId} flipId={flipId}>
                 <li
                     style={{
                       backgroundColor: getColor(index),
@@ -129,7 +129,7 @@ const Word = ({ word }) => {
 const Expanded = ({ data }) => {
   return (
       <ExpandedContainer className="expandedContainer">
-        {data.map(word => <Word word={word} />)}
+        {data.map(word => <Word key={word} word={word} />)}
       </ExpandedContainer>
   );
 };
