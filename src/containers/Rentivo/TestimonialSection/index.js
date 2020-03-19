@@ -25,7 +25,7 @@ const TestimonialSection = ({
 }) => {
   const Data = useStaticQuery(graphql`
     query {
-      allContentfulTestimonial {
+      allContentfulTestimonial(filter: {node_locale: {glob: "en*"}}) {
         edges {
           node {
             id
@@ -40,7 +40,7 @@ const TestimonialSection = ({
               }
             }
             avatar {
-              fluid(maxWidth: 420, background: "rgb:000000") {
+              fluid(maxWidth: 180, background: "rgb:000000") {
                 ...GatsbyContentfulFluid_tracedSVG
               }
             }
