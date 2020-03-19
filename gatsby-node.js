@@ -296,6 +296,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     slug
                     name
                     summary
+                    node_locale
                   }
                 }
               }
@@ -314,6 +315,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               context: {
                 slug: page.node.slug,
                 id: page.node.id,
+                node_locale: page.node_locale
               },
             });
           })
@@ -335,6 +337,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     id
                     slug
                     name
+                    node_locale
                   }
                 }
               }
@@ -353,6 +356,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               context: {
                 slug: page.node.slug,
                 id: page.node.id,
+                node_locale: page.node.node_locale
               },
             });
           })
@@ -376,6 +380,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     id
                     slug
                     name
+                    node_locale
                   }
                 }
               }
@@ -395,6 +400,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
               context: {
                 slug: page.node.slug,
                 id: page.node.id,
+                node_locale: page.node.node_locale
               },
             });
           })

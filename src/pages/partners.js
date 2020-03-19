@@ -41,9 +41,9 @@ import Image from "gatsby-image";
 import {Link, graphql} from "gatsby";
 import './partners.css';
 import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faChevronRight, faExternalLinkAlt} from '@fortawesome/pro-duotone-svg-icons'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faChevronRight, faExternalLinkAlt} from '@fortawesome/pro-duotone-svg-icons';
+import { injectIntl, FormattedMessage } from 'gatsby-plugin-intl';
 
 const Section = styled('section')`
   position: relative;
@@ -137,7 +137,7 @@ const TagList = styled(TagFilter)`
    }
 `;
 
-export default ({data : { tags : { distinct : tags } } , data : { allContentfulPartner : { edges : partners } } }, props) => {
+export default injectIntl( ({data : { tags : { distinct : tags } } , data : { allContentfulPartner : { edges : partners } } }, props) => {
   const menuProducts = getMenuProducts();
   const productCategory = useProductHome();
   const faqGroups = useFAQGroupsOnHome();
@@ -221,7 +221,7 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulP
 
       </MarketingLayout>
   );
-};
+});
 
 export const query = graphql`
   query PartnersQuery {
