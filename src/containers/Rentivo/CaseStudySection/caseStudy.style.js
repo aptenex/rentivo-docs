@@ -30,6 +30,7 @@ export const CaseStudySlideWrapper = styled.div`
 export const StudyBackground = styled(Image)`
   filter: brightness(0.7);
   height: 100%;
+  max-height: 240px;
 `
 
 export const CaseStudyBannerWrapper = styled(Link)`
@@ -47,8 +48,10 @@ export const LogoImage = styled(Image)`
   z-index: 10;
   bottom: 20px;
   left: 20px;
-  max-width: 60%;
-  height: 75px;
+  padding: 20px;
+  max-width: 40%;
+  height: 20px;
+  max-height:20px;
   overflow: visible;
   filter: brightness(0) invert(1);
 `;

@@ -102,9 +102,9 @@ export default class IntegrationFlipchart extends Component {
 const Word = ({ word }) => {
   return (
       <ExpandedList>
-        {word.map(index => {
+        {word.map( (index,m) => {
           const letter = letters[index];
-          const flipId = `letter-${index}`;
+          const flipId = `letter-${index}-${m}`;
           return (
               <Flipped key={flipId} flipId={flipId}>
                 <li

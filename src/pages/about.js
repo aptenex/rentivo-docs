@@ -39,7 +39,7 @@ import Row from 'components/Flex/Row'
 import Col from 'components/Flex/Col'
 const Section = styled('section')`
   position: relative;
-  padding-top: 220px; 
+  padding-top: 0px; 
 `;
 
 

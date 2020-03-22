@@ -1,7 +1,12 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { themeGet } from 'styled-system';
+import NavbarItem from "./DesktopNav/Navbar/NavbarItem";
+import Navbar from "./Navbar";
+import {LoginLink, Cta, CtaSection, IconLock} from "./Navbar/Navbar.style";
+import Logo from 'reusecore/src/elements/UI/Logo';
 
 export const GlobalStyle = createGlobalStyle`
+  
   body{
     font-family: 'Roboto', sans-serif;
   }
@@ -123,23 +128,96 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const ContentWrapper = styled.div`
+export const ContentWrapper = styled.main`
   position: relative;
   overflow: hidden;
   a:-webkit-any-link {
     text-decoration: none;
   }
+  
+  .sticky-outer-wrapper.menu {
+    :not(.sticky-nav-active) .nav-sub {
+      background: transparent !important;
+    }
+    .nav-sub {
+      background: #f2f2f2;
+      transition: 0.5s;
+      top: 0px;
+      transition: top 0.2s;
+      position: relative;   
+      left: 0px;
+      right: 0px;
+    }
+    
+    &.light:not(.sticky-nav-active) {
+      
+      background: rgba(0,0,0,0.1);
+      .nav-sub {
+        background: transparent;
+        transition: background 0s;
+        border-bottom: 1px solid rgba(0,0,0,0.3);        
+        transition: top 0.7s;
+        position: relative;
+        top: -150px;   
+        transition: 0s;
+      }
+      ul.breadcrumb li {
+        color: white !important;
+      }
+      input::placeholder {
+        color: white;        
+      }
+      .input-text-wrap.is-search::after {
+        color: white;  
+      }
+      ul.breadcrumb li a  {
+        color: white !important;
+      }
+      ul.breadcrumb li + li::before {
+          padding: 0 6px;
+          color: #f2f2f2;
+          content: "/\\A0";
+      }
+      li ${NavbarItem} button {
+        color: white !important;
+      }
+      ${IconLock} {
+        filter: invert(1);
+      }
+    
+      a.btn-primary {
+        background: transparent;
+        border: 2px solid rgba(255,255,255,0.2);
+        color: #fff;
+        &:hover {
+          border: 2px solid rgba(255,255,255,0.3);
+          background: rgba(255,255,255,0.2);
+        }
+      }
+      ${LoginLink}, ${CtaSection} {
+        color: white !important;
+      }
+      .logo {
+        filter: brightness(0) invert(1);
+      }
+      
+    }
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+  }
+  
   .sticky-nav-active {
-    .hosting_navbar {
+    .main_navbar {
       background: #fff;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
       padding: 15px 0;
     }
   }
 
-  .hosting_navbar {
+  .main_navbar {
     z-index: 2;
-    background: white;
     position: relative;
     top: 0;
     left: 0;

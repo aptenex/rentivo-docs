@@ -27,8 +27,15 @@ import { useProductHome } from "containers/Rentivo/ProductSection/hooks/home";
 import { useFAQGroupsOnHome } from "containers/Rentivo/FaqSection/hooks/home";
 import SubNav from 'components/NavSub';
 
+const Article = styled('article')`
+  margin-top: 180px;
+  &.top {
+    margin-top: 0px;
+  }
+`
+
 const MarketingLayout = props => {
-  const { title, children,subNav } = props
+  const { title, children,subNav, menu, articleClass } = props
   const [toggleNav, setToggleNav] = React.useState(false)
 
   return (
@@ -38,16 +45,16 @@ const MarketingLayout = props => {
           <ResetCSS />
           <GlobalStyle />
           <ContentWrapper>
-            <Sticky top={0} innerZ={9999} activeClass="sticky-nav-active">
+            <Sticky top={0} innerZ={9999} className={'menu ' + menu} activeClass="sticky-nav-active">
               <DrawerProvider>
-                <Navbar />
-                {subNav && <SubNav {...props} />}
+                <Navbar className={menu} />
+                {subNav && <SubNav className={menu} {...props} />}
               </DrawerProvider>
 
             </Sticky>
-
-
-            {children}
+            <Article className={articleClass}>
+              {children}
+            </Article>
 
             <Footer />
           </ContentWrapper>

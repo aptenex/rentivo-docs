@@ -36,7 +36,7 @@ const BannerSection = ({
   const HeroImage = styled(Image)`
     width: 130%;
     max-width: 130%;
-    margin-top: 80px;
+    margin-top: 10px;
   `;
 
   const ButtonGroup = () => (

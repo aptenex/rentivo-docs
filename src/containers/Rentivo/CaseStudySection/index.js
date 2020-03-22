@@ -43,7 +43,7 @@ const CaseStudySection = ({
 
   const carouselOptions = {
     type: 'slider',
-    autoplay: 6000,
+    autoplay: 0,
     perView: 1,
     gap: 30,
     animationDuration: 800,
@@ -80,7 +80,7 @@ const CaseStudySection = ({
               {caseStudies.map((study, index) => (
                   <GlideSlide key={`case-study-slide-${index}`}>
                     <CaseStudyItem>
-                      <CaseStudyBannerWrapper to={"/"}>
+                      <CaseStudyBannerWrapper to={"/customers/" + study.slug}>
                         <ImageLabel>Case Study</ImageLabel>
                         <LogoImage
                             {...study.logo}
@@ -98,7 +98,7 @@ const CaseStudySection = ({
                         <Heading as="h3" content={study.title} {...reviewTitle} />
                         <Text content={study.summary} {...review} />
                         <CaseStudyMeta>
-                           <Link to={"/"}>Read Case Study</Link>
+                           <Link to={"/customers/" + study.slug}>Read Case Study</Link>
                         </CaseStudyMeta>
                       </CaseStudyBody>
                     </CaseStudyItem>

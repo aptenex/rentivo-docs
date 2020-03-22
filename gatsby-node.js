@@ -323,6 +323,49 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     )
   });
 
+
+  const  caseStudyPromise = new Promise((resolve, reject) => {
+
+    const caseStudyPage = path.resolve('src/templates/caseStudy.jsx');
+
+    resolve(
+        graphql(
+            `
+            {
+              allContentfulCaseStudy {
+                edges {
+                  node {
+                    id
+                    slug
+                    node_locale
+                  }
+                }
+              }
+            }
+          `
+        ).then(result => {
+          if (result.errors) {
+            reject(result.errors)
+          }
+
+          const pages = result.data.allContentfulCaseStudy.edges;
+          pages.forEach((page, index) => {
+            createPage({
+              path: '/customers/' + `${_.kebabCase(page.node.slug)}`,
+              component: caseStudyPage ,
+              context: {
+                slug: page.node.slug,
+                id: page.node.id,
+                node_locale: page.node_locale
+              },
+            });
+          })
+        })
+    )
+  });
+
+
+
   const  integrationPromise = new Promise((resolve, reject) => {
 
     const integrationPage = path.resolve('src/templates/integration.jsx');
@@ -408,7 +451,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     )
   });
 // , ,
-  return Promise.all([markdownPromise, glossaryPromise, productPromise, integrationPromise, partnersPromise ]);
+  return Promise.all([markdownPromise, glossaryPromise, productPromise, integrationPromise, partnersPromise, caseStudyPromise ]);
 
 
 };

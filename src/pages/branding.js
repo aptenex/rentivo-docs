@@ -42,7 +42,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronRight, faCloudDownload} from '@fortawesome/pro-duotone-svg-icons'
 const Section = styled('section')`
   position: relative;
-  padding-top: 220px; 
+  padding-top: 120px; 
 `;
 import LogoImage from 'common/src/assets/image/rentivo-logo.png';
 

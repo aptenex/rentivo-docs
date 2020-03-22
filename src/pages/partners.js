@@ -47,7 +47,8 @@ import { injectIntl, FormattedMessage } from 'gatsby-plugin-intl';
 
 const Section = styled('section')`
   position: relative;
-  padding-top: 220px; 
+  padding-bottom: 30px;
+   
 `;
 
 const WhiteSectionWrapper = styled.section`
@@ -160,64 +161,64 @@ export default injectIntl( ({data : { tags : { distinct : tags } } , data : { al
   return (
       <MarketingLayout>
 
-            <Section>
-              <Container width={'720px'}>
-                  <Heading fontWeight={600} textAlign={'center'} as={'h1'} content={'Our Industry Partners'} />
-                  <Heading fontWeight={400}  textAlign={'center'}  as={'h3'} content={'We believe that a holiday rental companies growth is strengthened through partnerships and keeping great company with likeminded peers. That is why we have some fantastic partners we collaborate, integrate or share knowledge with on a daily basis.'} />
+        <Section>
+          <Container width={'720px'}>
+              <Heading fontWeight={600} textAlign={'center'} as={'h1'} content={'Our Industry Partners'} />
+              <Heading fontWeight={400}  textAlign={'center'}  as={'h3'} content={'We believe that a holiday rental companies growth is strengthened through partnerships and keeping great company with likeminded peers. That is why we have some fantastic partners we collaborate, integrate or share knowledge with on a daily basis.'} />
 
-              </Container>
-            </Section>
-            <Section>
+          </Container>
+        </Section>
+        <Section>
 
 
-              <Container width={'1940px'}>
-                <TagFilter>
-                  <li className={ activeTag === null ?  "active" : null  } onClick={() => handleTagClickEvent(null)} key={'all-partners'}>All Partners</li>
-                {tags.map( (tag, index) => (
-                    <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
-                ))}
-                </TagFilter>
-                {filteredPartners &&
+        <Container>
+            <TagFilter>
+              <li className={ activeTag === null ?  "active" : null  } onClick={() => handleTagClickEvent(null)} key={'all-partners'}>All Partners</li>
+              {tags.map( (tag, index) => (
+                  <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
+              ))}
+            </TagFilter>
+              {filteredPartners &&
                 <ListGrid
-                    data={filteredPartners}
-                    columnWidth={[1, 1 / 2, 1 / 4]} //{[1, 1/2, 1/4]} responsive
-                    component={({node}) => (
-                        <CardPartner>
-                          <Heading fontWeight={400} as={'h2'}  textAlign={'right'}  content={node.name} />
-                          { node.slug ? <div /> : <div><PartnerLink rel={"nofollow"} href={node.webAddress} target={"_blank"} >
-                            Website
-                            <span> </span><FontAwesomeIcon icon={faExternalLinkAlt} />
-                          </PartnerLink>
-                          </div>}
+                  data={filteredPartners}
+                  columnWidth={[1, 1 / 2, 1 / 3]} //{[1, 1/2, 1/4]} responsive
+                  component={({node}) => (
+                      <CardPartner>
+                        <Heading fontWeight={400} as={'h2'}  textAlign={'right'}  content={node.name} />
+                        { node.slug ? <div /> : <div><PartnerLink rel={"nofollow"} href={node.webAddress} target={"_blank"} >
+                          Website
+                          <span> </span><FontAwesomeIcon icon={faExternalLinkAlt} />
+                        </PartnerLink>
+                        </div>}
 
-                          { node.logo && ( node.slug &&
-                              <Link to={'integrations/' + node.slug }>
-                                <ContentfulAsset className={'featureLogo'} data={node.logo}/>
-                              </Link> ) ||
-                            node.logo && <ContentfulAsset className={'featureLogo'} data={node.logo}/>
-                          }
-
-
-
-                          <TagList>
-                            {node.tags && node.tags.map( (tag, index) => (
-                                <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
-                            ))}
-                          </TagList>
+                        { node.logo && ( node.slug &&
+                            <Link to={'integrations/' + node.slug }>
+                              <ContentfulAsset className={'featureLogo'} data={node.logo}/>
+                            </Link> ) ||
+                          node.logo && <ContentfulAsset className={'featureLogo'} data={node.logo}/>
+                        }
 
 
-                          {node.summary && <Summary>{node.summary.summary}</Summary> }
-                          {node.heroFeaturette &&
-                          <LearnMore><Link to={'partners/' + node.slug}>Learn more</Link></LearnMore>}
-                        </CardPartner>
-                    )}
+
+                        <TagList>
+                          {node.tags && node.tags.map( (tag, index) => (
+                              <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
+                          ))}
+                        </TagList>
+
+
+                        {node.summary && <Summary>{node.summary.summary}</Summary> }
+                        {node.heroFeaturette &&
+                        <LearnMore><Link to={'partners/' + node.slug}>Learn more</Link></LearnMore>}
+                      </CardPartner>
+                  )}
                 />
-                }
-              </Container>
+              }
+           </Container>
 
-            </Section>
+        </Section>
 
-            <FaqSection  data={faqGroups} groups={"General,Billing"} active={"General"}  />
+        <FaqSection  data={faqGroups} groups={"General,Billing"} active={"General"}  />
 
       </MarketingLayout>
   );

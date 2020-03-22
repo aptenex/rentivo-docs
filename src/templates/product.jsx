@@ -21,7 +21,7 @@ import FaqSection from '../containers/Rentivo/FaqSection';
 import ProductSection from '../containers/Rentivo/ProductSection';
 import CaseStudySection from '../containers/Rentivo/CaseStudySection';
 import mediumZoom from 'medium-zoom'
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import BlobA from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_artur.svg';
 import BlobB from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_barbra.svg';
 import BlobC from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_carol.svg';
@@ -67,13 +67,14 @@ class ProductTemplate extends React.Component {
   }
 
   render() {
+    console.log(this.props, "<<<<<");
     const { data, location } = this.props;
     const productNode = data.product;
     const { faqGroups : groups }  = productNode;
     const asideLinks = this.getLinks();
 
     return (
-      <MarketingLayout location={location} subNav={true}>
+      <MarketingLayout location={location} menu={'dark'} subNav={true}>
         <SEO postNode={productNode} postType="product" />
         { asideLinks.length > 0
             ? (<AsideMenu asideLinks={this.getLinks()} />)
@@ -122,7 +123,7 @@ class ProductTemplate extends React.Component {
   }
 }
 
-export default ProductTemplate;
+export default withTheme( ProductTemplate );
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
@@ -147,9 +148,10 @@ export const pageQuery = graphql`
         ...FAQ
       }
       caseStudies {
+        slug
         logo {
-          id
-          fixed(height: 75) {
+          id          
+          fixed(height: 40) {
             ...GatsbyContentfulFixed_tracedSVG
           }
           ... on ContentfulAsset {

@@ -50,7 +50,8 @@ const Section = styled('section')`
 `;
 const FeatuetteSection = styled('section')`
   position: relative;
-  padding-top: 120px; 
+  padding-top: 0px;
+  padding-bottom: 30px; 
 
 `;
 
@@ -228,7 +229,7 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulI
             </FeatuetteSection>
             <Section>
 
-              <Container width={'1940px'}>
+              <Container >
                 <TagFilter>
                   <li className={ activeTag === null ?  "active" : null  } onClick={() => handleTagClickEvent(null)} key={'all-integrations'}>All Integrations</li>
                 {tags.map( (tag, index) => (
