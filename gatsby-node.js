@@ -450,8 +450,60 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         })
     )
   });
-// , ,
-  return Promise.all([markdownPromise, glossaryPromise, productPromise, integrationPromise, partnersPromise, caseStudyPromise ]);
+
+
+  const  featuresPromise = new Promise((resolve, reject) => {
+
+    const featuresPage = path.resolve('src/templates/feature.jsx');
+
+    resolve(
+        graphql(
+            `
+            {
+              allContentfulPage(filter: {type: {eq: "Feature Page"}, slug: {ne: ""}}) {
+                edges {
+                  node {
+                    id
+                    slug
+                    name
+                    node_locale
+                    parentPage {
+                      id
+                      name
+                      slug
+                    }
+                  }
+                }
+              }
+            }
+          `
+        ).then(result => {
+          if (result.errors) {
+            reject(result.errors)
+          }
+          //  ${page.node.parentPage.slug ? page.node.parentPage.slug : 'features'}
+          const pages = result.data.allContentfulPage.edges;
+
+          pages.forEach((page, index) => {
+            createPage({
+              path: `/features/${_.kebabCase(page.node.slug)}`,
+              component: featuresPage,
+              context: {
+                slug: page.node.slug,
+                id: page.node.id,
+                parentId: page.node.parentPage ? page.node.parentPage.id : null,
+                node_locale: page.node.node_locale
+              },
+            });
+          })
+        })
+    )
+  });
+
+
+
+
+  return Promise.all([markdownPromise, glossaryPromise, productPromise, integrationPromise, partnersPromise, caseStudyPromise, featuresPromise ]);
 
 
 };

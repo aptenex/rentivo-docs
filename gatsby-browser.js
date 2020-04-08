@@ -8,4 +8,19 @@ exports.onClientEntry = () => {
     document.head.appendChild(link);
     // require('./src/scss/style-guide.scss');
   }());
+
+  window.erxesSettings = {
+    messenger: {
+      brand_id: "mM6o5a",
+    },
+  };
+
+  (function() {
+    var script = document.createElement('script');
+    script.src = "https://engage.rentivo.com/widgets/build/messengerWidget.bundle.js";
+    script.async = true;
+    var entry = document.getElementsByTagName('script')[0];
+    entry.parentNode.insertBefore(script, entry);
+  })();
+
 };

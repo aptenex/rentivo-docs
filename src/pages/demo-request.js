@@ -7,8 +7,7 @@ import { GlobalStyle, ContentWrapper } from '../containers/Rentivo/rentivo.style
 import Navbar from '../containers/Rentivo/Navbar';
 import BannerSection from '../containers/Rentivo/BannerSection';
 import DemoSection from '../containers/Rentivo/DemoSection';
-import FeatureSection from '../containers/Rentivo/FeatureSection';
-import ProductSection from '../containers/Rentivo/ProductSection';
+import ProductSection from '../containers/Rentivo/FeatureGallery';
 import VisitorSection from '../containers/Rentivo/VisitorSection';
 import ServiceSection from '../containers/Rentivo/ServiceSection';
 import FaqSection from '../containers/Rentivo/FaqSection';
@@ -22,7 +21,7 @@ import PartnerSection from '../containers/Rentivo/PartnerSection';
 import IntegrationFlipchart from '../containers/Rentivo/IntegrationFlipchart';
 import { DrawerProvider } from 'common/src/contexts/DrawerContext';
 import SEO from '../components/seo';
-import { useProductHome } from "../containers/Rentivo/ProductSection/hooks/home";
+import { useProductHome } from "../containers/Rentivo/FeatureGallery/hooks/home";
 import { useFAQGroupsOnHome } from "../containers/Rentivo/FaqSection/hooks/home";
 import { getMenuProducts} from '../containers/Rentivo/DesktopNav/DropdownContents/hooks/home';
 import MarketingLayout from "../components/MarketingLayout";
@@ -34,7 +33,7 @@ export default (props) => {
   const productCategory = useProductHome();
   const faqGroups = useFAQGroupsOnHome();
   return (
-      <MarketingLayout>
+      <MarketingLayout articleClass={'top pt20'}>
             <DemoSection />
             <ProductSection data={productCategory}  />
             <TestimonialCards />

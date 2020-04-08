@@ -30,11 +30,10 @@ import Row from 'components/Flex/Row'
 import Col from 'components/Flex/Col'
 import Card from 'reusecore/src/elements/Card';
 import LogoImage from 'common/src/assets/image/rentivo-logo.png';
-import { ConnectorTopLeftBottomRight, ConnectorTopJoinBottom  } from '../containers/Rentivo/Icons';
+import {ConnectorTopLeftBottomRight, ConnectorTopJoinBottom} from '../containers/Rentivo/Icons';
 import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import FaqSection from '../containers/Rentivo/FaqSection';
-import ProductSection from '../containers/Rentivo/ProductSection';
-
+import ProductSection from '../containers/Rentivo/FeatureGallery';
 
 
 const renderAst = new RehypeReact({
@@ -103,15 +102,10 @@ margin-bottom: -120px;
 z-index:-1;
 `;
 
-const HeroWrapper = styled('div')`
-  > section {
-    padding-bottom: 0px !important;
-  }
-`;
 
 class IntegrationTemplate extends React.Component {
   getLinks() {
-    const { data } = this.props;
+    const {data} = this.props;
     return [];
     const headers = data.product.htmlAst.children.filter(el => el.type === 'element' && _.includes(['h2', 'h3'], el.tagName));
     return headers.map((header) => {
@@ -123,16 +117,16 @@ class IntegrationTemplate extends React.Component {
     });
   }
 
-  getImage(logo){
+  getImage(logo) {
 
-    if(logo &&  logo.fluid && logo.fluid.src ){
+    if (logo && logo.fluid && logo.fluid.src) {
       return logo.fluid;
     }
     return logo.svg;
   }
 
   getRepoLink() {
-    const { data } = this.props;
+    const {data} = this.props;
     const {
       permalink,
     } = data.product.fields;
@@ -147,99 +141,104 @@ class IntegrationTemplate extends React.Component {
   }
 
   render() {
-    const { data, location } = this.props;
+    const {data, location} = this.props;
     const integrationNode = data.integration;
-    const { faq : faqGroups}  = data;
+    const {faq: faqGroups} = data;
     const asideLinks = this.getLinks();
     return (
-      <MarketingLayout location={location} subNav={true}>
-          <SEO postNode={integrationNode} postType="integration" />
-          { asideLinks.length > 0
-              ? (<AsideMenu asideLinks={this.getLinks()} />)
+        <MarketingLayout location={location} subNav={true}>
+          <SEO postNode={integrationNode} postType="integration"/>
+          {asideLinks.length > 0
+              ? (<AsideMenu asideLinks={this.getLinks()}/>)
               : null
           }
-            <HeroWrapper>
-              <HeroSection title={integrationNode.title} tagline={integrationNode.tagline} image={ integrationNode.logo } />
-            </HeroWrapper>
-            <Container  width={'720px'}>
-              <Row top="xs" >
-                <Col xs={6} >
-                  <CardWrapper>
-                    {integrationNode.logo && <ContentfulAsset data={integrationNode.logo} /> }
-                  </CardWrapper>
-                </Col>
-                <Col xs={6} >
-                  <CardWrapper>
-                    <img
-                        src={LogoImage}
-                        title="Rentivo"
-                    />
-                  </CardWrapper>
-                </Col>
-
-                <ConnectorImage src={ConnectorTopLeftBottomRight} />
-
-              </Row>
-            </Container>
 
 
-            { integrationNode.heroFeaturette &&
-              integrationNode.heroFeaturette.internal.type === 'ContentfulHero' &&
-              <HeroSection {...integrationNode.heroFeaturette }></HeroSection>
-            }
-            { integrationNode.heroFeaturette &&
-              integrationNode.heroFeaturette.internal.type === 'ContentfulFeaturette' &&
-              <FeaturetteSection
-                  hero
-                  className={'hero'}
-                  leadingLabelHeader={ integrationNode.onboardingSchedule ? 'Onboarding Schedule' : null }
-                  leadingLabelText={ integrationNode.onboardingSchedule }
-                  logo={integrationNode.logo}
-                  {...integrationNode.heroFeaturette}
-              />
-            }
+          {
+            integrationNode?.heroFeaturette?.internal.type === 'ContentfulHero' &&
+            <HeroSection {...integrationNode.heroFeaturette} />
+          }
 
-            { integrationNode.featurettes.map( (feature, index) => (
-                (
-                    feature.internal.type === 'ContentfulFeaturette'  &&  <FeatuetteSection  key={index} {...feature} />
-                    || feature.internal.type === 'ContentfulFeatureGallery' &&  <ProductSection columnWidth={eval(feature.columnWidth)} key={index} data={feature} />
-                    || feature.internal.type === 'ContentfulHero' &&   <HeroSection {...feature }></HeroSection>
-                    || feature.internal.type === 'ContentfulFaq' &&   <FaqList sectionTitle={{
-                      content: feature.question,
-                      textAlign: 'center',
-                      fontSize: ['20px', '24px'],
-                      fontWeight: '400',
-                      color: '#0f2137',
-                      letterSpacing: '-0.025em',
-                      mb: '0',
-                    }} data={feature.items} />
-                )
-            ))}
-
-        <SummarySection>
+          <Container width={'1024px'}>
+            <Heading fontWeight={400} textAlign={'center'} as={'h1'}>{integrationNode.title}</Heading>
+            <Text textAlign={'center'} className={'tagline'}>{integrationNode.tagline}</Text>
+          </Container>
           <Container width={'720px'}>
-            { integrationNode.logo &&  integrationNode.logo.fluid &&  integrationNode.logo.fluid.src ? <Image
-                fluid={ integrationNode.logo}
-                alt="Product"
-            /> :  integrationNode.logo &&  integrationNode.logo.file ? <ContentfulAsset className={'featureLogo'} data={ integrationNode.logo}/> : null}
-            <Text content={integrationNode.webAddress}/>
-            <SummaryContent
-                dangerouslySetInnerHTML={{ __html: integrationNode.summary.childMarkdownRemark.html }}
-            />
+            <Row top="xs">
+              <Col xs={6}>
+                <CardWrapper>
+                  {integrationNode.logo && <ContentfulAsset data={integrationNode.logo}/>}
+                </CardWrapper>
+              </Col>
+              <Col xs={6}>
+                <CardWrapper>
+                  <img
+                      src={LogoImage}
+                      title="Rentivo"
+                  />
+                </CardWrapper>
+              </Col>
+
+              <ConnectorImage src={ConnectorTopLeftBottomRight}/>
+
+            </Row>
           </Container>
-        </SummarySection>
 
 
-        { integrationNode.faq && integrationNode.faq.length > 0 && <FaqList  data={integrationNode.faq}   /> }
+          {integrationNode?.heroFeaturette?.internal.type === 'ContentfulFeaturette' &&
+          <FeaturetteSection
+              hero
+              className={'hero'}
+              leadingLabelHeader={integrationNode.onboardingSchedule ? 'Onboarding Schedule' : null}
+              leadingLabelText={integrationNode.onboardingSchedule}
+              logo={integrationNode.logo}
+              {...integrationNode.heroFeaturette}
+          />
+          }
 
-        <SummarySection>
-          <Container  width={'820px'}>
-            <DemoForm/>
-          </Container>
-        </SummarySection>
+          {integrationNode?.featurettes && integrationNode?.featurettes.map((feature, index) => (
+              (
+                  feature?.internal?.type === 'ContentfulFeaturette' && <FeatuetteSection key={index} {...feature} />
+                  || feature?.internal?.type === 'ContentfulFeatureGallery' &&
+                  <ProductSection columnWidth={eval(feature.columnWidth)} key={index} data={feature}/>
+                  || feature?.internal?.type === 'ContentfulHero' && <HeroSection {...feature} />
+                  || feature?.internal?.type === 'ContentfulFaq' && <FaqList sectionTitle={{
+                    content: feature.question,
+                    textAlign: 'center',
+                    fontSize: ['20px', '24px'],
+                    fontWeight: '400',
+                    color: '#0f2137',
+                    letterSpacing: '-0.025em',
+                    mb: '0',
+                  }} data={feature.items}/>
+              )
+          ))}
+
+          <SummarySection>
+            <Container width={'720px'}>
+              {integrationNode?.logo?.fluid?.src ? <Image
+                  fluid={integrationNode.logo}
+                  alt="Product"
+              /> : integrationNode?.logo?.file ?
+                  <ContentfulAsset className={'featureLogo'} data={integrationNode.logo}/> : null}
+              <Text content={integrationNode.webAddress}/>
+              <SummaryContent
+                  dangerouslySetInnerHTML={{__html: integrationNode.summary.childMarkdownRemark.html}}
+              />
+            </Container>
+          </SummarySection>
 
 
-      </MarketingLayout>
+          {integrationNode.faq && integrationNode.faq.length > 0 && <FaqList data={integrationNode.faq}/>}
+
+          <SummarySection>
+            <Container width={'820px'}>
+              <DemoForm/>
+            </Container>
+          </SummarySection>
+
+
+        </MarketingLayout>
     );
   }
 }
@@ -248,8 +247,8 @@ export default IntegrationTemplate;
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
-  
-  
+
+
   query IntegrationByID($id: String!) {
     integration: contentfulIntegration(id: {eq: $id}) {
       internal {
@@ -264,7 +263,7 @@ export const pageQuery = graphql`
       seoDescription
       onboardingSchedule
       minimumUnits
-      partnerCost  
+      partnerCost
       webAddress
       faq {
         id
@@ -318,13 +317,13 @@ export const pageQuery = graphql`
       featurettes {
         ...Featurette
         ...Hero
-      }     
+      }
     }
 
-   
-    
+
+
   }
-  
+
 `;
 
 // fixed(width: 960, background: "rgb:000000") {

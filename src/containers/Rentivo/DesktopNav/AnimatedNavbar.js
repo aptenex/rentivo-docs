@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import onClickOutside from "react-onclickoutside";
 
 const navbarConfig = [
-  { title: "Products", dropdown: ProductsDropdown },
+  { title: "Features", dropdown: ProductsDropdown },
   // { title: "Developers", dropdown: DevelopersDropdown },
   { title: "Why Rentivo", dropdown: CompanyDropdown },
   { title: "Resources", dropdown: LearnDropdown }
@@ -54,7 +54,7 @@ class AnimatedNavbar extends Component {
     })
     this.animatingOutTimeout = setTimeout(
       this.resetDropdownState,
-      1400
+      700
     )
   }
 

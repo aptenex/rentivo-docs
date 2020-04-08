@@ -17,6 +17,7 @@ const ProductBlock = ({
   contentfulAsset,
   title,
   button,
+  slug,
   hasOverlay,
   description,
   iconPosition,
@@ -47,7 +48,7 @@ const ProductBlock = ({
       className={addAllClasses.join(' ')}
       {...wrapperStyle}
       {...props}
-      href={'#'}
+      href={ slug ?? '#'}
     >
       { contentfulAsset && <ContentfulAsset data={contentfulAsset}/> }
 

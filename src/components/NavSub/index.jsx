@@ -10,7 +10,7 @@ const SubNav = (props) => {
   }
   return (
 
-      <div className={addAllClasses.join(' ')}>
+      <nav className={addAllClasses.join(' ')}>
         <div className="container-lg">
           <div className="row">
             <div className="col-md-8">
@@ -21,7 +21,7 @@ const SubNav = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </nav>
   );
 }
 

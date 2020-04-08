@@ -18,12 +18,17 @@ const Flex = styled.div`
     margin-right: 48px;
   }
 `
+const Col = styled.div`
+ flex-grow: 1;
+ min-width: 15rem;
+ padding: 20px;
+`
 
 const DevelopersDropdown = () => {
   return (
     <DevelopersDropdownEl>
       <DropdownSection data-first-dropdown-section>
-        <div>
+        <Col>
           <Heading>Documentation</Heading>
           <p>Start integrating Stripe&rsquo;s products and tools</p>
           <Flex>
@@ -56,7 +61,7 @@ const DevelopersDropdown = () => {
               </LinkList>
             </div>
           </Flex>
-        </div>
+        </Col>
       </DropdownSection>
       <DropdownSection>
         <ul>

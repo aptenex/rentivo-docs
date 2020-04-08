@@ -6,7 +6,7 @@ const HeroWrapper = styled.section`
   
   padding-top: 80px;
   padding-bottom: 120px;
-  
+   
   .featureLogo {
     max-width: 200px;
     float: right;

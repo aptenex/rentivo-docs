@@ -6,11 +6,11 @@ import Text from 'reusecore/src/elements/Text';
 import Heading from 'reusecore/src/elements/Heading';
 import ProductBlock from 'common/src/components/ProductBlock';
 import Container from 'common/src/components/UI/Container';
-import ProductSectionWrapper from './productSection.style';
+import FeatureGallerySectionWrapper from './featureGallerySection.style';
 import Image from 'gatsby-image';
 import { injectIntl, Link, FormattedMessage } from "gatsby-plugin-intl"
 
-const ProductSection = ({
+const FeatureGallerySection = ({
   data,
   row,
   columnWidth,
@@ -37,7 +37,7 @@ const ProductSection = ({
   });
 
   return (
-    <ProductSectionWrapper className={'product__section'}>
+    <FeatureGallerySectionWrapper className={'product__section'}>
       <Container>
         {data.title &&
           <Box {...sectionHeader}>
@@ -54,6 +54,7 @@ const ProductSection = ({
                 wrapperStyle={blockWrapperStyle}
                 iconStyle={iconStyle}
                 contentStyle={contentStyle}
+                slug={node.slug}
                 title={<Heading content={node.title} {...featureTitle} />}
                 description={
                   node.description && <Text className={'productContent'} content={node.description.description} {...featureDescription} />
@@ -63,12 +64,12 @@ const ProductSection = ({
           ))}
         </Box>
       </Container>
-    </ProductSectionWrapper>
+    </FeatureGallerySectionWrapper>
   );
 };
 
-// ProductSection style props
-ProductSection.propTypes = {
+// FeatureGallerySection style props
+FeatureGallerySection.propTypes = {
   sectionHeader: PropTypes.object,
   row: PropTypes.object,
   columnWidth: PropTypes.array,
@@ -79,8 +80,8 @@ ProductSection.propTypes = {
   featureDescription: PropTypes.object,
 };
 
-// ProductSection default style
-ProductSection.defaultProps = {
+// FeatureGallerySection default style
+FeatureGallerySection.defaultProps = {
   // section header default style
   columnCount: 3,
   columnWidth: [1, 1 / 2, 1 / 3, 1 / 3],
@@ -93,7 +94,7 @@ ProductSection.defaultProps = {
     display: 'block',
     textAlign: 'center',
     fontSize: '42px',
-    fontWeight: '700',
+    fontWeight: '400',
     color: '#01c88b',
     mb: '10px',
   },
@@ -152,4 +153,4 @@ ProductSection.defaultProps = {
   },
 };
 
-export default ProductSection;
+export default FeatureGallerySection;

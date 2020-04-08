@@ -10,6 +10,10 @@ const NavbarList = styled.ul`
   justify-content: center;
   list-style: none;
   margin: 0;
+  a {
+    color: #1C4A6E;
+    font-weight: 600 !important;
+  }
 `
 
 

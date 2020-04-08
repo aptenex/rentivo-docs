@@ -43,6 +43,19 @@ import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChevronRight, faExternalLinkAlt} from '@fortawesome/pro-duotone-svg-icons';
 import { injectIntl, FormattedMessage } from 'gatsby-plugin-intl';
+import {
+  CaseStudySlideWrapper,
+  CaseStudyBannerWrapper,
+  CaseStudyItem,
+  CaseStudyMeta,
+  AuthorInfo,
+  StudyBackground,
+  CaseStudyBody,
+  ImageLabel,
+  LogoImage,
+  AuthorImage,
+  AccentFocusHighlightBar
+} from "../containers/Rentivo/CaseStudySection/caseStudy.style";
 
 const Section = styled('section')`
   position: relative;
@@ -54,7 +67,7 @@ const WhiteSectionWrapper = styled.section`
   padding: 80px 0;
 `;
 
-const CardPartner = styled(Card)`
+const CardCustomer = styled(Card)`
   padding: 30px;
   background: white;
   margin-bottom: 20px;
@@ -111,7 +124,7 @@ const TagFilter = styled('ul')`
   }
 `;
 
-const PartnerLink = styled('a')`
+const CustomerLink = styled('a')`
 float:right;
 margin-bottom: 10px;
 margin-top: -15px;
@@ -137,22 +150,17 @@ const TagList = styled(TagFilter)`
    }
 `;
 
-export default injectIntl( ({data : { tags : { distinct : tags } } , data : { allContentfulPartner : { edges : partners } } }, props) => {
-  const menuProducts = getMenuProducts();
-  const productCategory = useProductHome();
-  const faqGroups = useFAQGroupsOnHome();
-  console.log("what ios partners", partners, tags);
+export default injectIntl( ({data : { tags : { distinct : tags } } , data : { allContentfulCaseStudy : { edges : customers } } }, props) => {
 
-
-  const [ filteredPartners, setFilteredPartners ] = useState( partners );
+  const [ filteredCustomers, setFilteredCustomers ] = useState( customers );
   const [ activeTag, setActiveTag ] = useState( null );
   const handleTagClickEvent = (tag) => {
       if(!tag) {
-        setFilteredPartners(partners);
+        setFilteredCustomers(customers);
         setActiveTag(tag);
       } else {
-        const f = partners.filter((p) => p.node.tags.includes(tag));
-        setFilteredPartners(f);
+        const f =customers.filter((p) => p.node.product.map( x => x.name ).includes(tag));
+        setFilteredCustomers(f);
         setActiveTag(tag);
       }
   }
@@ -162,8 +170,8 @@ export default injectIntl( ({data : { tags : { distinct : tags } } , data : { al
 
         <Section>
           <Container width={'720px'}>
-              <Heading fontWeight={600} textAlign={'center'} as={'h1'} content={'Our Industry Partners'} />
-              <Heading fontWeight={400}  textAlign={'center'}  as={'h3'} content={'We believe that a holiday rental companies growth is strengthened through partnerships and keeping great company with likeminded peers. That is why we have some fantastic partners we collaborate, integrate or share knowledge with on a daily basis.'} />
+              <Heading fontWeight={600} textAlign={'center'} as={'h1'} content={'Our Customers'} />
+              <Heading fontWeight={400}  textAlign={'center'}  as={'h3'} content={'See case studies of how companies are using Rentivo to build their business.'} />
 
           </Container>
         </Section>
@@ -172,75 +180,69 @@ export default injectIntl( ({data : { tags : { distinct : tags } } , data : { al
 
         <Container>
             <TagFilter>
-              <li className={ activeTag === null ?  "active" : null  } onClick={() => handleTagClickEvent(null)} key={'all-partners'}>All Partners</li>
+              <li className={ activeTag === null ?  "active" : null  } onClick={() => handleTagClickEvent(null)} key={'all-customers'}>All Case Studies</li>
               {tags.map( (tag, index) => (
-                  <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
+                  <li className={ tag.toLowerCase().replace(' ', '-') + ' ' + (activeTag === tag ?  "active" : null)  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
               ))}
             </TagFilter>
-              {filteredPartners &&
+              {filteredCustomers &&
                 <ListGrid
-                  data={filteredPartners}
+                  data={filteredCustomers}
                   columnWidth={[1, 1 / 2, 1 / 3]} //{[1, 1/2, 1/4]} responsive
-                  component={({node}) => (
-                      <CardPartner>
-                        <Heading fontWeight={400} as={'h2'}  textAlign={'right'}  content={node.name} />
-                        { node.slug ? <div /> : <div><PartnerLink rel={"nofollow"} href={node.webAddress} target={"_blank"} >
-                          Website
-                          <span> </span><FontAwesomeIcon icon={faExternalLinkAlt} />
-                        </PartnerLink>
-                        </div>}
-
-                        { node.logo && ( node.slug &&
-                            <Link to={'partners/' + node.slug }>
-                              <ContentfulAsset className={'featureLogo'} data={node.logo}/>
-                            </Link> ) ||
-                          node.logo && <ContentfulAsset className={'featureLogo'} data={node.logo}/>
-                        }
+                  component={({node : study}) => (
 
 
+                      <CaseStudyItem>
+                        <CaseStudyBannerWrapper to={"/customers/" + study.slug}>
+                          <ImageLabel>Case Study</ImageLabel>
+                          <LogoImage
+                              {...study.logo}
+                              alt={study.title + ` case study`}
+                          />
+                          <StudyBackground
+                              {...study.studyBackground}
+                              alt={study.title + ` case study`}
+                          />
 
-                        <TagList>
-                          {node.tags && node.tags.map( (tag, index) => (
-                              <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
-                          ))}
-                        </TagList>
+                        </CaseStudyBannerWrapper>
+                        <CaseStudyBody>
+                          <AccentFocusHighlightBar />
+                          <Heading as="h3" content={study.title} />
+                          <Text content={study.summary} />
+                          <CaseStudyMeta>
+                            <Link to={"/customers/" + study.slug}>Read Case Study</Link>
+                          </CaseStudyMeta>
+                        </CaseStudyBody>
+                      </CaseStudyItem>
 
 
-                        {node.summary && <Summary>{node.summary.summary}</Summary> }
-                        {node.heroFeaturette &&
-                        <LearnMore><Link to={'partners/' + node.slug}>Learn more</Link></LearnMore>}
-                      </CardPartner>
                   )}
                 />
               }
            </Container>
-
         </Section>
 
-        <FaqSection  data={faqGroups} groups={"General,Billing"} active={"General"}  />
 
       </MarketingLayout>
   );
 });
 
 export const query = graphql`
-  query PartnersQuery {
-    tags: allContentfulPartner {
-      distinct(field: tags)
+  query CustomersQuery {
+    tags: allContentfulCaseStudy  {
+      distinct(field: product___name)
     }
-    allContentfulPartner {
+    allContentfulCaseStudy {
       edges {
         node {
           id
           slug
-          name
-          heroFeaturette {
-            id
+          product {
+            name
           }
-          tags
           logo {
             id
-            fixed(height: 75) {
+            fixed(height: 40) {
               ...GatsbyContentfulFixed_tracedSVG
             }
             ... on ContentfulAsset {
@@ -264,11 +266,14 @@ export const query = graphql`
               }
             }
           }
-          summary {
-            id
-            summary
+          title
+          website
+          summary
+          studyBackground {
+            fluid(maxWidth: 420, background: "rgb:000000") {
+              ...GatsbyContentfulFluid_tracedSVG
+            }
           }
-          webAddress
         }
       }
     }

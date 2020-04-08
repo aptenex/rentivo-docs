@@ -1,24 +1,24 @@
-  import React from "react"
+import React from "react"
 import styled from "styled-components"
-import { Icon, DropdownSection, Heading } from "./Components"
-import { ThemeProvider } from 'styled-components';
+import {Icon, DropdownSection, Heading} from "./Components"
+import {ThemeProvider} from 'styled-components';
 import ContentfulAsset from '../../../../containers/Rentivo/ContentfulAsset';
-import { StaticQuery, graphql, Link } from "gatsby"
-import { getMenuProducts } from './hooks/home';
-
-
-
+import ProductIcons from '../../../../containers/Rentivo/ProductIcons';
+import ProductDefinitions from '../../../../containers/Rentivo/ProductIcons/icons';
+import {StaticQuery, graphql, Link} from "gatsby"
+import {getMenuProducts} from './hooks/home';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faChartNetwork, faParachuteBox, faBrowser, faCalendarEdit} from '@fortawesome/pro-duotone-svg-icons'
+import {themeGet} from "styled-system";
 
 const ProductsDropdownEl = styled.div`
   
   max-width: 100vw !important; 
   display: flex;
-  margin: -20px;
+  //margin: -20px;
   position: relative;
   flex-direction: column; 
-  ul, li {
-    margin: 0;
-    padding: 0px;
+  ul, li {    
     h3 {
       margin-bottom: -6px;
     }
@@ -30,8 +30,7 @@ const ProductsDropdownEl = styled.div`
 
 
 const Col = styled.div`
-  padding: 0px;
-  margin: 0px;
+
   @media (max-width: 768px) {    
     width: 100vw;
   }
@@ -51,7 +50,7 @@ const SectionHeader = styled.h4`
   margin-bottom: 20px;
 `
 
-const ProductIcon = styled.div`
+const ProductIconWrapper = styled.div`
   width: 24px;
   height: 24px;
   margin-right: 30px;
@@ -65,28 +64,13 @@ const ProductIcon = styled.div`
   }
 `
 
-const IntegrationIcon = styled(ProductIcon)`
-   width: 24px;
-  height: 24px;
-  margin-right: 30px;
-  border-radius: 100%;
-  
-  > div {
-    width: 32px;
-    svg {
-      width: 24px;
-      height: 24px;  
-    }
-  }
-`;
-
 const ProductLink = styled(Link)`
   display: flex;
   padding: 10px;
   width: 100%;
   border-radius: 4px;
   &:hover {
-    background: #dbf1ff42
+    background: #dbf1ff42;
     background: rgba(0,0,0,0.02);
     ;
   }
@@ -109,20 +93,83 @@ const SubProductsList = styled.ul`
 `
 
 const ProductsSection = styled.ul`
+  margin: 20px;
   li {
     display: flex;
     min-width: 680px;
     width: 100%;
+    position: relative;
+    &[data-slug] {
+      &:hover {
+          &:before {
+              content: '';
+              display: block;
+              width: 42px;
+              height: 10px;
+              border-radius: 5px;
+              background-color: var(--primary);
+              left: 0%;
+              top: 94%;
+              position: absolute;
+              margin-top: -23px;
+              z-index: -2;
+              opacity: 0.05;
+          }
+          &:after {
+              content: '';
+            display: block;
+            width: 37px;
+            height: 9px;
+            opacity: 0.1;
+            border-radius: 7px;
+            background-color: var(--primary);
+            left: -1%;
+            position: absolute;
+            margin-top: 7px;
+            z-index: -2;
+            top: 63%;
+          }
+        }
+      }
+    &[data-slug=manage] {    
+      --primary : ${themeGet('colorStyles.products.manage.color')};
+      ${ProductIconWrapper} {
+        color: ${themeGet('colorStyles.products.manage.color')};
+      }      
+    }
+    &[data-slug=channel-management] {
+    --primary : ${themeGet('colorStyles.products.channels.color')};
+      ${ProductIconWrapper} {    
+        color: ${themeGet('colorStyles.products.channels.color')};
+        color: #258bb4;
+      }
+    }
+    &[data-slug=direct-booking-website] {
+    --primary : ${themeGet('colorStyles.products.website.color')}; 
+      ${ProductIconWrapper} {
+        color: ${themeGet('colorStyles.products.website.color')};
+      }
+    }
+    &[data-slug=supply] {
+    --primary : ${themeGet('colorStyles.products.supply.color')};
+      ${ProductIconWrapper} {    
+        color: ${themeGet('colorStyles.products.supply.color')};
+      }
+    }
+    svg[data-prefix=fad]{
+      font-size: 2.4em;    
+      margin-top: 10px;
+    }
+      
     div p {
       margin-top: 0;
       margin-bottom: 0rem;
     }
-  }
-  
+  }  
 `
 
 const Text = styled.p`
-  color: #546b81
+  color: #546b81;
   font-weight: bold;
 `;
 
@@ -134,6 +181,7 @@ const DemoRequest = styled.div`
     margin-top: var(--spacer);
     padding-top: var(--spacer);
     margin-top: 25px;
+    margin-bottom: 20px;
   h3 {
     margin-bottom: 0;
   }
@@ -157,43 +205,43 @@ font-weight: bold;
 
 
 export default () => {
-  const { allContentfulProduct, allContentfulIntegration } = getMenuProducts();
+  const {allContentfulProduct, allContentfulIntegration} = getMenuProducts();
   // console.log(allContentfulProduct,"##$#434", allContentfulIntegration);
   return (
-    <ProductsDropdownEl>
-      <Col>
-        <DropdownSection data-first-dropdown-section>
-          {/*<SectionHeader>Products</SectionHeader>*/}
-          <ProductsSection>
-            { allContentfulProduct.edges.map( ( {node}, index) => (
-              <li key={index}>
-                <ProductLink to={ node.slug}>
-                  <div>
-                    <ProductIcon>
-                      <ContentfulAsset data={node.icon}/>
-                    </ProductIcon>
-                  </div>
-                  <div>
-                    <Heading color="blue">{ node.name }</Heading>
-                    <Text> { node.summary }</Text>
-                  </div>
-                </ProductLink>
+      <ProductsDropdownEl>
+        <Col>
+          <DropdownSection data-first-dropdown-section>
+            {/*<SectionHeader>Products</SectionHeader>*/}
+            <ProductsSection>
+              {allContentfulProduct.edges.map(({node}, index) => (
+                  <li data-slug={node.slug} key={index}>
+                    <ProductLink to={node.slug}>
+                      <ProductIconWrapper>
+                        {ProductDefinitions[node.slug] ?
+                            <ProductIcons type={node.slug}/> : <ContentfulAsset data={node.icon}/>}
 
-              </li>
-            ))}
-          </ProductsSection>
-          <DemoRequest>
-            <Heading >
-              <a href="/demo-request">
-                 Demo Request
-              </a>
-            </Heading>
-          </DemoRequest>
-        </DropdownSection>
+                      </ProductIconWrapper>
+                      <div>
+                        <Heading color="primary">{node.name}</Heading>
+                        <Text> {node.summary}</Text>
+                      </div>
+                    </ProductLink>
+
+                  </li>
+              ))}
+            </ProductsSection>
+            <DemoRequest>
+              <Heading>
+                <a href="/demo-request">
+                  Demo Request
+                </a>
+              </Heading>
+            </DemoRequest>
+          </DropdownSection>
 
 
-      </Col>
+        </Col>
 
-    </ProductsDropdownEl>
+      </ProductsDropdownEl>
   )
 }

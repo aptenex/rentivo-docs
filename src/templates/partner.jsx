@@ -38,7 +38,6 @@ const renderAst = new RehypeReact({
   },
 }).Compiler;
 
-
 const Section = styled('section')`
   position: relative;
   padding-top: 180px;

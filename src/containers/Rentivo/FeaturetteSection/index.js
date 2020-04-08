@@ -222,7 +222,7 @@ const FeaturetteSection = ({
                     <Heading content={title} />
                   }
                   description={
-                    content.childMarkdownRemark && <Text {...description} dangerouslySetInnerHTML={{ __html: content.childMarkdownRemark.html }} />
+                    content && content?.childMarkdownRemark && <Text {...description} dangerouslySetInnerHTML={{ __html: content?.childMarkdownRemark?.html }} />
                   }
                   button={<ButtonGroup />}
               />
@@ -265,7 +265,7 @@ FeaturetteSection.defaultProps = {
   reverse: false,
   title: {
     fontSize: ['22px', '34px', '30px', '55px'],
-    fontWeight: '700',
+    fontWeight: '400',
     color: '#0f2137',
     letterSpacing: '-0.025em',
     mb: ['20px', '25px'],
@@ -290,14 +290,14 @@ FeaturetteSection.defaultProps = {
     mb: 0,
     as: 'span',
     mr: '0.4em',
-    fontWeight: 700,
+    fontWeight: 400,
   },
   leadingLabelTextStyle: {
     fontSize: ['13px', '14px'],
     color: '#0f2137',
     mb: 0,
     as: 'span',
-    fontWeight: 500,
+    fontWeight: 400,
   },
   // glide slider nav controls style
   btnWrapperStyle: {

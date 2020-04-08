@@ -17,7 +17,13 @@ import { IconLockMan, IconLock as Lock } from '../Icons';
 import { CtaSection, LoginLink, IconLock, Cta } from './Navbar.style';
 
 
-const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
+const Navbar = ({ navbarStyle, className, logoStyle, row, menuWrapper }) => {
+
+  const addAllClasses = ['main_navbar'];
+  if (className) {
+    addAllClasses.push(className);
+  }
+
   const Data = useStaticQuery(graphql`
     query {
       rentivoJson {
@@ -30,7 +36,6 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
     }
   `);
 
-
   const { state, dispatch } = useContext(DrawerContext);
 
   // Toggle drawer
@@ -41,7 +46,7 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
   };
 
   return (
-    <NavbarWrapper {...navbarStyle}>
+    <NavbarWrapper className={addAllClasses.join(' ')} {...navbarStyle}>
       <Container>
         <Box {...row}>
           <Logo
@@ -63,7 +68,7 @@ const Navbar = ({ navbarStyle, logoStyle, row, menuWrapper }) => {
               </Cta>
 
 
-              <LoginLink href="#1">
+              <LoginLink href="https://manage.rentivo.com/login">
                 Sign In
               </LoginLink>
               <IconLock/>
@@ -107,7 +112,6 @@ Navbar.propTypes = {
 
 Navbar.defaultProps = {
   navbarStyle: {
-    className: 'main_navbar',
     minHeight: '70px',
     display: 'block',
   },

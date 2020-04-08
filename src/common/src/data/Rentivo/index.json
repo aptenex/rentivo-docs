@@ -27,47 +27,6 @@
         }
     ],
 
-
-
-    "Features": [
-        {
-            "id": 1,
-            "svg": "LineAnchor",
-            "title": "Booking Managent",
-            "description": "A complete end to end solution for short term property management"
-        },
-        {
-            "id": 2,
-            "svg": "LineAnalytics",
-            "title": "Channel Distribution",
-            "description": "Expand your distribution opportunities to our partners such as Airbnb, HomeAway, Booking.com and more."
-        },
-        {
-            "id": 3,
-            "svg": "LineGift",
-            "title": "Booking Website",
-            "description": "Want to accept direct bookings  and strengthen your organic bookings and brand. We have a solution."
-        },
-        {
-            "id": 3,
-            "svg": "LineCurrency",
-            "title": "Grow and Acquire",
-            "description": "Want to expand your destination and inventory, we can supply more rental units from our catalogue of partners and managers."
-        },
-        {
-            "id": 3,
-            "svg": "LineAnnouncement",
-            "title": "Developer APIs",
-            "description": "Our APIs provide faster connections to channels, easier access to more rental units and in-house custom software capabilities"
-        },
-        {
-            "id": 3,
-            "icon": "flaticon-flask",
-            "svg": "LineContactBook",
-            "title": "Destination Marketing",
-            "description": "Optimise traffic for your DMO, Tourism Board, Authority or Visitors Bureau. Promote your destination and supply a booking gateway for your visitors."
-        }
-    ],
     "Footer_Data": [{
         "title": "About Us",
         "menuItems": [{

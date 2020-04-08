@@ -32,12 +32,14 @@ class Main extends Component {
 
     // console.log(contentfulAsset, "<<<<<<<<<<< $################");
     let asset;
-    if(contentfulAsset.svg && contentfulAsset.svg.content ){
-      asset = <Wrapper className={'svgWrapper'} dangerouslySetInnerHTML={{ __html: contentfulAsset.svg.content}} />
-    } else if( (contentfulAsset.fluid && contentfulAsset.fluid.src ) || contentfulAsset.fixed) {
-      asset = <Wrapper className={'imgWrapper'} ><Img {...contentfulAsset} alt={`product image`} /></Wrapper>
-    } else if(contentfulAsset.file && contentfulAsset.file.url ){
-      asset = <Wrapper className={'imgWrapper'} ><img src={contentfulAsset.file.url} alt={`product image`} /></Wrapper>
+    if(contentfulAsset) {
+      if (contentfulAsset.svg && contentfulAsset.svg.content) {
+        asset = <Wrapper className={'svgWrapper'} dangerouslySetInnerHTML={{__html: contentfulAsset.svg.content}}/>
+      } else if ((contentfulAsset.fluid && contentfulAsset.fluid.src) || contentfulAsset.fixed) {
+        asset = <Wrapper className={'imgWrapper'}><Img {...contentfulAsset} alt={`product image`}/></Wrapper>
+      } else if (contentfulAsset.file && contentfulAsset.file.url) {
+        asset = <Wrapper className={'imgWrapper'}><img src={contentfulAsset.file.url} alt={`product image`}/></Wrapper>
+      }
     }
 
 

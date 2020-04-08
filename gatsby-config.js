@@ -30,6 +30,8 @@ module.exports = {
     description: config.siteDescription
   },
   plugins: [
+    'gatsby-optional-chaining',
+    'gatsby-plugin-nullish-coalescing-operator',
     {
       resolve: "gatsby-plugin-react-svg",
       options: {
@@ -51,17 +53,12 @@ module.exports = {
         redirect: false,
       },
     },
+
     {
       resolve: 'gatsby-plugin-module-resolver',
       options: {
         root: './src', // <- will be used as a root dir
-        aliases: {
-          'reusecore': './reusecore',
-          'common': './common',
-          'functions': './functions',
-          'containers' : './containers',
-          'components' : './components'
-        }
+        aliases: require('./webpack.alias').resolve.alias
       }
     },
     {

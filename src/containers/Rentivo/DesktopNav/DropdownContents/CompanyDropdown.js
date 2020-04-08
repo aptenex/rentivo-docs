@@ -22,6 +22,7 @@ const CompanyDropdownEl = styled.div`
 const Col = styled.div`
  flex-grow: 1;
  min-width: 15rem;
+ padding: 20px;
 `
 
 // const IconRocket = styled(IconTogether)`
@@ -32,8 +33,8 @@ const Col = styled.div`
 
 const WhyCallout = styled(Col)`
   background: #f2f2f2;
-  margin: -40px -40px -40px 20px;
-  padding: 40px 0px 20px 40px;
+  //margin: -40px -40px -40px 20px;
+  //padding: 40px 0px 20px 40px;
   position: relative;
   flex-grow: 1;
   min-width: 20rem;  
@@ -171,14 +172,15 @@ const DemoRequest = styled.div`
 `
 
 const AllIntegrations = styled(Link)`
-font-weight: bold;
- display: flex;
- font-size: 1.2em;
+font-weight: 400;
+ 
+ font-size: 1em;
  padding: 10px;
   width: 100%;
   border-radius: 4px;
+  margin-bottom: 20px;
   &:hover {
-    background: #dbf1ff42
+    background: #dbf1ff42;
     background: rgba(0,0,0,0.02);
     ;
   }
@@ -192,6 +194,7 @@ const CompanyDropdown = () => {
     <CompanyDropdownEl>
       <Col>
         <DropdownSection data-first-dropdown-section>
+          <h3>Why Rentivo</h3>
           <ul>
             <HeadingLink>
               <Link to="/about">
@@ -209,8 +212,8 @@ const CompanyDropdown = () => {
               </Link>
             </HeadingLink>
             <HeadingLink>
-              <a href="/">
-                <Icon /> Case Studies
+              <a href="/customers">
+                <Icon /> Customers
               </a>
             </HeadingLink>
 
@@ -239,10 +242,12 @@ const CompanyDropdown = () => {
 
                     </li>
                 ))}
-
+                <li>
+                  <AllIntegrations to={'/integrations'}>View All Integrations</AllIntegrations>
+                </li>
 
               </ProductsSection>
-              <AllIntegrations to={'/integrations'}>View All Integrations</AllIntegrations>
+
             </DropdownSection>
 
           </Integrations>

@@ -67,7 +67,7 @@ const HeroWrapper = styled('div')`
     position: static !important;
   }
   filter: brightness(0.92);
-  padding-top: 280px; 
+  padding-top: 180px; 
   position: relative;
 
   border-bottom: 1px solid #222;
@@ -208,7 +208,7 @@ class CaseStudyTemplate extends React.Component {
     const asideLinks = this.getLinks();
     return (
 
-      <MarketingLayout location={location} articleClass={'top'} menu={'light'} subNav={true}>
+      <MarketingLayout location={location} wrapperClass={'absolute-menu'} articleClass={'top'} menu={['light', 'bg-dark-alpha']} subNav={true}>
           <SEO postNode={caseStudyNode} postType="caseStudy" />
           { asideLinks.length > 0
               ? (<AsideMenu asideLinks={this.getLinks()} />)

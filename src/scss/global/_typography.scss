@@ -108,10 +108,13 @@ p,
 }
 
 ol,
-ul {
-  font-size: 13px;
+article ul {
+  margin-bottom: $scaleup-1;
   line-height: 20px;
   padding-left: $scaleup-1;
+  li {
+    margin-bottom: 5px;
+  }
 }
 
 strong {

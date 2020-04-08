@@ -4,7 +4,7 @@
 import React from 'react';
 import {graphql} from "gatsby";
 export const featuretteFields = graphql`
-  fragment FeatureItem on ContentfulFeatureItemBlock {
+  fragment FeatureItem on ContentfulFeatureItem {
     
       id
       title
@@ -14,7 +14,7 @@ export const featuretteFields = graphql`
         }
         description
       }
-
+      slug  
       image {
         fixed(height: 125) {
           ...GatsbyContentfulFixed_tracedSVG
@@ -96,6 +96,10 @@ export const featuretteFields = graphql`
     }
     id
     title
+    isMenuSticky
+    hasSubMenu
+    columnWidths
+    component
     textLoopAst {
       id 
       internal {
@@ -106,11 +110,14 @@ export const featuretteFields = graphql`
       ...FeatureItem
     }
     as
-    lottieJson {
-      file {
-        url
-      }
-    }
+#    lottieJson {
+#      file {
+#        url
+#      }
+#    }
+    bodyClasses
+    className
+    menuVariant
     primaryCallToAction {
       url
       to

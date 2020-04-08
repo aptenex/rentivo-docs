@@ -31,6 +31,37 @@ export const rentivoTheme = {
   maxWidths: [16, 32, 64, 128, 256, 512, 768, 1024, 1536],
   colors,
   colorStyles: {
+    products : {
+      manage : {
+        color: '#01b47d',
+        background: 'linear-gradient(135deg,#01b47d 0,#01b47d 100%);'
+      },
+      supply : {
+        color: '#e5683a',
+        background: 'linear-gradient(-180deg,#e5683a,#f59f3d 43%,#f8cd53)',
+        primaryWithBg: {
+          color: colors.white,
+          backgroundColor: '#e5683a',
+          borderColor: '#b9461b',
+          backgroundImage: 'linear-gradient(-180deg,#e5683a,#e5683a 43%,#e18a27)',
+          '&:hover': {
+            backgroundColor: '#e5683a',
+            borderColor: '#e5683a',
+            backgroundImage: 'linear-gradient(-180deg,#d76136,#d96237 43%,#d38125)',
+            boxShadow: '0px 9px 20px -5px rgba(82, 104, 219, 0.57)',
+          },
+        },
+      },
+      channels : {
+        color: '#012837',
+        background: 'linear-gradient(135deg,#012837 0,#1d6683 100%)'
+      },
+      website : {
+        color: '#403d93',
+        background: 'linear-gradient(-180deg,#403d93,#5246bd 43%,#6367ce)'
+      }
+    },
+
     primary: {
       color: colors.primary,
       border: '1px solid',

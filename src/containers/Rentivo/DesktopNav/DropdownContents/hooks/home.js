@@ -5,7 +5,7 @@ export const getMenuProducts = () => {
   const data = useStaticQuery(
       graphql`
         query {
-          allContentfulProduct(filter: { node_locale: {glob: "en*"}, pinnedProduct: {eq: true}}) {
+          allContentfulProduct(sort: {fields: order, order: DESC}, filter: { node_locale: {glob: "en*"}, pinnedProduct: {eq: true}}) {
             edges {
               node {
                 id

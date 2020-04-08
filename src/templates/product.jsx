@@ -16,9 +16,11 @@ import './syntax-highlighting.scss';
 import './product.scss';
 import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import HeroSection from '../containers/Rentivo/HeroSection';
+import HeroChannelConnections from '../containers/Rentivo/HeroChannelConnections';
+import Container from 'common/src/components/UI/Container';
 import MarketingLayout from "../components/MarketingLayout";
 import FaqSection from '../containers/Rentivo/FaqSection';
-import ProductSection from '../containers/Rentivo/ProductSection';
+import ProductSection from '../containers/Rentivo/FeatureGallery';
 import CaseStudySection from '../containers/Rentivo/CaseStudySection';
 import mediumZoom from 'medium-zoom'
 import styled, { withTheme } from 'styled-components';
@@ -26,20 +28,9 @@ import BlobA from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/
 import BlobB from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_barbra.svg';
 import BlobC from '-!babel-loader!svg-react-loader?classIdPrefix=manage!img/svg/blob/blob_carol.svg';
 import FaqList from '../containers/Rentivo/FaqSection/List';
+import ConditionalWrapper from "../containers/Rentivo/Contained";
+import { BlobWrapperA, BlobWrapperB,BlobWrapperC } from '../containers/Rentivo/rentivo.style';
 
-
-const BlobWrapperA = styled.div`
-  position: absolute;
-  left: -40%;
-`;
-const BlobWrapperB = styled.div`
-  position: absolute;
-  right: 40%;
-`;
-const BlobWrapperC = styled.div`
-  position: absolute;
-  left: -40%;
-`;
 
 
 const renderAst = new RehypeReact({
@@ -67,26 +58,37 @@ class ProductTemplate extends React.Component {
   }
 
   render() {
-    console.log(this.props, "<<<<<");
     const { data, location } = this.props;
     const productNode = data.product;
     const { faqGroups : groups }  = productNode;
     const asideLinks = this.getLinks();
+    let menuVariantClasses = productNode.heroFeaturette.menuVariant ?? [];
+    menuVariantClasses = [ ...menuVariantClasses, ...(productNode.heroFeaturette.className ?? [])];
 
-    return (
-      <MarketingLayout location={location} menu={'dark'} subNav={true}>
+    const isMenuSticky = productNode.heroFeaturette.isMenuSticky !== null ? productNode.heroFeaturette.isMenuSticky : productNode.isMenuSticky || true;
+    const hasSubNav = productNode.heroFeaturette.hasSubMenu !== null ? productNode.heroFeaturette.hasSubMenu : true;
+
+
+    return  (
+      <MarketingLayout isMenuSticky={isMenuSticky} location={location} menu={menuVariantClasses} articleClass={productNode.heroFeaturette?.className + ' ' + productNode.heroFeaturette?.bodyClasses} subNav={hasSubNav}>
         <SEO postNode={productNode} postType="product" />
         { asideLinks.length > 0
             ? (<AsideMenu asideLinks={this.getLinks()} />)
             : null
         }
 
-        <BlobWrapperB>
-          <BlobC/>
-        </BlobWrapperB>
+        {!productNode?.heroFeaturette?.bodyClasses?.includes('contained') &&
+          <BlobWrapperB>
+            <BlobC/>
+          </BlobWrapperB>
+        }
 
         { productNode.heroFeaturette.internal.type === 'ContentfulHero' &&
-          <HeroSection {...productNode.heroFeaturette }></HeroSection>
+        <ConditionalWrapper
+            condition={productNode?.heroFeaturette?.bodyClasses?.includes('contained')}
+            wrapper={children => <Container>{children}</Container>}>
+          <HeroSection {...productNode.heroFeaturette }/>
+        </ConditionalWrapper>
         }
         { productNode.heroFeaturette.internal.type === 'ContentfulFeaturette' &&
           <FeatuetteSection   {...productNode.heroFeaturette } />
@@ -96,7 +98,7 @@ class ProductTemplate extends React.Component {
             (
               feature.internal.type === 'ContentfulFeaturette'  &&  <FeatuetteSection  key={index} {...feature} />
               || feature.internal.type === 'ContentfulFeatureGallery' &&  <ProductSection columnWidth={eval(feature.columnWidth)} key={index} data={feature} />
-              || feature.internal.type === 'ContentfulHero' &&   <HeroSection key={index} {...feature }></HeroSection>
+              || feature.internal.type === 'ContentfulHero' &&   <HeroSection key={index} {...feature }/>
               || feature.internal.type === 'ContentfulFaq' &&   <FaqList key={index} sectionTitle={{
                 content: feature.question,
                 textAlign: 'center',
@@ -115,8 +117,6 @@ class ProductTemplate extends React.Component {
         }
 
         {/*{ <FaqSection  data={ useFAQGroupsOnCategories(groups) }  groups={"Product"} active={"Product"}  /> }*/}
-
-
 
       </MarketingLayout>
     );
@@ -138,6 +138,7 @@ export const pageQuery = graphql`
       seoDescription
       name
       slug
+      isMenuSticky
       heroFeaturette {        
         ...Hero
       }      

@@ -9,7 +9,7 @@ import {
 } from "./Components"
 
 const LearnDropdownEl = styled.div`
-  width: 28rem;
+  width: 34rem;
    ${DropdownSection} {
     margin-bottom: 30px;
   }
@@ -27,11 +27,17 @@ const Flex = styled.div`
  
 `
 
+const Col = styled.div`
+ flex-grow: 1;
+ min-width: 22rem;
+ padding: 20px 40px;
+`
+
 const LearnDropdown = () => {
   return (
     <LearnDropdownEl>
       <DropdownSection data-first-dropdown-section>
-        <div>
+        <Col>
           <h3>Learning and Knowledgebase</h3>
           <p>Are you a developer looking to integrate or a customer on the quest of knowledge?</p>
           <LinkList>
@@ -72,7 +78,7 @@ const LearnDropdown = () => {
               </LinkList>
             </div>
           </Flex>
-        </div>
+        </Col>
       </DropdownSection>
 
     </LearnDropdownEl>

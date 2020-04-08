@@ -1,35 +1,27 @@
-import React, {Fragment, useEffect, useState } from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
-import Box from 'reusecore/src/elements/Box';
 import Text from 'reusecore/src/elements/Text';
-import Image from 'gatsby-image';
 import Heading from 'reusecore/src/elements/Heading';
-import Button from 'reusecore/src/elements/Button';
 import HrefLink from 'reusecore/src/elements/Link';
 import Link from 'gatsby-link';
-import FeatureBlock from 'common/src/components/FeatureBlock';
 import Container from 'common/src/components/UI/Container';
-import Particles from '../Particle';
-import {fontFamily, fontWeight, letterSpacing, lineHeight, textAlign, themeGet} from 'styled-system';
-import colors from 'common/src/theme/rentivo/colors';
 import styled from "styled-components"
-import { base, themed } from 'reusecore/src/elements/base';
-import CalloutWrapper from 'components/CalloutWrapper';
+import {base, themed} from 'reusecore/src/elements/base';
 import Row from 'components/Flex/Row'
 import Col from 'components/Flex/Col'
-import classNames from 'components/Flex/classNames';
-import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
-import HubspotForm from 'react-hubspot-form';
 import HeroWrapper from './heroSection.style';
 import RehypeReact from "rehype-react";
-import CodeGroup from '../../../componentsMarkdown/CodeGroup';
 import TextLoop from "react-text-loop";
 import Lottie from 'react-lottie';
 import Card from 'reusecore/src/elements/Card';
 import ListGrid from 'reusecore/src/elements/ListGrid';
 import IconCheck from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/enhancement/check_sm.svg';
+import {getColWidth} from "../../../constants/uiWidths";
+import HeroChannelConnections from "../HeroChannelConnections";
 
-
+const Components = {
+  HeroChannelConnections  : HeroChannelConnections
+};
 const renderAst = new RehypeReact({
   createElement: React.createElement,
   components: {
@@ -39,12 +31,81 @@ const renderAst = new RehypeReact({
 // Glide js options
 
 
+const CtaHref = styled(HrefLink)`
+    &.btn {
+      padding-top: 14px;
+      padding-bottom: 14px;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-right: 10px;
+    }
+  `;
+const CtaLink = styled(Link)`
+    &.btn {
+      padding-top: 14px;
+      padding-bottom: 14px;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-right: 10px;
+    }
+  `;
+
+const ButtonGroup = (props) => (
+    <Fragment>
+      { props.callToAction && props.callToAction.to &&
+      <CtaLink className="btn btn-primary outlined" to={props.callToAction.to} >
+        {props.callToAction.text}
+      </CtaLink>
+      }
+      { props.callToAction && props.callToAction.url &&
+      <CtaHref className="btn btn-primary" to={props.callToAction.url} >
+        {props.callToAction.text}
+      </CtaHref>
+      }
+
+      { props.secondaryCallToAction && props.secondaryCallToAction.to &&
+      <CtaLink className="btn btn-secondary outlined" to={props.secondaryCallToAction.to} >
+        {props.secondaryCallToAction.text}
+      </CtaLink>
+      }
+      { props.secondaryCallToAction && props.secondaryCallToAction.url &&
+      <CtaHref className="btn btn-secondary" to={props.secondaryCallToAction.url} >
+        {props.secondaryCallToAction.text}
+      </CtaHref>
+      }
+
+
+    </Fragment>
+);
+const CardNumbers = styled(Card)`
+    padding: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    color: themed('Rentivo.coilor');
+    background: #f2f2f2;
+    svg {      
+      width: 42px;
+      margin-right: 15px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+  `
+const UnderlayWrapper = styled('div')``;
+const Tagline = styled(Text)``;
+
 const HeroSection = ({
   title,
   backgroundParticles,
   description,
   hero,
+  bodyClasses,
+  component,
+  className,
   as,
+  columnWidths,
   textLoopAst,
   tagline,
   content,
@@ -58,8 +119,8 @@ const HeroSection = ({
   leadingLabelText,
   primaryCallToAction : callToAction,
   secondaryCallToAction,
+  forceHeroPrimaryBg,
   logo,
-  image, // is an array
   backgroundHeroImage,
   leadingLabelHeaderStyle,
   leadingLabelTextStyle,
@@ -68,6 +129,7 @@ const HeroSection = ({
   btnWrapperStyle
 }) => {
 
+  const CustomComponent = Components[component];
 
   const defaultOptions = {
     loop: true,
@@ -77,111 +139,64 @@ const HeroSection = ({
       preserveAspectRatio: 'xMidYMid slice'
     }
   };
-  const CtaHref = styled(HrefLink)`
-    &.btn {
-      padding-top: 14px;
-      padding-bottom: 14px;
-      font-weight: bold;
-      font-size: 1.1em;
-      margin-right: 10px;
-    }
-  `;
-  const CtaLink = styled(Link)`
-    &.btn {
-      padding-top: 14px;
-      padding-bottom: 14px;
-      font-weight: bold;
-      font-size: 1.1em;
-      margin-right: 10px;
-    }
-  `;
 
-  const ButtonGroup = () => (
-      <Fragment>
-        { callToAction && callToAction.to &&
-          <CtaLink className="btn btn-primary outlined" to={callToAction.to} >
-            {callToAction.text}
-          </CtaLink>
-        }
-        { callToAction && callToAction.url &&
-          <CtaHref className="btn btn-primary" to={callToAction.url} >
-            {callToAction.text}
-          </CtaHref>
-        }
-       
-        { secondaryCallToAction && secondaryCallToAction.to &&
-          <CtaLink className="btn btn-secondary outlined" to={secondaryCallToAction.to} >
-            {secondaryCallToAction.text}
-          </CtaLink>
-        }
-        { secondaryCallToAction && secondaryCallToAction.url &&
-          <CtaHref className="btn btn-secondary" to={secondaryCallToAction.url} >
-            {secondaryCallToAction.text}
-          </CtaHref>
-        }
+  const addAllClasses = hero ? ['hero'] : [];
+  if (className) {
+    addAllClasses.push(className);
+  }
+  if(forceHeroPrimaryBg){
+    addAllClasses.push('forcePrimaryBg');
+  }
 
-
-      </Fragment>
-  );
-  const CardNumbers = styled(Card)`
-    padding: 30px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: row;
-    text-align: left;
-    background: #f2f2f2;
-    svg {      
-      width: 42px;
-      margin-right: 15px;
-    }
-    h4 {
-      font-size: 18px;
-    }
-  `
-  const UnderlayWrapper = styled('div')``;
-  const Tagline = styled(Text)``;
   return (
-    <HeroWrapper className={ hero ? 'hero ' : null }>
+      <HeroWrapper className={addAllClasses.join(' ')}>
+        <div className="contained-bg">
+          <div className="bg-settings bg-1" />
+          <div className="bg-settings bg-2" />
+          <div className="bg-settings bg-3" />
+        </div>
+        <Container>
 
-      <Container>
-
-        <Row top="xs" >
-            <Col xs={12} >
-              <Container  width={'960px'}>
+          <Row middle="xs">
+            <Col {...getColWidth(columnWidths, 0)}>
+              <Container width={'960px'}>
                 {/*https://gist.github.com/Kalyse/922cb05b7c9e08e43e39f73538169d77*/}
                 <Heading as={as || 'h2'} {...title} >{title}</Heading>
-                { textLoopAst && textLoopAst.internal && renderAst( JSON.parse( textLoopAst.internal.content ) ) }
+                {textLoopAst && textLoopAst.internal && renderAst(JSON.parse(textLoopAst.internal.content))}
                 <Tagline className={'tagline'}>{tagline}</Tagline>
-                <ButtonGroup />
+                <ButtonGroup callToAction={callToAction} secondaryCallToAction={secondaryCallToAction}/>
               </Container>
 
+            </Col>
+            <Col  {...getColWidth(columnWidths, 0)} >
 
+              {features && <ListGrid
+                  data={features}
+                  columnWidth={[1, 1 / 2, 1 / 2, 1 / 3]} //{[1, 1/2, 1/4]} responsive
+                  component={(feature) => (
+                      <CardNumbers content={feature.title} key={feature.id}>
+                        <IconCheck/>
+                        <div>
+                          <Heading fontWeight={600} as={'h4'} textAlign={'left'} content={feature.title}/>
+                          <Text>{feature.description && feature.description.description}</Text>
+                        </div>
+                      </CardNumbers>
+                  )}
+              />}
+
+              { CustomComponent && <CustomComponent /> }
+
+              {lottieJson && <Lottie options={defaultOptions}
+                                     height={400}
+                                     width={400}
+              />}
             </Col>
 
-          {features && <ListGrid
-              data={features}
-              columnWidth={[1, 1/2, 1/2,1 / 3]} //{[1, 1/2, 1/4]} responsive
-              component={( feature) => (
-                  <CardNumbers key={feature.id}>
-                    <IconCheck />
-                    <div>
-                      <Heading fontWeight={600} as={'h4'}  textAlign={'left'}  content={feature.title} />
-                      <Text>{feature.description && feature.description.description}</Text>
-                    </div>
-                  </CardNumbers>
-              )}
-          /> }
 
-          { lottieJson && <Lottie options={defaultOptions}
-                    height={400}
-                    width={400}
-            /> }
+          </Row>
+        </Container>
 
-
-        </Row>
-      </Container>
-
-    </HeroWrapper>
+      </HeroWrapper>
   );
 };
 
@@ -192,7 +207,6 @@ HeroSection.propTypes = {
   btnStyle: PropTypes.object,
   hero: PropTypes.bool,
   description: PropTypes.object,
-  image: PropTypes.array,
   features: PropTypes.array,
   contentStyle: PropTypes.object,
   outlineBtnStyle: PropTypes.object,
@@ -204,8 +218,8 @@ HeroSection.defaultProps = {
   reverse: false,
   as: 'h2',
   title: {
-    fontSize: ['22px', '34px', '30px', '635px'],
-    fontWeight: '700',
+    fontSize: ['22px', '34px', '30px', '35px'],
+    fontWeight: '400',
     color: '#0f2137',
     letterSpacing: '-0.025em',
     mb: ['20px', '25px'],
