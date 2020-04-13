@@ -10,7 +10,7 @@ import {FORM_SUPPORT_ACCOUNT, FORM_SUPPORT_GENERAL} from '../../constants/erxesF
 export default (props) => {
 
   return (
-      <Layout location={location} subNav={true}>
+      <Layout location={props.location} subNav={true}>
         <Container width={'720px'}>
           <Heading fontWeight={600} textAlign={'center'} as={'h1'} content={'Support - Account Setup'} />
           <Heading fontWeight={400}  textAlign={'center'}  as={'h3'} content={'We love solving support tickets in a single email. Where possible, please include as much information as your fingers will type. .'} />
