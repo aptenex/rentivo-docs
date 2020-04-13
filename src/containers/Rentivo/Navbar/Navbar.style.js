@@ -29,6 +29,9 @@ export const LoginLink = styled('a')`
 
 export const Cta = styled('div')`
     float:right;  
+    @media (max-width: 767px) {
+      display: none;
+    } 
     @media (max-width: 990px) {
       margin-right: 20px;
     }  

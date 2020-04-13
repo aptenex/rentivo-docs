@@ -30,7 +30,7 @@ const ProductsDropdownEl = styled.div`
 const Col = styled.div`
 
   @media (max-width: 768px) {    
-    width: 100vw;
+    width: auto;
   }
 
 `

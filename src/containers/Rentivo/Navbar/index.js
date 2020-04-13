@@ -75,7 +75,7 @@ const Navbar = ({ navbarStyle, className, logoStyle, row, menuWrapper, location 
             <Drawer
               width="500px"
               placement="right"
-              drawerHandler={<HamburgMenu barColor="#eb4d4b" />}
+              drawerHandler={<HamburgMenu barColor="#405650" />}
               open={state.isOpen}
               toggleHandler={toggleHandler}
             >

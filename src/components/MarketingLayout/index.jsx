@@ -19,6 +19,9 @@ import PropTypes from 'prop-types';
 
 const Article = styled('article')`
   margin-top: 180px;
+  @media (max-width: 767px) {
+    margin-top: 200px;   
+  }
   &.top {
     margin-top: 0px;
     section[class^=heroSection] {

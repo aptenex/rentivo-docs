@@ -99,6 +99,11 @@ table td {
   section {
     position: relative;
   }
+  @media (max-width: 767px) {
+  .nav-sub [class*='col-lg'], .nav-sub [class*='col-md']{
+      margin-bottom: 0px;
+    }
+  }
   .nav-sub.contained {
     border-bottom: none;
   }
@@ -116,7 +121,7 @@ table td {
   }
   .drawer-content-wrapper{
     @media (max-width: 767px) {
-      width: 70% !important;
+      width: 100vw !important;
     }
     .drawer-content {
       padding: 60px;    
