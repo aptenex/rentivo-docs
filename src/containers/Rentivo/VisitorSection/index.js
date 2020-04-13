@@ -11,7 +11,7 @@ import Image from 'reusecore/src/elements/Image';
 import FeatureBlock from 'common/src/components/FeatureBlock';
 import Container from 'common/src/components/UI/Container';
 import VisitorSectionWrapper, { SectionObject } from './visitor.style';
-
+import { Link } from 'gatsby';
 import ImageOne from 'common/src/assets/image/rentivo/product/manage-bookings-dashboard.png';
 import ImageBg from 'common/src/assets/image/saas/visitor_bg.png';
 
@@ -41,20 +41,20 @@ const VisitorSection = ({
           <FeatureBlock
             title={
               <Heading
-                content="Software you can trust"
+                content="Simple and Reliable Pricing + Availability Synchronization"
                 {...title}
               />
             }
             description={
               <Text
-                content="For Enhanced performance we use LiteSpeed Web Server, HTTP/2, PHP7. We make your website faster, which will help you to increase search ranking!."
+                content="Rentivo helps you manage your calendars across all of your distribution platforms. It's easy to use and has full two way realtime connectivity approved by all our partners."
                 {...description}
               />
             }
             button={
-              <a href="#1">
-                <Button title="HOW IT WORKS" {...btnStyle} />
-              </a>
+              <Link to="/manage">
+                <Button title="Property Management Software" {...btnStyle} />
+              </Link>
             }
           />
         </Box>

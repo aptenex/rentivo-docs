@@ -12,9 +12,9 @@ export const GLOSSARY_TERMS_HOME = {
 export const GLOSSARY_TERMS_DEVS = {
   HEADER: 'Featured Terms',
   ANCHORS: [
-    { URL: '/glossary/sender-authentication/', TEXTNODE: 'Sender Authentication' },
-    { URL: '/glossary/event-webhook/', TEXTNODE: 'Event Webhook' },
-    { URL: '/glossary/deliverability/', TEXTNODE: 'Email Deliverability' },
+    // { URL: '/glossary/sender-authentication/', TEXTNODE: 'Sender Authentication' },
+    // { URL: '/glossary/event-webhook/', TEXTNODE: 'Event Webhook' },
+    // { URL: '/glossary/deliverability/', TEXTNODE: 'Email Deliverability' },
   ],
   IMAGE: magnifyImageDevs,
 };

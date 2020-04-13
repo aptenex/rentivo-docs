@@ -30,13 +30,6 @@ import ListGrid from 'reusecore/src/elements/ListGrid';
 import IconCheck from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/enhancement/check_sm.svg';
 import { useStaticQuery, graphql } from 'gatsby';
 
-const renderAst = new RehypeReact({
-  createElement: React.createElement,
-  components: {
-    TextLoop: TextLoop
-  },
-}).Compiler;
-// Glide js options
 
 const HeroChannelConnections = ({
 
@@ -82,7 +75,6 @@ const HeroChannelConnections = ({
       
     }
   `);
-  console.log("WHATS THIS", Data);
   return (
     <ChannelsWrapper>
       <div className="illustration small-11 medium-11 large-6 align-right text-center">

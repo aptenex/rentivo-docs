@@ -54,7 +54,6 @@ const TestimonialSection = ({
       }
     }
   `);
-  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", Data);
   const carouselOptions = {
     type: 'carousel',
     autoplay: 6000,

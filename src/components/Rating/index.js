@@ -1,6 +1,7 @@
 import React from 'react';
 import './Rating.scss';
 import { AuthCtx } from '../withUser';
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
 
 class Rating extends React.Component {
   constructor(props) {
@@ -29,10 +30,10 @@ class Rating extends React.Component {
       hasRating: true,
     })
 
-    analytics.track("Doc Rated", {
-      docID: window.location.pathname,
-      userID, // SendGrid userID or false
-      rating
+    trackCustomEvent({
+      'category' : 'Knowledge Base',
+      'action' : 'Star Assigned',
+      value: rating
     });
   }
 
@@ -63,7 +64,7 @@ class Rating extends React.Component {
                 <React.Fragment>
                     {this.state.hasRating ? (
                       <p className="rate-this-doc__success">
-                        You’re the best! Thanks for helping us improve. 🙌
+                        You’re the best! Thanks for helping us improve.
                       </p>
                       ) : (
                         <div className="rating" onClick={this.rateDoc(ctx.user)}>

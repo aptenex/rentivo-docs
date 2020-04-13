@@ -1,6 +1,5 @@
 export const getColWidth = (type, colNumber) => {
    const p =[];
-   console.log(type, colNumber);
    const objValues = Object.entries(COL_WIDTHS[type ?? 'Stacked [ 12, 12 ]']);
    for (let [key, value] of objValues) {
       p[key] = value[ colNumber ];

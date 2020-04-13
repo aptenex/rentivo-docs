@@ -20,7 +20,7 @@ import {
 } from 'styled-system';
 
 // ProductBlock wrapper style
-const ProductBlockWrapper = styled.a`
+const ProductBlockWrapper = styled.div`
   display: block;
   &.icon_left {
     display: flex;

@@ -22,37 +22,19 @@ class SEO extends Component {
     let title;
     let permalink;
     let description = false;
-    console.log(postNode,"<<<<<<<");
-    // #SG Frontmatter
-
-
-    // Defined on Contentful... regardless of category...
-    if(postNode.seoTitle){
+    if(postNode?.seoTitle){
       title = postNode.seoTitle;
       description = postNode.seoDescription;
 
     } else if (postType === 'category') {
       const {
         docType,
-        category,
-      } = postNode.pathContext;
-
+        category : { title : category },
+      } = postNode.pageContext;
 
       title = SEO.capitalizeFirstLetter(`${docType.replace('-', ' ')} | ${category.replace('-', ' ')}`);
 
-    } else if (postType === 'doc') {
-
-      // #SG Frontmatter
-      const { seo } = postNode.frontmatter ?? {};
-      permalink = sitePath + postNode.fields.permalink;
-
-      if (seo) {
-        title = seo.title ? seo.title : postNode.title;
-        description = seo.description ? seo.description : false;
-      } else {
-        ({ title } = postNode.fields);
-      }
-    } else if(postType ==='glossary'){
+    }  else if(postType ==='glossary'){
       permalink = sitePath + '/glossary/' + postNode.slug;
       ({ title } = this.props);
       ({ description } = this.props);

@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'gatsby-link';
+import { getFullPath } from '../../../../constants/pageSlugPrefixes';
 import ProductBlockWrapper, {
   IconWrapper,
   ContentWrapper,
@@ -9,6 +11,9 @@ import ProductBlockWrapper, {
 import Block from '../../../../containers/Rentivo/Icons/Block';
 import Img from 'gatsby-image';
 import ContentfulAsset from '../../../../containers/Rentivo/ContentfulAsset';
+import {ConditionalElseWrapper} from "../../../../containers/Rentivo/Contained";
+import Container from "../UI/Container";
+import Sticky from "react-stickynode";
 
 const ProductBlock = ({
   className,
@@ -18,6 +23,7 @@ const ProductBlock = ({
   title,
   button,
   slug,
+  linkToPage,
   hasOverlay,
   description,
   iconPosition,
@@ -28,6 +34,7 @@ const ProductBlock = ({
   btnWrapperStyle,
   ...props
 }) => {
+  console.log("asdasd", linkToPage);
   // Add all classs to an array
   const addAllClasses = ['product__block'];
   if(hasOverlay && description){
@@ -44,36 +51,44 @@ const ProductBlock = ({
   }
 
   return (
+
     <ProductBlockWrapper
       className={addAllClasses.join(' ')}
       {...wrapperStyle}
       {...props}
-      href={ slug ?? '#'}
     >
-      { contentfulAsset && <ContentfulAsset data={contentfulAsset}/> }
 
 
-      {title || description || button ? (
-        <Fragment>
-          <ContentWrapper className="content__wrapper" {...contentStyle}>
-            {title}
-            {button && (
-              <ButtonWrapper className="button__wrapper" {...btnWrapperStyle}>
-                {button}
-              </ButtonWrapper>
-            )}
-          </ContentWrapper>
-          {hasOverlay && description &&
-            <OverlayWrapper className={'overlayContentWrapper'}  {...contentStyle}>
-              {title}
-              {description}
-            </OverlayWrapper>
-          }
-          {additionalContent}
-        </Fragment>
-      ) : (
-        ''
-      )}
+      <ConditionalElseWrapper
+          condition={linkToPage}
+          wrapper={children => <Link to={getFullPath(linkToPage)}>{children}</Link>}
+          elseWrapper={children => <a href={slug}>{children}</a>} >
+
+          {contentfulAsset && <ContentfulAsset data={contentfulAsset}/> }
+          {title || description || button ? (
+              <Fragment>
+                <ContentWrapper className="content__wrapper" {...contentStyle}>
+                  {title}
+                  {button && (
+                      <ButtonWrapper className="button__wrapper" {...btnWrapperStyle}>
+                        {button}
+                      </ButtonWrapper>
+                  )}
+                </ContentWrapper>
+                {hasOverlay && description &&
+                <OverlayWrapper className={'overlayContentWrapper'}  {...contentStyle}>
+                  {title}
+                  {description}
+                </OverlayWrapper>
+                }
+                {additionalContent}
+              </Fragment>
+          ) : ( '' )}
+
+      </ConditionalElseWrapper>
+
+
+
     </ProductBlockWrapper>
   );
 };
@@ -109,7 +124,10 @@ ProductBlock.propTypes = {
    * flexDirection and justifyContent. */
   btnWrapperStyle: PropTypes.object,
 
-  hasOverlay: PropTypes.bool
+  hasOverlay: PropTypes.bool,
+
+  /** if provided, we would use this to link to a page instead of slug */
+  linkToPage: PropTypes.object,
 };
 
 ProductBlock.defaultProps = {

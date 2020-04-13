@@ -33,32 +33,33 @@ class ForDevelopers extends Component {
           <SEO postNode={this.props} title="For Developers" description="Rentivo API and Product Helpguides for Developers" />
           <div className="container for-devs-callouts m-bottom-6">
             <h1 className="page-title">For Developers</h1>
-            <div className="row row--home-cards">
-              <div className="col-md-4 col-offset-md-2 col-lg-4 col-offset-lg-2 card ta-center">
-                <div className="for-devs-callouts__bar" />
-                <h2>API Reference</h2>
-                <Link to="/api-reference/" className="btn btn-primary center">Visit API reference</Link>
-              </div>
-              <div className="col-lg-4 card ta-center">
-                <div className="for-devs-callouts__bar" />
-                <h2>Get Started</h2>
-                <div className="row for-devs-callouts__get-started-btns">
-                  <Link to="/for-developers/sending-email/api-getting-started/" className="btn btn-primary col-sm-6">API</Link>
-                  <Link to="/for-developers/sending-email/getting-started-smtp/" className="btn btn-primary col-sm-6">SMTP</Link>
-                </div>
-              </div>
-            </div>
+            {/*<div className="row row--home-cards">*/}
+              {/*<div className="col-md-4 col-offset-md-2 col-lg-4 col-offset-lg-2 card ta-center">*/}
+                {/*<div className="for-devs-callouts__bar" />*/}
+                {/*<h2>API Reference</h2>*/}
+                {/*<a parent="_blank" href="https://docs.lycan.rentivo.com" className="btn btn-primary center">Visit API reference</a>*/}
+                {/*/!*<Link to="/api-reference/" className="btn btn-primary center">Visit API reference</Link>*!/*/}
+              {/*</div>*/}
+              {/*<div className="col-lg-4 card ta-center">*/}
+                {/*<div className="for-devs-callouts__bar" />*/}
+                {/*<h2>Get Started</h2>*/}
+                {/*<div className="row for-devs-callouts__get-started-btns">*/}
+                  {/*<Link to="/for-developers/sending-email/api-getting-started/" className="btn btn-primary col-sm-6">API</Link>*/}
+                  {/*<Link to="/for-developers/sending-email/getting-started-smtp/" className="btn btn-primary col-sm-6">SMTP</Link>*/}
+                {/*</div>*/}
+              {/*</div>*/}
+            {/*</div>*/}
           </div>
-          <Libaries />
-          <div className="for-devs-featured container">
-            <h2>Featured Resources</h2>
-            <div className="row row--home-cards">
-              {ForDevelopers.renderFeaturedCards()}
-            </div>
-          </div>
-          <div className="for-devs-glossary">
-            <GlossaryPartial data={GLOSSARY_TERMS_DEVS} />
-          </div>
+          {/*<Libaries />*/}
+          {/*<div className="for-devs-featured container">*/}
+            {/*<h2>Featured Resources</h2>*/}
+            {/*<div className="row row--home-cards">*/}
+              {/*{ForDevelopers.renderFeaturedCards()}*/}
+            {/*</div>*/}
+          {/*</div>*/}
+          {/*<div className="for-devs-glossary">*/}
+            {/*<GlossaryPartial data={GLOSSARY_TERMS_DEVS} />*/}
+          {/*</div>*/}
         </div>
       </Layout>
     );

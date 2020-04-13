@@ -10,12 +10,7 @@ import LearnDropdown from "./DropdownContents/LearnDropdown"
 import PropTypes from 'prop-types';
 import onClickOutside from "react-onclickoutside";
 
-const navbarConfig = [
-  { title: "Features", dropdown: ProductsDropdown },
-  // { title: "Developers", dropdown: DevelopersDropdown },
-  { title: "Why Rentivo", dropdown: CompanyDropdown },
-  { title: "Resources", dropdown: LearnDropdown }
-]
+
 
 
 
@@ -63,7 +58,12 @@ class AnimatedNavbar extends Component {
     let CurrentDropdown
     let PrevDropdown
     let direction
-
+    const navbarConfig = [
+      { title: "Features", dropdown: ProductsDropdown },
+      // { title: "Developers", dropdown: DevelopersDropdown },
+      { title: "Why Rentivo", dropdown: CompanyDropdown },
+      { title: "Resources", dropdown: LearnDropdown }
+    ];
     const currentIndex = this.state.activeIndices[
       this.state.activeIndices.length - 1
     ]

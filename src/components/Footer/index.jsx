@@ -8,9 +8,7 @@ class Footer extends Component {
         <div className="container-lg footer-container">
           <div className="footer-logo" />
           <ul>
-            <li>
-              <a href="https://www.rentivo.com/team" title="About">Team</a>
-            </li>
+
             <li>
                 Company no. 07646198
             </li>

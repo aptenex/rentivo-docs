@@ -8,8 +8,8 @@ const crypto = require('crypto');
  *
  * @param {any} { node, boundActionCreators, getNode }
  */
-exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
-  const { createNodeField } = boundActionCreators;
+exports.onCreateNode = ({node, boundActionCreators, getNode}) => {
+  const {createNodeField} = boundActionCreators;
 
   /**
    * Add slug edge
@@ -17,13 +17,13 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
   let slug;
   if (node && node.internal && node.internal.type === 'MarkdownRemark') {
     const fileNode = getNode(node.parent);
-    if(!fileNode.relativePath){
+    if (!fileNode.relativePath) {
       return;
     }
     const parsedFilePath = path.parse(fileNode.relativePath);
     if (
-      Object.prototype.hasOwnProperty.call(node, 'frontmatter')
-      && Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug')
+        Object.prototype.hasOwnProperty.call(node, 'frontmatter')
+        && Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug')
     ) {
       slug = `/${node.frontmatter.slug}`;
     } else if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
@@ -32,12 +32,12 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       slug = `/${parsedFilePath.dir}/`;
     }
     if (
-      Object.prototype.hasOwnProperty.call(node, 'frontmatter')
-      && Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug')
+        Object.prototype.hasOwnProperty.call(node, 'frontmatter')
+        && Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug')
     ) {
       slug = `/${_.kebabCase(node.frontmatter.slug)}`;
     }
-    createNodeField({ node, name: 'slug', value: _.kebabCase(slug).toLowerCase() });
+    createNodeField({node, name: 'slug', value: _.kebabCase(slug).toLowerCase()});
 
     /**
      * Add permalink edge
@@ -47,8 +47,8 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
      */
     let permalink;
     if (
-      Object.prototype.hasOwnProperty.call(node, 'frontmatter')
-      && Object.prototype.hasOwnProperty.call(node.frontmatter, 'path')
+        Object.prototype.hasOwnProperty.call(node, 'frontmatter')
+        && Object.prototype.hasOwnProperty.call(node.frontmatter, 'path')
     ) {
       permalink = `/${node.frontmatter.path}${slug}`;
     } else if (parsedFilePath.dir !== '') {
@@ -56,7 +56,7 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
     } else {
       permalink = slug;
     }
-    createNodeField({ node, name: 'permalink', value: permalink.toLowerCase() });
+    createNodeField({node, name: 'permalink', value: permalink.toLowerCase()});
 
     /**
      * Check if doc is "ui", "for developers", "glossary" or "release-notes" and add a field slug to represent this.
@@ -68,12 +68,12 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       docType = 'for-developers';
     }
 
-    createNodeField({ node, name: 'docType', value: docType });
+    createNodeField({node, name: 'docType', value: docType});
 
     let cat;
     if (
-      Object.prototype.hasOwnProperty.call(node, 'frontmatter')
-      && Object.prototype.hasOwnProperty.call(node.frontmatter, 'category')
+        Object.prototype.hasOwnProperty.call(node, 'frontmatter')
+        && Object.prototype.hasOwnProperty.call(node.frontmatter, 'category')
     ) {
       cat = node.frontmatter.category;
     } else {
@@ -83,34 +83,34 @@ exports.onCreateNode = ({ node, boundActionCreators, getNode }) => {
       cat = (cat.length > 1 && cat[1].length) ? cat[1] : 'uncategorized';
     }
 
-    createNodeField({ node, name: 'category', value: cat });
+    createNodeField({node, name: 'category', value: cat});
 
     let group = 'ungrouped';
     if (
-      Object.prototype.hasOwnProperty.call(node, 'frontmatter')
-      && Object.prototype.hasOwnProperty.call(node.frontmatter, 'group')
+        Object.prototype.hasOwnProperty.call(node, 'frontmatter')
+        && Object.prototype.hasOwnProperty.call(node.frontmatter, 'group')
     ) {
       group = node.frontmatter.group;
     }
-    createNodeField({ node, name: 'group', value: group });
+    createNodeField({node, name: 'group', value: group});
 
     let title;
     if (
-      Object.prototype.hasOwnProperty.call(node, 'frontmatter')
-      && Object.prototype.hasOwnProperty.call(node.frontmatter, 'title')
+        Object.prototype.hasOwnProperty.call(node, 'frontmatter')
+        && Object.prototype.hasOwnProperty.call(node.frontmatter, 'title')
     ) {
       title = node.frontmatter.title;
     } else {
       title = parsedFilePath.name.replace('-', '');
     }
-    createNodeField({ node, name: 'title', value: title });
+    createNodeField({node, name: 'title', value: title});
   }
 };
 
-exports.createPages = ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators;
+exports.createPages = ({graphql, boundActionCreators}) => {
+  const {createPage} = boundActionCreators;
 
-  const  glossaryPromise = new Promise((resolve, reject) => {
+  const glossaryPromise = new Promise((resolve, reject) => {
 
     const glossaryPage = path.resolve('src/templates/glossary.jsx');
 
@@ -118,14 +118,15 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         graphql(
             `
             {
-              allContentfulGlossaryTerm(
-                limit: 2000,      
-                sort: { fields: [title], order: ASC }
+              allContentfulPage(
+                limit: 2000,   
+                filter: { type: { eq: "Glossary Term" }}   
+                sort: { fields: [name], order: ASC }
               ) {
                 edges {
                   node {
                     id
-                    title
+                    title : name
                     slug
                   }
                 }
@@ -137,11 +138,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             reject(result.errors)
           }
 
-          const pages = result.data.allContentfulGlossaryTerm.edges;
+          const pages = result.data.allContentfulPage.edges;
           pages.forEach((page, index) => {
             createPage({
-              path: '/glossary/' + `${_.kebabCase(page.node.slug)}` + '/' ,
-              component: glossaryPage ,
+              path: '/glossary/' + `${_.kebabCase(page.node.slug)}` + '/',
+              component: glossaryPage,
               context: {
                 slug: page.node.slug,
                 id: page.node.id,
@@ -153,67 +154,80 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 
 
-
-  const markdownPromise = new Promise((resolve, reject) => {
+  const knowledgebasePromise = new Promise((resolve, reject) => {
     const docsPage = path.resolve('src/templates/doc.jsx');
     const categoryPage = path.resolve('src/templates/category.jsx');
 
     resolve(graphql(`
         {
-          allMarkdownRemark(filter: {fields: {docType: {ne: null}}}) {
+          kb : allContentfulPage(filter: {type: {eq: "Knowledge Base"}, slug: {ne: ""}}) {
             edges {
               node {
                 id
-                fileAbsolutePath
-                fields {
-                  permalink
+                slug
+                name
+                type
+                category {
+                  id
+                  title
+                }
+                node_locale
+                parentPage {
+                  id
+                  name
                   slug
-                  category
-                  docType
                 }
               }
             }
           }
-        }
+        }        
       `).then((result) => {
       if (result.errors) {
         /* eslint no-console: "off" */
         reject(result.errors);
       }
 
-      const helpCategorySet = new Set();
-      const developerCategorySet = new Set();
+      // We use a set because it automatically deduplicates items..
+      const kbProductSet = new Set();
+      const developerProductSet = new Set();
 
-      result.data.allMarkdownRemark.edges.forEach((edge) => {
-        const {
-          category,
-          docType,
-        } = edge.node.fields;
-
-        // aggregate "ui" categories
-        if (docType === 'ui') {
-          helpCategorySet.add(category);
-        }
-
-        // aggregate "for-developers" categories
-        if (docType === 'for-developers') {
-          developerCategorySet.add(category);
-        }
-
-        // Create docs pages
-        const { permalink } = edge.node.fields;
-
+      result.data.kb.edges.forEach(({node}) => {
+        const { title } = node.category || {}; // ie "How it Works", "Getting Starting". etc.
+        const { type : docType } = node; // node.type === docType
+        kbProductSet.add({ parentPage : node.parentPage, type: docType , ...node.category});
+        console.log("><>>>>>", node.parentPage);
         createPage({
-          path: permalink,
+          path: ('/docs/' + (node.parentPage && node.parentPage.slug ? (node.parentPage.slug + '/' + node.slug) : node.slug)),
           component: docsPage,
           context: {
-            slug: edge.node.fields.slug,
-            id: edge.node.id,
+            slug: node.slug,
+            id: node.id,
           },
         });
       });
 
-      const categoryList = Array.from(developerCategorySet);
+      //
+      // ** CATEGORIES **
+      //
+      const kbProductList = Array.from(kbProductSet);
+      kbProductList.forEach((category, i) => {
+        console.log("LKALKALKALK", category);
+        // Create "/ui/<category-slug>" pages.
+        createPage({
+          path: `/docs/${_.kebabCase(category.parentPage.slug)}/`,
+          component: categoryPage,
+          context: {
+            parentPage : category.parentPage.id,
+            docType: category.type, // This is the "type" within the Page.
+            categoryTitle: category.title,
+            categoryId : category.id,
+            category: category // not sure how to use an object in graphql function
+          }
+        });
+      });
+
+
+      const categoryList = Array.from(developerProductSet);
       categoryList.forEach((category, i) => {
         // Create "for-developer" category nodes.
         const cat = {
@@ -225,14 +239,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             type: 'forDeveloperCategories',
           },
         };
-        // Get content digest of node. (Required field)
-        const contentDigest = crypto
-          .createHash('md5')
-          .update(JSON.stringify(cat))
-          .digest('hex');
 
         // add it to contentNode
-        cat.internal.contentDigest = contentDigest;
+        cat.internal.contentDigest =  crypto
+            .createHash('md5')
+            .update(JSON.stringify(cat))
+            .digest('hex');
 
         // Create "/for-developers/<category-slug>" pages.
         createPage({
@@ -245,43 +257,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         });
       });
 
-      const helpCategoryList = Array.from(helpCategorySet);
-      helpCategoryList.forEach((category, i) => {
-        // Create "ui" category nodes.
-        const cat = {
-          id: `${i}`,
-          slug: category,
-          parent: '__SOURCE__',
-          children: [],
-          internal: {
-            type: 'helpSupportCategories',
-          },
-        };
 
-        // Get content digest of node. (Required field)
-        const contentDigest = crypto
-          .createHash('md5')
-          .update(JSON.stringify(cat))
-          .digest('hex');
-
-        // add it to userNode
-        cat.internal.contentDigest = contentDigest;
-
-        // Create "/ui/<category-slug>" pages.
-        createPage({
-          path: `/ui/${_.kebabCase(category)}/`,
-          component: categoryPage,
-          context: {
-            docType: 'ui',
-            category,
-          },
-        });
-      });
     }));
   });
 
 
-  const  productPromise = new Promise((resolve, reject) => {
+  const productPromise = new Promise((resolve, reject) => {
 
     const productPage = path.resolve('src/templates/product.jsx');
 
@@ -311,7 +292,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           pages.forEach((page, index) => {
             createPage({
               path: `/${_.kebabCase(page.node.slug)}`,
-              component: productPage ,
+              component: productPage,
               context: {
                 slug: page.node.slug,
                 id: page.node.id,
@@ -324,7 +305,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 
 
-  const  caseStudyPromise = new Promise((resolve, reject) => {
+  const caseStudyPromise = new Promise((resolve, reject) => {
 
     const caseStudyPage = path.resolve('src/templates/caseStudy.jsx');
 
@@ -352,7 +333,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           pages.forEach((page, index) => {
             createPage({
               path: '/customers/' + `${_.kebabCase(page.node.slug)}`,
-              component: caseStudyPage ,
+              component: caseStudyPage,
               context: {
                 slug: page.node.slug,
                 id: page.node.id,
@@ -365,8 +346,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 
 
-
-  const  integrationPromise = new Promise((resolve, reject) => {
+  const integrationPromise = new Promise((resolve, reject) => {
 
     const integrationPage = path.resolve('src/templates/integration.jsx');
 
@@ -395,7 +375,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           pages.forEach((page, index) => {
             createPage({
               path: `/integrations/${_.kebabCase(page.node.slug)}`,
-              component: integrationPage ,
+              component: integrationPage,
               context: {
                 slug: page.node.slug,
                 id: page.node.id,
@@ -408,51 +388,50 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
   });
 
 
+  // const partnersPromise = new Promise((resolve, reject) => {
+  //
+  //   const partnerPage = path.resolve('src/templates/partner.jsx');
+  //
+  //   resolve(
+  //       graphql(
+  //           `
+  //           {
+  //             allContentfulPartner(filter: {slug: {ne: null}}) {
+  //               edges {
+  //                 node {
+  //                   id
+  //                   slug
+  //                   name
+  //                   node_locale
+  //                 }
+  //               }
+  //             }
+  //           }
+  //
+  //         `
+  //       ).then(result => {
+  //         if (result.errors) {
+  //           reject(result.errors)
+  //         }
+  //
+  //         const pages = result.data.allContentfulPartner.edges;
+  //         pages.forEach((page, index) => {
+  //           createPage({
+  //             path: `/partners/${_.kebabCase(page.node.slug)}`,
+  //             component: partnerPage,
+  //             context: {
+  //               slug: page.node.slug,
+  //               id: page.node.id,
+  //               node_locale: page.node.node_locale
+  //             },
+  //           });
+  //         })
+  //       })
+  //   )
+  // });
 
-  const  partnersPromise = new Promise((resolve, reject) => {
 
-    const partnerPage = path.resolve('src/templates/partner.jsx');
-
-    resolve(
-        graphql(
-            `
-            {
-              allContentfulPartner(filter: {slug: {ne: null}}) {
-                edges {
-                  node {
-                    id
-                    slug
-                    name
-                    node_locale
-                  }
-                }
-              }
-            }
-
-          `
-        ).then(result => {
-          if (result.errors) {
-            reject(result.errors)
-          }
-
-          const pages = result.data.allContentfulPartner.edges;
-          pages.forEach((page, index) => {
-            createPage({
-              path: `/partners/${_.kebabCase(page.node.slug)}`,
-              component: partnerPage ,
-              context: {
-                slug: page.node.slug,
-                id: page.node.id,
-                node_locale: page.node.node_locale
-              },
-            });
-          })
-        })
-    )
-  });
-
-
-  const  featuresPromise = new Promise((resolve, reject) => {
+  const featuresPromise = new Promise((resolve, reject) => {
 
     const featuresPage = path.resolve('src/templates/feature.jsx');
 
@@ -500,15 +479,13 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     )
   });
 
-
-
-
-  return Promise.all([markdownPromise, glossaryPromise, productPromise, integrationPromise, partnersPromise, caseStudyPromise, featuresPromise ]);
+  //  partnersPromise,
+  return Promise.all([knowledgebasePromise, glossaryPromise, productPromise, integrationPromise, caseStudyPromise, featuresPromise]);
 
 
 };
 
-exports.onCreateWebpackConfig = ({ stage, actions }) => {
+exports.onCreateWebpackConfig = ({stage, actions}) => {
   if (stage === 'build-javascript') {
     actions.setWebpackConfig({
 

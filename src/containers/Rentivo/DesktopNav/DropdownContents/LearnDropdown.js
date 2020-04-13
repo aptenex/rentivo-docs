@@ -1,4 +1,5 @@
 import React from "react"
+import Link from 'gatsby-link';
 import styled from "styled-components"
 import {
   Icon,
@@ -42,14 +43,14 @@ const LearnDropdown = () => {
           <p>Are you a developer looking to integrate or a customer on the quest of knowledge?</p>
           <LinkList>
             <li>
-              <a href="/docs">
+              <Link to="/docs">
                 <Icon /> Knowledge Center
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/">
+              <Link to="/support">
                 <Icon /> Support
-              </a>
+              </Link>
             </li>
 
           </LinkList>

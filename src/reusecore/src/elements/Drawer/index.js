@@ -64,7 +64,7 @@ Drawer.propTypes = {
 };
 
 Drawer.defaultProps = {
-  width: '300px',
+  width: '400px',
   handler: false,
   level: null
 };

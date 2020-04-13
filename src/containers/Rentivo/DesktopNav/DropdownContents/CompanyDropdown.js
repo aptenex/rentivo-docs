@@ -201,11 +201,12 @@ const CompanyDropdown = () => {
                 <Icon /> About Rentivo
               </Link>
             </HeadingLink>
-            <HeadingLink>
-              <Link to="/partners">
-                <Icon /> Our Partners
-              </Link>
-            </HeadingLink>
+            {/* REMOVED DUE TO OVERLAP WITH INTEGRATIONS */}
+            {/*<HeadingLink>*/}
+              {/*<Link to="/partners">*/}
+                {/*<Icon /> Our Partners*/}
+              {/*</Link>*/}
+            {/*</HeadingLink>*/}
             <HeadingLink>
               <Link to="/integrations">
                 <Icon /> Our Integrations

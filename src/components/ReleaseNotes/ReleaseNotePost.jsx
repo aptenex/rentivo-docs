@@ -3,14 +3,7 @@ import _ from 'lodash';
 import RehypeReact from 'rehype-react';
 import Callout from '../../componentsMarkdown/Callout';
 import CodeGroup from '../../componentsMarkdown/CodeGroup';
-
-const renderAst = new RehypeReact({
-  createElement: React.createElement,
-  components: {
-    'call-out': Callout,
-    'code-group': CodeGroup,
-  },
-}).Compiler;
+import renderAst from "../../utils/renderer";
 
 const ReleaseNotePost = ({ node }) => (
   <div key={node.releaseDate} className="release-note m-bottom-4">

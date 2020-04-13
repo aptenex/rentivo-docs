@@ -1,28 +1,22 @@
 import { Link } from 'gatsby';
 import React from 'react';
 import _ from 'lodash';
+import { getFullPath } from '../../constants/pageSlugPrefixes';
 
 function Group(props) {
-  const sort = _.sortBy(props.edges, [function (o) { return o.node.frontmatter.order; }]);
+  const sort = _.sortBy(props.edges, [function (o) { return o.node?.order; }]);
   return (
     <div className="group-links">
       {sort.map((doc) => {
         const {
-          permalink,
-          title,
-        } = doc.node.fields;
+          slug,
+          name,
+        } = doc.node;
+        return <Link
+            key={slug}
+            to={getFullPath( doc.node, slug )}
+        >{ name }</Link>;
 
-        const docIsVisible = !!doc.node.frontmatter.navigation.show;
-
-        return docIsVisible
-          ? (
-            <Link
-              key={permalink}
-              to={permalink}
-              dangerouslySetInnerHTML={{ __html: title }}
-            />
-          )
-          : null;
       })}
     </div>
   );

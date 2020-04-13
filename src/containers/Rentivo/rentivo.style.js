@@ -109,10 +109,14 @@ table td {
     position: relative;
   
   }
-
+  .reusecore__drawer {
+    li {
+    
+    }
+  }
   .drawer-content-wrapper{
     @media (max-width: 767px) {
-      width: 300px!important;
+      width: 70% !important;
     }
     .drawer-content {
       padding: 60px;    
@@ -122,14 +126,37 @@ table td {
       @media (max-width: 767px) {
         padding: 50px 40px 30px 40px;
       }
+      div[class^='LearnDropdown_'],
+      div[class^='CompanyDropdown__CompanyDropdownEl']{
+        display: block !important;
+        width: auto !important;
+       
+      }
+       div[class^='LearnDropdown_'] {
+         h3 {
+          margin-top: 40px;
+        }
+        li a {
+          color: #01c88b;
+        }
+       }
+      
       .mobile_menu {
         margin-bottom: 40px;
         flex-grow: 1;
         @media (max-width: 767px) {
           margin-bottom: 30px;
         }
+        ul {
+          margin: 0px;
+          svg {
+            position: relative;
+            left: -30px;
+          }
+        }
         li{
-          margin-bottom: 35px;
+          width: auto !important;
+          min-width: inherit !important;
           @media (max-width: 767px) {
             margin-bottom: 25px;
           }

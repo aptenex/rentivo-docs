@@ -90,7 +90,7 @@ const DropdownSlot = styled.div`
   left: 50%;
   transform: translateX(-50%);
   perspective: 1500px;
-  
+  z-index: 3;
 `
 
 export default class NavbarItem extends Component {

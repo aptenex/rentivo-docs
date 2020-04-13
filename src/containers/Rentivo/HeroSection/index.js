@@ -18,17 +18,7 @@ import ListGrid from 'reusecore/src/elements/ListGrid';
 import IconCheck from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/enhancement/check_sm.svg';
 import {getColWidth} from "../../../constants/uiWidths";
 import HeroChannelConnections from "../HeroChannelConnections";
-
-const Components = {
-  HeroChannelConnections  : HeroChannelConnections
-};
-const renderAst = new RehypeReact({
-  createElement: React.createElement,
-  components: {
-    TextLoop: TextLoop
-  },
-}).Compiler;
-// Glide js options
+import renderAst from "../../../utils/renderer";
 
 
 const CtaHref = styled(HrefLink)`
@@ -95,6 +85,9 @@ const CardNumbers = styled(Card)`
   `
 const UnderlayWrapper = styled('div')``;
 const Tagline = styled(Text)``;
+const Components = {
+  HeroChannelConnections  : HeroChannelConnections
+};
 
 const HeroSection = ({
   title,

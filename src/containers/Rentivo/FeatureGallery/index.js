@@ -55,6 +55,7 @@ const FeatureGallerySection = ({
                 iconStyle={iconStyle}
                 contentStyle={contentStyle}
                 slug={node.slug}
+                linkToPage={node.linkToPage}
                 title={<Heading content={node.title} {...featureTitle} />}
                 description={
                   node.description && <Text className={'productContent'} content={node.description.description} {...featureDescription} />

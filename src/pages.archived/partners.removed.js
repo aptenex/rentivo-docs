@@ -3,42 +3,21 @@ import Sticky from 'react-stickynode';
 import { ThemeProvider } from 'styled-components';
 import { rentivoTheme } from 'common/src/theme/rentivo';
 import { ResetCSS } from 'common/src/assets/css/style';
-import { GlobalStyle, ContentWrapper } from '../containers/Rentivo/rentivo.style';
-import Navbar from '../containers/Rentivo/Navbar';
-import BannerSection from '../containers/Rentivo/BannerSection';
-import CalendlySection from '../containers/Rentivo/CalendlySection';
-import ProductSection from '../containers/Rentivo/FeatureGallery';
-import VisitorSection from '../containers/Rentivo/VisitorSection';
-import ServiceSection from '../containers/Rentivo/ServiceSection';
-import FaqSection from '../containers/Rentivo/FaqSection';
-import Footer from '../containers/Rentivo/Footer';
-import PricingSection from '../containers/Rentivo/PricingSection';
-import TrialSection from '../containers/Rentivo/TrialSection';
-import TimelineSection from '../containers/Rentivo/TimelineSection';
-import TestimonialCards from '../containers/Rentivo/TestimonialCards';
-import TestimonialSection from '../containers/Rentivo/TestimonialSection';
-import PartnerSection from '../containers/Rentivo/PartnerSection';
-import IntegrationFlipchart from '../containers/Rentivo/IntegrationFlipchart';
+import FaqSection from '../containers/Rentivo/FaqSection/index';
 import { DrawerProvider } from 'common/src/contexts/DrawerContext';
-import SEO from '../components/seo';
 import { useProductHome } from "../containers/Rentivo/FeatureGallery/hooks/home";
 import { useFAQGroupsOnHome } from "../containers/Rentivo/FaqSection/hooks/home";
 import { getMenuProducts} from '../containers/Rentivo/DesktopNav/DropdownContents/hooks/home';
-import MarketingLayout from "../components/MarketingLayout";
-import Box from 'reusecore/src/elements/Box';
+import MarketingLayout from "../components/MarketingLayout/index";
 import Text from 'reusecore/src/elements/Text';
 import Heading from 'reusecore/src/elements/Heading';
 import Card from 'reusecore/src/elements/Card';
 import ListGrid from 'reusecore/src/elements/ListGrid';
 import Container from 'common/src/components/UI/Container';
 import styled from 'styled-components';
-import TeamAtDeskImage from '../components/Images/TeamAtDesk';
-import SoftwareDeveloperImage from '../components/Images/SoftwareDeveloper';
-import Row from 'components/Flex/Row'
-import Col from 'components/Flex/Col'
 import Image from "gatsby-image";
 import {Link, graphql} from "gatsby";
-import './partners.css';
+import '../pages/partners.css';
 import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChevronRight, faExternalLinkAlt} from '@fortawesome/pro-duotone-svg-icons';
@@ -141,7 +120,6 @@ export default injectIntl( ({data : { tags : { distinct : tags } } , data : { al
   const menuProducts = getMenuProducts();
   const productCategory = useProductHome();
   const faqGroups = useFAQGroupsOnHome();
-  console.log("what ios partners", partners, tags);
 
 
   const [ filteredPartners, setFilteredPartners ] = useState( partners );
@@ -169,12 +147,11 @@ export default injectIntl( ({data : { tags : { distinct : tags } } , data : { al
         </Section>
         <Section>
 
-
         <Container>
             <TagFilter>
               <li className={ activeTag === null ?  "active" : null  } onClick={() => handleTagClickEvent(null)} key={'all-partners'}>All Partners</li>
               {tags.map( (tag, index) => (
-                  <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
+                  <li className={ activeTag === tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
               ))}
             </TagFilter>
               {filteredPartners &&
@@ -201,7 +178,7 @@ export default injectIntl( ({data : { tags : { distinct : tags } } , data : { al
 
                         <TagList>
                           {node.tags && node.tags.map( (tag, index) => (
-                              <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
+                              <li className={ activeTag === tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
                           ))}
                         </TagList>
 

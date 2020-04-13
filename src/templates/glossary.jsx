@@ -17,20 +17,8 @@ import './glossary.scss';
 import { BLOCKS, MARKS } from "@contentful/rich-text-types"
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 
-// const renderAst = new RehypeReact({
-//   createElement: React.createElement,
-//   components: {
-//     gist: Gist,
-//     'call-out-link': CalloutLink,
-//     'call-out': Callout,
-//     'code-group': CodeGroup,
-//   },
-// }).Compiler;
 
 class GlossaryTemplate extends React.Component {
-
-
-
 
   render() {
     const options = {
@@ -52,7 +40,6 @@ class GlossaryTemplate extends React.Component {
 
           <div className="doc-main">
             <h1 dangerouslySetInnerHTML={{ __html: postNode.title }} />
-            {/*{renderAst(postNode.htmlAst)}*/}
             { documentToReactComponents(postNode.body.json, options) }
             <Rating />
 
@@ -69,27 +56,8 @@ export default GlossaryTemplate;
 export const pageQuery = graphql`
   
   query GlossaryBySlug($id: String!) {
-    doc : contentfulGlossaryTerm(id: {eq: $id}) {
-      body {
-        id
-        body
-        json
-        nodeType
-        internal {
-          content
-          description
-          ignoreType
-          mediaType
-        }
-      }
-      slug
-      title
-      keywords
-      category {
-        title
-        updatedAt
-        createdAt
-      }
+    doc : contentfulPage(id: {eq: $id}) {
+      ...Page
     }
   }
 `;

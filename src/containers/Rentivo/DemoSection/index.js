@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Box from 'reusecore/src/elements/Box';
 import Text from 'reusecore/src/elements/Text';
@@ -21,6 +21,10 @@ import Arrow from 'common/src/assets/image/rentivo/banner/arrow-200-top-right.pn
 import BannerObject1 from 'common/src/assets/image/saas/banner/bannerObject1.png';
 import DemoForm from '../DemoForm';
 import MarcSignatureImage from 'components/Images/MarcSignature';
+import {useScript} from "../../../components/useScript";
+import {loadScript} from "../../../components/loadScript";
+import {ErxesEmbed} from "../ErxesEmbed";
+import {FORM_DEMO} from "../../../constants/erxesForms";
 
 const SummarySection = styled('section')`
   position: relative;
@@ -84,6 +88,7 @@ const DemoSection = ({
     </Fragment>
   );
 
+
   const OnlineNow = () => (
     <div style={{color:'green'}}>Online now</div>
   );
@@ -97,8 +102,6 @@ const DemoSection = ({
               <Text content="Customer Success" {...discountAmount} />
               <Text content="demo request" {...discountText} />
             </DiscountLabel>
-
-
 
             <FeatureBlock
                 title={
@@ -125,7 +128,7 @@ const DemoSection = ({
           <Col xl={6}>
             <SummarySection>
               <Container  width={'820px'}>
-                <DemoForm/>
+                <ErxesEmbed embed={FORM_DEMO}  />
               </Container>
             </SummarySection>
           </Col>

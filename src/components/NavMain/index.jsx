@@ -115,9 +115,9 @@ class NavMain extends Component {
             </div>
 
             <div className="nav-item nav-item--btn">
-                <a className="nav-main__login" onClick={this.closeMenu} href={LINKS.SUPPORT}>
+                <Link  className="nav-main__login" to={'/support'}>
                     Create Support Ticket
-                </a>
+                </Link>
               {/*<a className="nav-main__login" href={LINKS.PRICING}>*/}
                 {/*Start Free*/}
               {/*</a>*/}

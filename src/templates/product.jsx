@@ -31,18 +31,6 @@ import FaqList from '../containers/Rentivo/FaqSection/List';
 import ConditionalWrapper from "../containers/Rentivo/Contained";
 import { BlobWrapperA, BlobWrapperB,BlobWrapperC } from '../containers/Rentivo/rentivo.style';
 
-
-
-const renderAst = new RehypeReact({
-  createElement: React.createElement,
-  components: {
-    gist: Gist,
-    'call-out-link': CalloutLink,
-    'call-out': Callout,
-    'code-group': CodeGroup,
-  },
-}).Compiler;
-
 class ProductTemplate extends React.Component {
   getLinks() {
     const { data } = this.props;

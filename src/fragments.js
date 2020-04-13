@@ -3,47 +3,76 @@
 /* eslint global-require:"off" */
 import React from 'react';
 import {graphql} from "gatsby";
+
 export const featuretteFields = graphql`
   fragment FeatureItem on ContentfulFeatureItem {
-    
-      id
-      title
-      description {
-        childMarkdownRemark {
-          html
-        }
-        description
+
+    id
+    title
+    description {
+      childMarkdownRemark {
+        html
       }
-      slug  
-      image {
-        fixed(height: 125) {
-          ...GatsbyContentfulFixed_tracedSVG
+      description
+    }
+    slug
+    linkToPage {
+      ... on ContentfulProduct {
+        slug
+        internal {
+          type
         }
-        ... on ContentfulAsset {
-          svg {
-            content # SVG content optimized with SVGO                        
-            dataURI # Optimized SVG as compact dataURI
-            absolutePath #
-            relativePath #
-          }
-          file {
-            contentType
-            url
-            fileName
-            contentType
-            details {
-              image {
-                width
-                height
-              }
+      }
+      ... on ContentfulPage {
+        slug
+        internal {
+          type
+        }
+      }
+    }
+    image {
+      fixed(height: 125) {
+        ...GatsbyContentfulFixed_tracedSVG
+      }
+      ... on ContentfulAsset {
+        svg {
+          content # SVG content optimized with SVGO                        
+          dataURI # Optimized SVG as compact dataURI
+          absolutePath #
+          relativePath #
+        }
+        file {
+          contentType
+          url
+          fileName
+          contentType
+          details {
+            image {
+              width
+              height
             }
           }
         }
       }
+    }
   }
-  
-  
+
+
   fragment FAQ on ContentfulFaq {
+    internal {
+      type
+    }
+    id
+    question
+    answer {
+      answer
+      childMarkdownRemark {
+        html
+        rawMarkdownBody
+      }
+    }
+    group
+    items {
       internal {
         type
       }
@@ -57,39 +86,57 @@ export const featuretteFields = graphql`
         }
       }
       group
-      items {
-        internal {
-          type
-        }
+    }
+  }
+  
+  fragment Page on ContentfulPage {
+    id
+    slug
+    name
+    node_locale
+    type
+    internal {
+      type
+    }    
+    category {
+      id
+      title
+    }
+    parentPage {
+      ... on ContentfulProduct {
         id
-        question
-        answer {
-          answer
-          childMarkdownRemark {
-            html
-            rawMarkdownBody
-          }
-        }
-        group       
+        name
+        slug
       }
+    }
+    body {
+      json
+    }
+    bodyMarkdown {
+      childMarkdownRemark {
+        htmlAst
+      }
+      bodyMarkdown
+    }
+    seoTitle    
   }
   
   fragment FeatureGallery on ContentfulFeatureGallery {
-      internal {
-        type
-      }
-      id
-      slug
-      title
-      columnWidth
-      borderlessItems
-      items {        
-        ...FeatureItem
-      }
+    internal {
+      type
     }
- 
-  
-  
+    id
+    slug
+    title
+    columnWidth
+    borderlessItems
+    items {
+      ...FeatureItem
+    }
+  }
+
+
+
   fragment Hero on ContentfulHero {
     internal {
       type
@@ -101,20 +148,20 @@ export const featuretteFields = graphql`
     columnWidths
     component
     textLoopAst {
-      id 
+      id
       internal {
         content
-      }      
+      }
     }
     features {
       ...FeatureItem
     }
     as
-#    lottieJson {
-#      file {
-#        url
-#      }
-#    }
+    #    lottieJson {
+    #      file {
+    #        url
+    #      }
+    #    }
     bodyClasses
     className
     menuVariant
@@ -131,7 +178,7 @@ export const featuretteFields = graphql`
       text
     }
     tagline
-    
+
   }
   fragment Featurette on ContentfulFeaturette {
     internal {
@@ -199,7 +246,7 @@ export const featuretteFields = graphql`
       parentBlank
       text
     }
-   
+
   }
 `
 

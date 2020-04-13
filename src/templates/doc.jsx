@@ -14,67 +14,45 @@ import withSubNav from '../components/NavSub';
 import Layout from '../components/DocsLayout';
 import './syntax-highlighting.scss';
 import './doc.scss';
-
-const renderAst = new RehypeReact({
-  createElement: React.createElement,
-  components: {
-    gist: Gist,
-    'call-out-link': CalloutLink,
-    'call-out': Callout,
-    'code-group': CodeGroup,
-  },
-}).Compiler;
-
+import { render } from '../utils/renderer';
 class DocTemplate extends React.Component {
   getLinks() {
     const { data } = this.props;
-    const headers = data.doc.htmlAst.children.filter(el => el.type === 'element' && _.includes(['h2', 'h3'], el.tagName));
-    return headers.map((header) => {
+    console.log( data?.doc?.bodyMarkdown?.childMarkdownRemark?.htmlAst);
+    const headers = data?.doc?.bodyMarkdown?.childMarkdownRemark?.htmlAst?.children?.filter(el => el.type === 'element' && _.includes(['h2', 'h3'], el.tagName));
+    return headers?.map((header) => {
       const link = {};
       link.tagName = header.tagName;
       link.textNode = header.children[1] ? header.children[1].value : '';
       link.id = header.properties.id;
       return link;
-    });
-  }
-
-  getRepoLink() {
-    const { data } = this.props;
-    const {
-      permalink,
-    } = data.doc.fields;
-
-    const absPath = data.doc.fileAbsolutePath;
-    const filename = absPath.substring(absPath.lastIndexOf('/') + 1);
-    const fileSlug = filename.replace('.md', '');
-    const path = permalink.replace(`${fileSlug}/`, '');
-    const gitHubURL = config.gitHubMarkdownPath + path + filename;
-
-    return gitHubURL;
+    }) || [];
   }
 
   render() {
     const { data, location } = this.props;
     const postNode = data.doc;
     const asideLinks = this.getLinks();
+    console.log(asideLinks, "whats postnode", postNode, postNode?.body?.json?.content);
 
+    const Body = render( postNode?.body?.json?.content?.length > 0 ?
+        postNode?.body.json :
+        postNode?.bodyMarkdown.childMarkdownRemark.htmlAst );
     return (
       <Layout location={location} subNav={true}>
         <div className="container-lg doc-wrap">
           <SEO postNode={postNode} postType="doc" />
-          {postNode.fields.docType !== 'glossary' && asideLinks.length
+          { asideLinks.length
             ? (<AsideMenu asideLinks={this.getLinks()} />)
             : null
           }
+
           <div className="doc-main">
-            <h1 dangerouslySetInnerHTML={{ __html: postNode.fields.title }} />
-            {renderAst(postNode.htmlAst)}
+            <h1 dangerouslySetInnerHTML={{ __html: postNode.name }} />
+            { Body }
+
             <Rating />
-            <div className="edit-this-page m-top-4 ta-center">
-              <strong>See a mistake?</strong>
-              {' '}
-              <a href={this.getRepoLink()}>Edit this page</a>
-            </div>
+
           </div>
         </div>
       </Layout>
@@ -86,25 +64,9 @@ export default DocTemplate;
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
-  query BlogPostByID($id: String!) {
-    doc: markdownRemark(id: { eq: $id } ) {
-      htmlAst
-      html
-      fileAbsolutePath
-      frontmatter {
-        seo {
-          title
-          description
-          keywords
-        }
-      }
-      fields {
-        slug
-        title
-        category
-        docType
-        permalink
-      }
+  query DocPostByID($id: String!) {
+    doc : contentfulPage(id: {eq: $id}) {
+      ...Page
     }
   }
 `;

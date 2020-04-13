@@ -119,7 +119,6 @@ export default (props) => {
 
   });
 
-  console.log("ASdasd", featurePages);
   return (
       <MarketingLayout>
 

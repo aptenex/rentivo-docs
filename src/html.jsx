@@ -24,7 +24,6 @@ export default class HTML extends React.Component {
             href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"
             as="style"
           />
-          <script src="//cdn.optimizely.com/js/72168671.js" />
           <script
             src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"
           />

@@ -61,14 +61,15 @@ export default Glossary;
 
 export const pageQuery = graphql`
   query glossary {
-    glossary: allContentfulGlossaryTerm(
-      limit: 2000,      
-      sort: { fields: [title], order: ASC }
+    glossary: allContentfulPage(
+      limit: 2000,
+       filter: { type: { eq: "Glossary Term" }},
+       sort: { fields: [name], order: ASC }
     ) {
       edges {
         node {
           id
-          title
+          title : name
           slug
         }
       }

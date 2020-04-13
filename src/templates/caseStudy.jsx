@@ -1,33 +1,23 @@
 import React, {Fragment} from 'react';
 import { graphql } from 'gatsby';
-import RehypeReact from 'rehype-react';
 import _ from 'lodash';
-import config from '../../data/SiteConfig';
 import SEO from '../components/SEO';
 import AsideMenu from '../components/AsideMenu';
-import withSubNav from '../components/NavSub';
-import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import TestimonialItem from '../containers/Rentivo/TestimonialItem';
 import MarketingLayout from "../components/MarketingLayout";
-import FaqList from '../containers/Rentivo/FaqSection/List';
 import Text from 'reusecore/src/elements/Text';
 import Heading from 'reusecore/src/elements/Heading';
 import styled from 'styled-components';
 import Container from 'common/src/components/UI/Container';
 import Image from 'gatsby-image';
 import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
-import DemoForm from 'containers/Rentivo/DemoForm';
-import HubspotForm from "react-hubspot-form";
-import { Link } from 'gatsby';
-import SubNav from '../components/NavSub';
-import HeroSection from '../containers/Rentivo/HeroSection';
 import Row from 'components/Flex/Row'
 import Col from 'components/Flex/Col'
 import Card from 'reusecore/src/elements/Card';
-import LogoImage from 'common/src/assets/image/rentivo-logo.png';
 import Box from 'reusecore/src/elements/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLinkAlt, faDownload } from '@fortawesome/pro-duotone-svg-icons'
+import renderAst from "../utils/renderer";
 
 const CardWrapper = styled(Card)`
     padding: 30px;
@@ -182,10 +172,6 @@ const StudyLink = styled('a')`
   margin-left: 20px;
 `;
 
-const renderAst = new RehypeReact({
-  createElement: React.createElement,
-}).Compiler;
-
 class CaseStudyTemplate extends React.Component {
   getLinks() {
     const { data } = this.props;
@@ -260,10 +246,7 @@ class CaseStudyTemplate extends React.Component {
                   <Text as={'div'}> {renderAst(caseStudyNode.content.childMarkdownRemark.htmlAst)}</Text>
                 }
 
-
-
               </Col>
-
               <Col  md={12} xl={3} >
                 <Requirements title={'Requirements'} content={ caseStudyNode.requirements } />
                 <Requirements title={'Results'} content={ caseStudyNode.results } />
@@ -271,8 +254,6 @@ class CaseStudyTemplate extends React.Component {
                 {caseStudyNode.website && <Text>
                   <FontAwesomeIcon icon={faExternalLinkAlt}/>
                   <StudyLink target={'_blank'} href={caseStudyNode.website}>{caseStudyNode.website}</StudyLink>
-
-
                   { caseStudyNode.downloadStudy && <DownloadLink download target={'_self'} href={caseStudyNode.downloadStudy.file.url }>Download PDF <FontAwesomeIcon icon={faDownload}/> </DownloadLink> }
                 </Text> }
 

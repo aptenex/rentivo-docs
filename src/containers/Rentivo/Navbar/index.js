@@ -15,10 +15,10 @@ import LogoImage from 'common/src/assets/image/rentivo-logo.png';
 import styled from "styled-components"
 import { IconLockMan, IconLock as Lock } from '../Icons';
 import { CtaSection, LoginLink, IconLock, Cta } from './Navbar.style';
-
+import Link from 'gatsby-link';
+import MobileNav from "../MobileNav";
 
 const Navbar = ({ navbarStyle, className, logoStyle, row, menuWrapper }) => {
-
   const addAllClasses = ['main_navbar'];
   if (className) {
     addAllClasses.push(className);
@@ -61,36 +61,26 @@ const Navbar = ({ navbarStyle, className, logoStyle, row, menuWrapper }) => {
             <div  className="animated_navbar">
               <AnimatedNavbar  duration={ 300 } />
             </div>
-            <CtaSection>
-
+            {!location?.pathname.includes('demo-request') && <CtaSection>
               <Cta href="#1" className="navbar_drawer_button">
-                <a className={'btn btn-primary'} href="/demo-request" title="Get connected with Rentivo and start a conversation">Demo Request</a>
+                <Link className={'btn btn-primary'} to="/demo-request"
+                      title="Get connected with Rentivo and start a conversation">Demo Request</Link>
               </Cta>
-
-
               <LoginLink href="https://manage.rentivo.com/login">
                 Sign In
               </LoginLink>
               <IconLock/>
-
-
             </CtaSection>
-
-            {/*<ScrollSpyMenu*/}
-              {/*className="main_menu"*/}
-              {/*menuItems={Data.rentivoJson.MENU_ITEMS}*/}
-              {/*offset={-70}*/}
-            {/*/>*/}
+            }
             <Drawer
-              width="420px"
+              width="500px"
               placement="right"
               drawerHandler={<HamburgMenu barColor="#eb4d4b" />}
               open={state.isOpen}
               toggleHandler={toggleHandler}
             >
-              <ScrollSpyMenu
+              <MobileNav
                 className="mobile_menu"
-                menuItems={Data.rentivoJson.MENU_ITEMS}
                 drawerClose={true}
                 offset={-100}
               />

@@ -27,40 +27,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronLeft } from '@fortawesome/pro-duotone-svg-icons'
 import Text from "../reusecore/src/elements/Text";
 
-const renderAst = new RehypeReact({
-  createElement: React.createElement,
-  components: {
-    gist: Gist,
-    'call-out-link': CalloutLink,
-    'call-out': Callout,
-    'code-group': CodeGroup,
-  },
-}).Compiler;
 
-
-
-const Section = styled('section')`
-  position: relative;
-  padding-top: 180px;
-`;
-const SummarySection = styled('section')`
-  position: relative;
-  padding-top: 80px;
-  padding-bottom: 80px;
-  img,svg {
-    max-width: 420px;
-    width: 420px;
-    margin-bottom: 50px;
-  }
-   
-`;
-
-const SummaryContent = styled('div')`
-  p {
-      font-size: 30px;
-      line-height: 2.5rem;
-    }
-`;
 
 const ReferenceProduct = styled(Link)`
   display: flex;
@@ -83,10 +50,6 @@ const ProductDescriptionSection = styled('div')`
   text-align: left;
 `
 
-const BackToPartners = styled(Link)`
-  margin-bottom: 20px;
-`
-
 class FeatureTemplate extends React.Component {
   getCategoryLinks() {
     const { data : { sideLinks : { edges : links } } } = this.props;
@@ -97,9 +60,7 @@ class FeatureTemplate extends React.Component {
   }
 
   render() {
-    const props = this.props;
     const { data, location, pageContext } = this.props;
-    console.log(data, location, ",@@@@@@@@@@@@@@@@@@sdalasjdkajdkajsd", pageContext);
     const featureNode = data.feature;
 
 
@@ -155,7 +116,7 @@ export default FeatureTemplate;
 export const pageQuery = graphql`
   
   query FeatureByID($id: String!, $parentId: String ) {
-    sideLinks : allContentfulPage( filter: {  parentPage: { id: {  eq : $parentId} }}){
+    sideLinks : allContentfulPage( filter: { type: { eq : "Feature Page"}, parentPage: { id: {  eq : $parentId} }}){
       edges {
         node {
           id
@@ -169,21 +130,7 @@ export const pageQuery = graphql`
       }
     }
     feature: contentfulPage(id: {eq: $id}) {
-      id
-      slug
-      name
-      node_locale
-      parentPage {
-        ... on ContentfulProduct {
-          id
-          name
-          slug
-        }
-      }
-      body {
-        json
-      }
-      seoTitle
+      ...Page
     }
     
   }

@@ -10,6 +10,7 @@ import './category.scss';
 
 class CategoryTemplate extends React.Component {
   static sortGroups(groupEdges) {
+
     const groupsEdgesWithOrder = groupEdges.map((edge) => {
       const order = GROUPS[edge.fieldValue] ? GROUPS[edge.fieldValue].order : null;
       return { ...edge, order };
@@ -21,6 +22,7 @@ class CategoryTemplate extends React.Component {
 
   renderGroups() {
     const { data } = this.props;
+    console.log('sdfsdfsdf', data);
     const sortedGroups = CategoryTemplate.sortGroups(data.docs.group);
 
     return sortedGroups.map((group) => {
@@ -35,16 +37,15 @@ class CategoryTemplate extends React.Component {
   }
 
   render() {
-    const { pathContext, location } = this.props;
-    const { category } = pathContext;
+    const { pageContext, location } = this.props;
+    const { categoryTitle } = pageContext;
     // If we don't have a "pretty category", make one out of the category context.
-    const title = CATEGORIES[category] ? CATEGORIES[category] : category.replace(/-/g, ' ');
-
+    const title = CATEGORIES[categoryTitle] ? CATEGORIES[categoryTitle] : categoryTitle.replace(/-/g, ' ');
     return (
       <Layout location={location} subNav={true}>
         <div className="category-container container">
-          <SEO postNode={this.props} postType="category" />
-          <h1 className="page-title">{title}</h1>
+          <SEO postNode={  this.props} postType="category" />
+          <h1 className="page-title">Category: {title}</h1>
           <div className="row">
             {this.renderGroups()}
           </div>
@@ -58,35 +59,21 @@ export default CategoryTemplate;
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
-  query CategoryPage($category: String, $docType: String) {
-    docs: allMarkdownRemark(
+  query CategoryPage($parentPage: String, $docType: String) {
+    docs: allContentfulPage(
       limit: 1000
-      sort: { fields: [frontmatter___title], order: ASC }
+      sort: { fields: [name], order: ASC }
       filter: {
-        fields: {
-          docType: {eq: $docType}
-          category: {eq: $category}
-        }
+        type: {eq: $docType}
+        parentPage: { id : { eq: $parentPage} }        
       }
     ) {
-    group(field: fields___group){
+    group(field: category___title) {
         totalCount
         fieldValue
         edges {
           node {
-            frontmatter {
-              navigation {
-                show
-              }
-              order
-            }
-            fields {
-              docType
-              slug
-              permalink
-              category
-              title
-            }
+            ...Page             
           }
         }
       }

@@ -13,6 +13,9 @@ exports.onClientEntry = () => {
     messenger: {
       brand_id: "mM6o5a",
     },
+    forms: [
+    // global forms, initialised on EVERY page only here.
+    ]
   };
 
   (function() {

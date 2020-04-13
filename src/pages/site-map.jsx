@@ -93,61 +93,61 @@ export default class siteMap extends React.Component {
     );
   }
 }
-
-export const pageQuery = graphql`
-  query SiteMap {
-    helpSupportCats: allMarkdownRemark(
-      limit: 2000,
-      filter: { fields: {docType: { eq: "ui" } } }
-    ) {
-      group(field: fields___category) {
-        fieldValue
-        totalCount
-      }
-    }
-    forDevsCats: allMarkdownRemark(
-      limit: 2000,
-      filter: { fields: {docType: { eq: "for-developers" } } }
-    ) {
-      group(field: fields___category) {
-        fieldValue
-        totalCount
-      }
-    }
-    pages: allSitePage(
-      filter: {
-        path: {regex:"/^((?!ui|for-developers\/[^/]+).)*$/"}
-      }
-    ) {
-      edges {
-        node {
-          path
-          id
-        }
-      }
-    }
-    allDocs: allMarkdownRemark(sort:{ fields: [fields___slug] }) {
-      edges {
-        node {
-          fields {
-            slug
-            permalink
-            docType
-            category
-            group
-          }
-          fileAbsolutePath
-          id
-          frontmatter {
-            title
-            seo {
-              title
-              description
-              keywords
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+//
+// export const pageQuery = graphql`
+//   query SiteMap {
+//     helpSupportCats: allMarkdownRemark(
+//       limit: 2000,
+//       filter: { fields: {docType: { eq: "ui" } } }
+//     ) {
+//       group(field: fields___category) {
+//         fieldValue
+//         totalCount
+//       }
+//     }
+//     forDevsCats: allMarkdownRemark(
+//       limit: 2000,
+//       filter: { fields: {docType: { eq: "for-developers" } } }
+//     ) {
+//       group(field: fields___category) {
+//         fieldValue
+//         totalCount
+//       }
+//     }
+//     pages: allSitePage(
+//       filter: {
+//         path: {regex:"/^((?!ui|for-developers\/[^/]+).)*$/"}
+//       }
+//     ) {
+//       edges {
+//         node {
+//           path
+//           id
+//         }
+//       }
+//     }
+//     allDocs: allMarkdownRemark(sort:{ fields: [fields___slug] }) {
+//       edges {
+//         node {
+//           fields {
+//             slug
+//             permalink
+//             docType
+//             category
+//             group
+//           }
+//           fileAbsolutePath
+//           id
+// #          frontmatter {
+// #            title
+// #            seo {
+// #              title
+// #              description
+// #              keywords
+// #            }
+// #          }
+//         }
+//       }
+//     }
+//   }
+// `;
