@@ -22,7 +22,6 @@ class CategoryTemplate extends React.Component {
 
   renderGroups() {
     const { data } = this.props;
-    console.log('sdfsdfsdf', data);
     const sortedGroups = CategoryTemplate.sortGroups(data.docs.group);
 
     return sortedGroups.map((group) => {

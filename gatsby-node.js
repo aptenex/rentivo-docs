@@ -195,7 +195,6 @@ exports.createPages = ({graphql, boundActionCreators}) => {
         const { title } = node.category || {}; // ie "How it Works", "Getting Starting". etc.
         const { type : docType } = node; // node.type === docType
         kbProductSet.add({ parentPage : node.parentPage, type: docType , ...node.category});
-        console.log("><>>>>>", node.parentPage);
         createPage({
           path: ('/docs/' + (node.parentPage && node.parentPage.slug ? (node.parentPage.slug + '/' + node.slug) : node.slug)),
           component: docsPage,
@@ -211,7 +210,6 @@ exports.createPages = ({graphql, boundActionCreators}) => {
       //
       const kbProductList = Array.from(kbProductSet);
       kbProductList.forEach((category, i) => {
-        console.log("LKALKALKALK", category);
         // Create "/ui/<category-slug>" pages.
         createPage({
           path: `/docs/${_.kebabCase(category.parentPage.slug)}/`,

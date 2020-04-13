@@ -34,7 +34,6 @@ const ProductBlock = ({
   btnWrapperStyle,
   ...props
 }) => {
-  console.log("asdasd", linkToPage);
   // Add all classs to an array
   const addAllClasses = ['product__block'];
   if(hasOverlay && description){
