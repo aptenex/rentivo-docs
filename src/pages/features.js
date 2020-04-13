@@ -120,7 +120,7 @@ export default (props) => {
   });
 
   return (
-      <MarketingLayout>
+      <MarketingLayout  location={props.location}>
 
             <Section>
               <Container width={'720px'}>

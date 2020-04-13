@@ -211,7 +211,7 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulI
   };
 
   return (
-      <MarketingLayout>
+      <MarketingLayout location={props.location}>
 
             <FeatuetteSection>
               <ContainerTop width={'720px'} >
@@ -232,7 +232,7 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulI
                 <TagFilter>
                   <li className={ activeTag === null ?  "active" : null  } onClick={() => handleTagClickEvent(null)} key={'all-integrations'}>All Integrations</li>
                 {tags.map( (tag, index) => (
-                    <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
+                    <li className={ activeTag === tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
                 ))}
                 </TagFilter>
 

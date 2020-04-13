@@ -34,7 +34,7 @@ export default (props) => {
   const productCategory = useProductHome();
   const faqGroups = useFAQGroupsOnHome();
   return (
-      <Layout location={location} subNav={true}>
+      <Layout location={props.location} subNav={true}>
           <SupportSection />
       </Layout>
   );

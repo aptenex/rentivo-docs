@@ -31,7 +31,7 @@ export default injectIntl( (props) => {
   const productCategory = useProductHome();
   const faqGroups = useFAQGroupsOnHome();
   return (
-      <MarketingLayout articleClass={'top pt20'}>
+      <MarketingLayout  location={props.location} articleClass={'top pt20'}>
             <BannerSection />
 
             <ProductSection data={productCategory}  />
