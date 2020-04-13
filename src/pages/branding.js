@@ -94,7 +94,7 @@ export default (props) => {
   const productCategory = useProductHome();
   const faqGroups = useFAQGroupsOnHome();
   return (
-      <MarketingLayout>
+      <MarketingLayout location={props.location} >
 
             <Section>
               <Container width={'720px'}>

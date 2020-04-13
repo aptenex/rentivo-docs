@@ -33,7 +33,7 @@ export default (props) => {
   const productCategory = useProductHome();
   const faqGroups = useFAQGroupsOnHome();
   return (
-      <MarketingLayout>
+      <MarketingLayout location={props.location} >
             <CalendlySection />
             <ProductSection data={productCategory}  />
             <TestimonialCards />

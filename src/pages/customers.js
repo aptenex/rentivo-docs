@@ -166,7 +166,7 @@ export default injectIntl( ({data : { tags : { distinct : tags } } , data : { al
   }
 
   return (
-      <MarketingLayout>
+      <MarketingLayout location={props.location} >
 
         <Section>
           <Container width={'720px'}>
