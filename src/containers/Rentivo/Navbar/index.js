@@ -18,7 +18,8 @@ import { CtaSection, LoginLink, IconLock, Cta } from './Navbar.style';
 import Link from 'gatsby-link';
 import MobileNav from "../MobileNav";
 
-const Navbar = ({ navbarStyle, className, logoStyle, row, menuWrapper }) => {
+const Navbar = ({ navbarStyle, className, logoStyle, row, menuWrapper, location }) => {
+  console.log("NAVPROPS", location);
   const addAllClasses = ['main_navbar'];
   if (className) {
     addAllClasses.push(className);
@@ -98,6 +99,7 @@ Navbar.propTypes = {
   button: PropTypes.object,
   row: PropTypes.object,
   menuWrapper: PropTypes.object,
+  location: PropTypes.object.isRequired
 };
 
 Navbar.defaultProps = {

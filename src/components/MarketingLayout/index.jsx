@@ -29,7 +29,7 @@ const Article = styled('article')`
 `
 
 const MarketingLayout = props => {
-  const { title, children,subNav, wrapperClass = '', menu = [], articleClass, isMenuSticky } = props;
+  const { title, children,subNav, wrapperClass = '', menu = [], articleClass, isMenuSticky, location } = props;
   const [toggleNav, setToggleNav] = React.useState(false);
   let menuClasses = menu.includes('inherit') ? [ ...menu, ...articleClass ] : menu;
   return (
@@ -48,7 +48,7 @@ const MarketingLayout = props => {
                   condition={isMenuSticky}
                   wrapper={children => <Sticky top={0} innerZ={9999}  activeClass="sticky-nav-active">{children}</Sticky>}>
                 <DrawerProvider>
-                  <Navbar className={menuClasses.join(" ")} />
+                  <Navbar location={location} className={menuClasses.join(" ")} />
                   {subNav && <SubNav className={menuClasses.join(" ")} {...props} />}
                 </DrawerProvider>
 

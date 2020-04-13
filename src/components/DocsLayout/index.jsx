@@ -24,7 +24,7 @@ function MainLayout(props) {
   const pathClass = location.pathname.replace(/\/docs\\|\//g, '');
   const classNames = `docSearch-content docs-wrap ${pathClass}`;
   const renderFooter = location.pathname.indexOf('/api-reference') === -1 ? <Footer/> : null;
-
+  console.log("LAYOUY", location)
   return (
       <ThemeProvider theme={rentivoTheme}>
         <Fragment>
@@ -37,7 +37,7 @@ function MainLayout(props) {
 
             <div className={subNav ? 'nav-wrap has-sub-nav' : 'nav-wrap'}>
               <DrawerProvider>
-                <Navbar />
+                <Navbar location={location} />
               </DrawerProvider>
 
               {subNav && <SubNav {...props} />}
