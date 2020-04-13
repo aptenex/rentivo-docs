@@ -6,12 +6,12 @@ import Layout from '../components/DocsLayout';
 export default class siteMap extends React.Component {
   render() {
     const { data, location } = this.props;
-    const {
-      helpSupportCats,
-      forDevsCats,
-      pages,
-      allDocs,
-    } = data;
+    // const {
+    //   helpSupportCats,
+    //   forDevsCats,
+    //   pages,
+    //   allDocs,
+    // } = data;
 
     return (
       <Layout location={location}>
@@ -19,33 +19,33 @@ export default class siteMap extends React.Component {
           <h1>Site Map</h1>
           <div className="m-bottom-4">
             <h3>Help Support Categories</h3>
-            {helpSupportCats.group.map(cat => (
-              <div key={cat.fieldValue}>
-                <Link to={`/ui/${kebabCase(cat.fieldValue)}/`}>
-                  {`${cat.fieldValue} (${cat.totalCount})`}
-                </Link>
-              </div>
-            ))}
+            {/*{helpSupportCats.group.map(cat => (*/}
+              {/*<div key={cat.fieldValue}>*/}
+                {/*<Link to={`/ui/${kebabCase(cat.fieldValue)}/`}>*/}
+                  {/*{`${cat.fieldValue} (${cat.totalCount})`}*/}
+                {/*</Link>*/}
+              {/*</div>*/}
+            {/*))}*/}
           </div>
           <div className="m-bottom-4">
             <h3>For Developers Categories</h3>
-            {forDevsCats.group.map(cat => (
-              <div key={cat.fieldValue}>
-                <Link to={`/for-developers/${kebabCase(cat.fieldValue)}/`}>
-                  {`${cat.fieldValue} (${cat.totalCount})`}
-                </Link>
-              </div>
-            ))}
+            {/*{forDevsCats.group.map(cat => (*/}
+              {/*<div key={cat.fieldValue}>*/}
+                {/*<Link to={`/for-developers/${kebabCase(cat.fieldValue)}/`}>*/}
+                  {/*{`${cat.fieldValue} (${cat.totalCount})`}*/}
+                {/*</Link>*/}
+              {/*</div>*/}
+            {/*))}*/}
           </div>
           <div className="m-bottom-4">
             <h3>Pages</h3>
-            {pages.edges.map(page => (
-              <div key={page.node.id}>
-                <Link to={page.node.path}>
-                  {page.node.id}
-                </Link>
-              </div>
-            ))}
+            {/*{pages.edges.map(page => (*/}
+              {/*<div key={page.node.id}>*/}
+                {/*<Link to={page.node.path}>*/}
+                  {/*{page.node.id}*/}
+                {/*</Link>*/}
+              {/*</div>*/}
+            {/*))}*/}
           </div>
           <div className="m-bottom-4">
             <h3>All Docs</h3>
