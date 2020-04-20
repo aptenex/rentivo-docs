@@ -25,6 +25,6 @@ export const render = (json) => {
 
   return json?.nodeType === 'document' ?
        documentToReactComponents(json, options)  :
-          renderAst(json);
+          json ? renderAst(json) : null;
 };
 export default renderAst;

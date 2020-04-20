@@ -37,7 +37,7 @@ class DocTemplate extends React.Component {
 
     const Body = render( postNode?.body?.json?.content?.length > 0 ?
         postNode?.body.json :
-        postNode?.bodyMarkdown.childMarkdownRemark.htmlAst );
+        (postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst ? postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst : null) );
     return (
       <Layout location={location} subNav={true}>
         <div className="container-lg doc-wrap">
