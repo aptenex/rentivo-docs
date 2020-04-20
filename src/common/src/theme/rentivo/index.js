@@ -52,6 +52,28 @@ export const rentivoTheme = {
           },
         },
       },
+      coop : {
+        color: 'rgba(244, 72, 105,1)',
+        background: 'linear-gradient(113.90679894237019deg, rgba(244, 72, 105,1) 5.012129380053908%, rgb(67, 25, 74) 97.68059299191374%)',
+        primary: {
+          color: '#fff',
+          borderColor: 'rgba(244, 72, 105,1)',
+          background: 'rgba(244, 72, 105,1)',
+          '&:hover': {
+            background: 'rgb(246, 101, 129)',
+            borderColor: colors.secondaryHover,
+          },
+        },
+        secondary: {
+          color: 'rgba(244, 72, 105,1)',
+          borderColor: 'rgba(244, 72, 105,1)',
+          '&:hover': {
+            color: colors.secondaryHover,
+            borderColor: colors.secondaryHover,
+          },
+        },
+
+      },
       channels : {
         color: '#012837',
         background: 'linear-gradient(135deg,#012837 0,#1d6683 100%)'

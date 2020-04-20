@@ -85,6 +85,10 @@ const CardWrapper = styled(Card)`
     h4 {
       font-size: 18px;
     }
+    .iconBlock__wrapper,
+    .imgWrapper {
+      width: 100%; 
+    }
   `
 
 const ConnectorJoinImage = styled('img')`
@@ -145,6 +149,25 @@ class IntegrationTemplate extends React.Component {
     const integrationNode = data.integration;
     const {faq: faqGroups} = data;
     const asideLinks = this.getLinks();
+
+    const TableOfKeyStats = ({integration}) => {
+      return <table>
+        { integration.phoneNumber && <tr><td>Phone Number</td><td>{integration.phoneNumber}</td></tr> }
+        { integration.parentOrganization && <tr><td>Parent Organization</td><td>{integration.parentOrganization}</td></tr> }
+        { integration.headquarters && <tr><td>Headquarters</td><td>{integration.headquarters}</td></tr> }
+        { integration.founded && <tr><td>Founded Units</td><td>{integration.founded}</td></tr> }
+        { integration.destinations && <tr><td>Destinations</td><td>{integration.destinations}</td></tr> }
+        { integration.minimumUnits && <tr><td>Minimum Units</td><td>{integration.minimumUnits}</td></tr> }
+        { integration.onboardingSchedule && <tr><td>Onboarding Schedule</td><td>{integration.onboardingSchedule}</td></tr> }
+        { integration.pricingModel && <tr><td>Pricing Model</td><td>{integration.pricingModel.join(', ')}</td></tr> }
+        { integration.partnerCost && <tr><td>Partner Cost</td><td>{integration.partnerCost}</td></tr> }
+        { integration.commissionModel && <tr><td>Commission Model</td><td>{integration.commissionModel}</td></tr> }
+        { integration.whatsSupported && <tr><td>What's Supported</td><td>{integration.whatsSupported}</td></tr> }
+        { integration.integrationRequirements && <tr><td>Integration Requirements</td><td>{integration.integrationRequirements}</td></tr> }
+
+      </table>
+    };
+
     return (
         <MarketingLayout location={location} subNav={true}>
           <SEO postNode={integrationNode} postType="integration"/>
@@ -218,6 +241,7 @@ class IntegrationTemplate extends React.Component {
             <Container width={'720px'}>
               {integrationNode?.logo?.fluid?.src ? <Image
                   fluid={integrationNode.logo}
+                  style={{width: '100%'}}
                   alt="Product"
               /> : integrationNode?.logo?.file ?
                   <ContentfulAsset className={'featureLogo'} data={integrationNode.logo}/> : null}
@@ -225,6 +249,7 @@ class IntegrationTemplate extends React.Component {
               <SummaryContent
                   dangerouslySetInnerHTML={{__html: integrationNode.summary.childMarkdownRemark.html}}
               />
+              <TableOfKeyStats integration={integrationNode} />
             </Container>
           </SummarySection>
 
@@ -261,10 +286,20 @@ export const pageQuery = graphql`
       slug
       seoTitle
       seoDescription
-      onboardingSchedule
-      minimumUnits
+      phoneNumber
+      parentOrganization
+      headquarters
+      destinations
+      integrationRequirements
+      whatsSupported
+      founded
+      pricingModel
       partnerCost
+      commissionModel
+      onboardingSchedule
+      minimumUnits      
       webAddress
+      status
       faq {
         id
         answer {

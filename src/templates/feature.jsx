@@ -3,20 +3,12 @@ import { graphql } from 'gatsby';
 import RehypeReact from 'rehype-react';
 import _ from 'lodash';
 import SEO from '../components/SEO';
-import AsideMenu from '../components/AsideMenu';
-import CalloutLink from '../componentsMarkdown/CalloutLink';
-import Callout from '../componentsMarkdown/Callout';
-import Gist from '../componentsMarkdown/Gist';
-import CodeGroup from '../componentsMarkdown/CodeGroup';
 import './syntax-highlighting.scss';
 import './doc.scss';
 import MarketingLayout from "../components/MarketingLayout";
-import Heading from 'reusecore/src/elements/Heading';
 import styled from 'styled-components';
 import Container from 'common/src/components/UI/Container';
-import Image from 'gatsby-image';
 import { Link } from 'gatsby';
-import { BLOCKS, MARKS } from "@contentful/rich-text-types"
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import AsideCategoryMenu from '../containers/Rentivo/AsideCategoryMenu';
 import Row from 'components/Flex/Row'
@@ -53,16 +45,14 @@ const ProductDescriptionSection = styled('div')`
 class FeatureTemplate extends React.Component {
   getCategoryLinks() {
     const { data : { sideLinks : { edges : links } } } = this.props;
-    const categories = _.groupBy( links, ({node}) => {
+    return _.groupBy( links, ({node}) => {
       return node?.category?.title;
     });
-    return categories;
   }
 
   render() {
     const { data, location, pageContext } = this.props;
     const featureNode = data.feature;
-
 
     const { faq : faqGroups}  = data;
     const categoryLinks = this.getCategoryLinks();

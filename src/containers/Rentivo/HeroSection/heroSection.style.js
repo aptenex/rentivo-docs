@@ -1,5 +1,68 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import {themeGet} from 'styled-system';
+const wave = keyframes`
+  0% {
+    top: -2%;
+    right: -2%
+  }
+  50% {
+    top: 6%;
+    right: 2%
+  }
+  100% {
+    top: -2%;
+    right: -2%
+  }
+`
+
+const waveThread1 = keyframes`
+  0% {
+    top: 0%;
+    right: -2%
+  }
+  50% {
+    top: 4%;
+    right: 2%
+  }
+  75% {
+    top: 3%;
+    right: 1%
+  }
+  100% {
+    top: 0%;
+    right: -2%
+  }
+`
+
+const waveThread2 = keyframes`
+  0% {
+    top: 8%;
+    right: -2%
+  }
+  50% {
+    top: 2%;
+    right: 2%
+  }
+  100% {
+    top: 8%;
+    right: -2%
+  }
+`
+
+const waveThread3 = keyframes`
+  0% {
+    top: 16%;
+    right: -2%
+  }
+  50% {
+    top: 4%;
+    right: 2%
+  }
+  100% {
+    top: 16%;
+    right: -2%
+  }
+`
 
 const HeroWrapper = styled.section`
   padding-top: 80px;
@@ -20,6 +83,11 @@ const HeroWrapper = styled.section`
       }
     }
   }
+  @media (max-width: 800px) {
+     .btn-primary {
+       margin-bottom: 10px;
+     }
+  }
   @media (min-width: 600px) {
     h1 {
       font-size: 52px;
@@ -33,6 +101,7 @@ const HeroWrapper = styled.section`
     }
     
   }
+  &.coop,
   &.manage,
   &.channels,
   &.website
@@ -44,6 +113,15 @@ const HeroWrapper = styled.section`
       color: #c4d2f1;
     }
   }
+  &.coop 
+  {
+    h1, h2, h3 {    
+      color: white;
+    }
+    .tagline {
+      color: #f2f2f2;
+    }
+  }
   .btn { 
     border-radius: 30px;
     &:hover {      
@@ -53,7 +131,7 @@ const HeroWrapper = styled.section`
     }
   }
   .contained-bg {
-  
+    
       position: absolute;
       height: 200%;
       width: 6000px;
@@ -63,6 +141,7 @@ const HeroWrapper = styled.section`
       will-change: transform;
       -webkit-transform: rotate(-20deg);
       transform: rotate(-20deg);
+      animation: ${wave} 12s linear infinite;
       .bg-settings {
           opacity: .08;
           position: absolute;
@@ -72,17 +151,20 @@ const HeroWrapper = styled.section`
       }
       .bg-1 {
           top: 0;
-        background-image: linear-gradient(-90deg,#fff,hsla(0,0%,100%,0) 60%,hsla(0,0%,100%,0));
+          background-image: linear-gradient(-90deg,#fff,hsla(0,0%,100%,0) 60%,hsla(0,0%,100%,0));
+          animation: ${waveThread1} 12s linear infinite;
       }
       .bg-2 {
           top: 8%;
         background-image: linear-gradient(-90deg,#fff,hsla(0,0%,100%,0) 68%,hsla(0,0%,100%,0));
+        animation: ${waveThread2} 12s linear infinite;
       }
       
       .bg-3 {
       
           top: 16%;
         background-image: linear-gradient(-90deg,#fff,hsla(0,0%,100%,0) 76%,hsla(0,0%,100%,0));
+        animation: ${waveThread3} 12s linear infinite;
       }
   }
   

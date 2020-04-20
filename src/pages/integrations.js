@@ -43,6 +43,7 @@ import {useScript} from '../components/useScript';
 import Lottie from 'react-lottie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/pro-duotone-svg-icons'
+import ReactTooltip from "react-tooltip";
 
 const Section = styled('section')`
   position: relative;  
@@ -78,8 +79,15 @@ const CardIntegration = styled(Card)`
     font-size: 1rem;
     color: #ccc;
   }
-  img, svg {
-    max-width: 180px;
+  svg {
+    max-height: 50px !important;
+    width: inherit !important;
+  }
+ 
+  &.rentals-united {
+    .featureLogo {
+      min-width: 150px;
+    }
   }
 `
 
@@ -101,8 +109,8 @@ margin-bottom: 20px;
   transition: all .5s ease-in-out;
   transform: scale(5);
   position: absolute;
-      right: 40px;
-      bottom: 80px;
+    right: 40px;
+    bottom: 80px;
  }
  &:hover {
     svg {
@@ -178,6 +186,11 @@ const TagList = styled(TagFilter)`
    }
 `;
 
+const RetiringIntegration = styled('label')`
+  float: right;
+  color: #cb8d11;
+`;
+
 const LottieWrapper = styled(Container)`
 svg {
   margin-top: -5vh;
@@ -240,7 +253,7 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulI
                     data={filteredIntegrations}
                     columnWidth={[1, 1/2, 1/2, 1/3]} //{[1, 1/2, 1/4]} responsive
                     component={({node}) => (
-                        <CardIntegration>
+                        <CardIntegration className={node.slug} key={node.slug}>
 
 
                           { ( node.slug &&  <Link to={'integrations/' + node.slug }>
@@ -250,10 +263,11 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulI
 
                           <Heading fontWeight={400} as={'h2'}  textAlign={'right'}  content={node.name} />
 
+                          { node.status && node.status ==='Retiring Integration' && <RetiringIntegration style={{float: 'right'}} data-multiline="true" data-tip="Due to service being removed from the market, this integration is being retired<br />If you are looking for a comparable product, please get in contact to help with a migration.">{node.status}</RetiringIntegration> }
 
                           <TagList>
                             {node.tags && node.tags.map( (tag, index) => (
-                                <li className={ activeTag == tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
+                                <li className={ activeTag === tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
                             ))}
                           </TagList>
                           { node.summary && <Summary>{node.summary.summary}</Summary> }
@@ -288,10 +302,11 @@ export const query = graphql`
           slug
           name
           tags
+          status
           logo {
             id
-            fixed(height: 75) {
-              ...GatsbyContentfulFixed_tracedSVG
+            fluid(maxHeight: 50) {
+              ...GatsbyContentfulFluid_tracedSVG
             }
             ... on ContentfulAsset {
               svg {
@@ -319,6 +334,7 @@ export const query = graphql`
             summary
           }
           webAddress
+          
         }
       }
     }

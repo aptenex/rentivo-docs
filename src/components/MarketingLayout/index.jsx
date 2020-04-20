@@ -16,6 +16,8 @@ import Container from "../../common/src/components/UI/Container";
 import HeroSection from "../../containers/Rentivo/HeroSection";
 import ConditionalWrapper from "../../containers/Rentivo/Contained";
 import PropTypes from 'prop-types';
+import ReactTooltip from "react-tooltip";
+
 
 const Article = styled('article')`
   margin-top: 180px;
@@ -41,6 +43,7 @@ const MarketingLayout = props => {
           <SEO title="Enterprise Holiday Rental Software for Short Term Vacation Rental Management" />
           <ResetCSS />
           <GlobalStyle />
+          <ReactTooltip effect={'solid'} />
           <ContentWrapper className={wrapperClass + (menuClasses.includes('contained') ? ' contained' : '')}>
 
 

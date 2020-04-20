@@ -13,33 +13,9 @@ export const getMenuProducts = () => {
                 summary
                 pinnedProduct
                 slug
-                icon {
-                  ... on ContentfulAsset {
-                    svg {
-                      content
-                      dataURI
-                      absolutePath
-                      relativePath
-                    }
-                    file {
-                      contentType
-                      url
-                      fileName
-                      contentType
-                      details {
-                        image {
-                          width
-                          height
-                        }
-                      }
-                    }
-                  }
-                }
               }
             }
           }
-
-
           allContentfulIntegration(filter: { node_locale: {glob: "en*"}, type: {eq: "Channel"}}) {
             edges {
               node {

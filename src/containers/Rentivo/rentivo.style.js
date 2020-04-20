@@ -34,7 +34,15 @@ export const GlobalStyle = createGlobalStyle`
   h6 {
     font-family: 'Roboto', sans-serif;
   }
-  
+  .__react_component_tooltip {
+        max-width: 460px;
+    font-size: 1.1em !important;
+    text-align: left;
+    line-height: 1.3em;
+    .multi-line {
+    text-align: left !important;
+    }
+  }
   
   table {
   width: 100%;
@@ -78,8 +86,7 @@ table td {
     }    
     svg [fill="#e6e6e6"] { 
       fill: ${themeGet('colorStyles.products.supply.color')};
-    }  
-    
+    }
   }
   .manage {
     --primaryColor :  ${themeGet('colorStyles.products.manage.color')};     
@@ -91,6 +98,14 @@ table td {
   
   .channels {
     --primaryColor :  ${themeGet('colorStyles.products.channels.color')};
+    svg path[fill="#3f3d56"] { 
+      fill: var(--primaryColor);
+    }
+  }
+  
+  .cooperative,
+  .coop {
+    --primaryColor :  ${themeGet('colorStyles.products.coop.color')};
     svg path[fill="#3f3d56"] { 
       fill: var(--primaryColor);
     }
@@ -287,6 +302,20 @@ export const ContentWrapper = styled.main`
         background: ${themeGet('colorStyles.products.manage.background')};
     }
   }  
+  .coop {
+  .btn-primary {
+          ${themeGet('colorStyles.products.coop.primary')};
+      }
+    .btn-secondary {
+       ${themeGet('colorStyles.products.coop.secondary')};
+    }
+    &:not(article){
+        background: ${themeGet('colorStyles.products.coop.background')};;
+    }
+    &.main_navbar {    
+      background: ${themeGet('colorStyles.products.coop.color')};
+    }
+  } 
   
   .channels {
   

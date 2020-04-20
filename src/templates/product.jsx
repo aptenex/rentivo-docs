@@ -82,7 +82,7 @@ class ProductTemplate extends React.Component {
           <FeatuetteSection   {...productNode.heroFeaturette } />
         }
 
-        { productNode.featurettes.map( (feature, index) => (
+        { productNode?.featurettes && productNode?.featurettes.map( (feature, index) => (
             (
               feature.internal.type === 'ContentfulFeaturette'  &&  <FeatuetteSection  key={index} {...feature} />
               || feature.internal.type === 'ContentfulFeatureGallery' &&  <ProductSection columnWidth={eval(feature.columnWidth)} key={index} data={feature} />

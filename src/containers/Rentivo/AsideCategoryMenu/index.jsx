@@ -55,7 +55,7 @@ class AsideCategoryMenu extends Component {
                   classes += ' active';
                 }
 
-                return <CatLink key={id} className={classes} href={`/features/${slug}`}>{textNode}</CatLink>;
+                return <CatLink key={id} className={classes} href={`/features/${_.kebabCase(slug)}`}>{textNode}</CatLink>;
               });
               return <CatGroup key={title}>{ title !== 'undefined' && <CatHeader>{title}</CatHeader>}{ catLinks }</CatGroup>
 

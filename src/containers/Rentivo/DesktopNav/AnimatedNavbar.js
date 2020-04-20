@@ -49,7 +49,7 @@ class AnimatedNavbar extends Component {
     })
     this.animatingOutTimeout = setTimeout(
       this.resetDropdownState,
-      700
+      270
     )
   }
 

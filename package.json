@@ -103,6 +103,7 @@
     "react-stickynode": "^2.1.1",
     "react-stripe-menu": "aholachek/react-stripe-menu",
     "react-text-loop": "^2.3.0",
+    "react-tooltip": "^4.2.5",
     "rehype-react": "^4.0.1",
     "rematrix": "^0.4.1",
     "s3-deploy": "^1.4.0",

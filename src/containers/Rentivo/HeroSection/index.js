@@ -78,9 +78,11 @@ const CardNumbers = styled(Card)`
     svg {      
       width: 42px;
       margin-right: 15px;
+      margin-top: 14px;
     }
     h4 {
       font-size: 18px;
+      line-height: 30px;
     }
   `
 const UnderlayWrapper = styled('div')``;

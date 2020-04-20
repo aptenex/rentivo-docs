@@ -136,6 +136,10 @@ const ProductsSection = styled.ul`
       }      
     }
     &[data-slug=channel-management] {
+     svg {
+       position: relative;
+       left: -6px;
+       }
     --primary : ${themeGet('colorStyles.products.channels.color')};
       ${ProductIconWrapper} {    
         color: ${themeGet('colorStyles.products.channels.color')};
@@ -152,6 +156,16 @@ const ProductsSection = styled.ul`
     --primary : ${themeGet('colorStyles.products.supply.color')};
       ${ProductIconWrapper} {    
         color: ${themeGet('colorStyles.products.supply.color')};
+      }
+    }
+     &[data-slug=cooperative] {
+     svg {
+       position: relative;
+       left: -5px;
+       }
+    --primary : ${themeGet('colorStyles.products.coop.color')};
+      ${ProductIconWrapper} {    
+        color: ${themeGet('colorStyles.products.coop.color')};
       }
     }
     svg[data-prefix=fad]{
@@ -201,6 +215,16 @@ font-weight: bold;
 
 `
 
+const Notice = styled('span')`
+float: right;
+font-size: 0.9em;
+font-weight: 300;
+color: #ccc;
+border-radius: 10px;
+color: #01c88b;
+position: relative;
+top: 10px;
+`
 
 export default () => {
   const {allContentfulProduct, allContentfulIntegration} = getMenuProducts();
@@ -216,10 +240,10 @@ export default () => {
                     <ProductLink to={node.slug}>
                       <ProductIconWrapper>
                         {ProductDefinitions[node.slug] ?
-                            <ProductIcons type={node.slug}/> : <ContentfulAsset data={node.icon}/>}
-
+                            <ProductIcons type={node.slug}/> : ''}
                       </ProductIconWrapper>
                       <div>
+                        { node.name === "Manage" && <Notice>Flagship Product</Notice> }
                         <Heading color="primary">{node.name}</Heading>
                         <Text> {node.summary}</Text>
                       </div>
@@ -230,9 +254,9 @@ export default () => {
             </ProductsSection>
             <DemoRequest>
               <Heading>
-                <a href="/demo-request">
+                <Link to="/demo-request">
                   Demo Request
-                </a>
+                </Link>
               </Heading>
             </DemoRequest>
           </DropdownSection>

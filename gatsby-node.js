@@ -160,7 +160,7 @@ exports.createPages = ({graphql, boundActionCreators}) => {
 
     resolve(graphql(`
         {
-          kb : allContentfulPage(filter: {type: {eq: "Knowledge Base"}, slug: {ne: ""}}) {
+          kb : allContentfulPage(filter: {type: {eq: "Knowledge Base"}, slug: {ne: null}}) {
             edges {
               node {
                 id
@@ -352,7 +352,7 @@ exports.createPages = ({graphql, boundActionCreators}) => {
         graphql(
             `
             {
-              allContentfulIntegration {
+              allContentfulIntegration(filter: {slug: {ne: null}}) {
                 edges {
                   node {
                     id
@@ -385,50 +385,6 @@ exports.createPages = ({graphql, boundActionCreators}) => {
     )
   });
 
-
-  // const partnersPromise = new Promise((resolve, reject) => {
-  //
-  //   const partnerPage = path.resolve('src/templates/partner.jsx');
-  //
-  //   resolve(
-  //       graphql(
-  //           `
-  //           {
-  //             allContentfulPartner(filter: {slug: {ne: null}}) {
-  //               edges {
-  //                 node {
-  //                   id
-  //                   slug
-  //                   name
-  //                   node_locale
-  //                 }
-  //               }
-  //             }
-  //           }
-  //
-  //         `
-  //       ).then(result => {
-  //         if (result.errors) {
-  //           reject(result.errors)
-  //         }
-  //
-  //         const pages = result.data.allContentfulPartner.edges;
-  //         pages.forEach((page, index) => {
-  //           createPage({
-  //             path: `/partners/${_.kebabCase(page.node.slug)}`,
-  //             component: partnerPage,
-  //             context: {
-  //               slug: page.node.slug,
-  //               id: page.node.id,
-  //               node_locale: page.node.node_locale
-  //             },
-  //           });
-  //         })
-  //       })
-  //   )
-  // });
-
-
   const featuresPromise = new Promise((resolve, reject) => {
 
     const featuresPage = path.resolve('src/templates/feature.jsx');
@@ -437,7 +393,7 @@ exports.createPages = ({graphql, boundActionCreators}) => {
         graphql(
             `
             {
-              allContentfulPage(filter: {type: {eq: "Feature Page"}, slug: {ne: ""}}) {
+              allContentfulPage(filter: {type: {eq: "Feature Page"}, slug: {ne: null}}) {
                 edges {
                   node {
                     id

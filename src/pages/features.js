@@ -39,6 +39,7 @@ import Col from 'components/Flex/Col'
 import {graphql} from "gatsby";
 import HeroSection from "../containers/Rentivo/HeroSection";
 import _ from "lodash";
+import PRODUCTS from "../constants/products";
 const Section = styled('section')`
   position: relative;
   padding-top: 0px; 
@@ -70,14 +71,29 @@ const FeatureColWrapper = styled(Col)`
 `
 
 export default (props) => {
-  const featurePages = props.data.allContentfulPage;
-  const FeaturesBlocks = featurePages.products.map( (product) => {
-    let HeroSections = <HeroSection forceHeroPrimaryBg={true} key={product.edges[0].node.parentPage.heroFeaturette.id} {...product.edges[0].node.parentPage.heroFeaturette } />
-    const categories = _.groupBy( product.edges, ({node}) => {
-      return node?.category?.title;
+
+  // TODO FUNCTION FOR SORTING....
+  const sortGroups = (productGroups) => {
+
+    const groupsEdgesWithOrder = productGroups.map(({edges}) => {
+      const order = PRODUCTS[edges[0].node.parentPage.name] ? PRODUCTS[edges[0].node.parentPage.name].order : null;
+      return { edges : {...edges}, order };
     });
 
-    const Features = Object.entries( categories ).map( ([title, links]) => {
+    const groupEdgesSorted = _.sortBy(groupsEdgesWithOrder, ['order']);
+    return groupEdgesSorted;
+  };
+
+
+  const  featurePagesSorted = sortGroups(props.data.allContentfulPage.products);
+  const FeaturesBlocks = featurePagesSorted.map( ( product, index) => {
+
+    let HeroSections = <HeroSection forceHeroPrimaryBg={true} key={product.edges[0].node.parentPage.heroFeaturette.id} {...product.edges[0].node.parentPage.heroFeaturette } />
+    const categories = _.groupBy( product.edges, ({node}) => {
+      return node?.category?.title ? node?.category?.title : 'Overview';
+    });
+
+    const Features = Object.entries( categories ).map( ([title, links], catIndex) => {
       const catLinks = links.map(({node : el}) => {
         const {
           id,
@@ -90,12 +106,13 @@ export default (props) => {
           classes += ' active';
         }
 
-        return <li><a key={id} className={classes} href={`/features/${slug}`}>{textNode}</a></li>;
+        return <li key={id}><a className={classes} href={`/features/${slug}`}>{textNode}</a></li>;
       });
-      return <Col xs={12} md={6} xl={4}><h5>{title}</h5><hr /><ul>{catLinks}</ul></Col>;
+      const colKey =  `${index}_${catIndex}_${product.edges[0].node.parentPage.heroFeaturette.id}`;
+      return <Col key={ colKey } xs={12} md={6} xl={4}><h5>{title}</h5><hr /><ul>{catLinks}</ul></Col>;
 
     });
-    return <Row >
+    return <Row key={index}>
         <Col xs={12} md={12} xl={12}>
           { HeroSections }
         </Col>

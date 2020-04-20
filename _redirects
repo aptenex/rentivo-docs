@@ -1,0 +1,3 @@
+/category/*  https://blog.rentivo.com/:splat  200
+/posts  https://blog.rentivo.com/posts  200
+/posts/*  https://blog.rentivo.com/posts/:splat  200
