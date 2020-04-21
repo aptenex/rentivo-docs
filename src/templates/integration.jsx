@@ -247,7 +247,7 @@ class IntegrationTemplate extends React.Component {
                   <ContentfulAsset className={'featureLogo'} data={integrationNode.logo}/> : null}
               <Text content={integrationNode.webAddress}/>
               <SummaryContent
-                  dangerouslySetInnerHTML={{__html: integrationNode.summary.childMarkdownRemark.html}}
+                  dangerouslySetInnerHTML={{__html: integrationNode?.summary?.childMarkdownRemark?.html}}
               />
               <TableOfKeyStats integration={integrationNode} />
             </Container>

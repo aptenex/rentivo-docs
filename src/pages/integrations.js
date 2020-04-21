@@ -84,9 +84,24 @@ const CardIntegration = styled(Card)`
     width: inherit !important;
   }
  
-  &.rentals-united {
-    .featureLogo {
+  &.rentals-united, &.supercontrol,&.lovecottages,&.cottages-com  {
+    .featureLogo, .imgWrapper, .gatsby-image-wrapper {
       min-width: 150px;
+    }
+  }
+  &.eats-and-retreats {
+   .featureLogo, .imgWrapper, .gatsby-image-wrapper {
+      min-width: 150px;
+    }
+  }
+    &.bookingsync {
+    svg {
+    min-height: 24px;
+    }
+    }
+  &.sykes-holiday-cottages {
+    svg {
+    min-height: 20px;
     }
   }
 `
@@ -135,14 +150,17 @@ const TagFilter = styled('ul')`
   margin: 0px;
   padding: 0px;  
   vertical-align: bottom;
-  margin-bottom: 20px;
-  
+  margin-bottom: 10px;
+    display: flex;
+  flex-flow: row wrap;
+  position: relative;
   li {
     border-radius: 3px;
     background: white;
     padding: 15px 30px;
     border: 1px solid #01b47d;
     margin-right: 20px;
+    margin-bottom: 20px;
     align-items: center;
     justify-content: center;
     &:hover {
