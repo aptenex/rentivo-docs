@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import Text from 'reusecore/src/elements/Text';
-import Heading from 'reusecore/src/elements/Heading';
 import HrefLink from 'reusecore/src/elements/Link';
 import Link from 'gatsby-link';
 import Container from 'common/src/components/UI/Container';
@@ -9,7 +8,7 @@ import styled from "styled-components"
 import {base, themed} from 'reusecore/src/elements/base';
 import Row from 'components/Flex/Row'
 import Col from 'components/Flex/Col'
-import HeroWrapper from './heroSection.style';
+import HeroWrapper, { TitleDecorWrapper } from './heroSection.style';
 import RehypeReact from "rehype-react";
 import TextLoop from "react-text-loop";
 import Lottie from 'react-lottie';
@@ -19,6 +18,7 @@ import IconCheck from '-!babel-loader!svg-react-loader?classIdPrefix=manage!svg/
 import {getColWidth} from "../../../constants/uiWidths";
 import HeroChannelConnections from "../HeroChannelConnections";
 import renderAst from "../../../utils/renderer";
+import Heading from 'reusecore/src/elements/Heading';
 
 
 const CtaHref = styled(HrefLink)`
@@ -92,6 +92,7 @@ const Components = {
 };
 
 const HeroSection = ({
+  titleDecor,
   title,
   backgroundParticles,
   description,
@@ -156,7 +157,7 @@ const HeroSection = ({
             <Col {...getColWidth(columnWidths, 0)}>
               <Container width={'960px'}>
                 {/*https://gist.github.com/Kalyse/922cb05b7c9e08e43e39f73538169d77*/}
-                <Heading as={as || 'h2'} {...title} >{title}</Heading>
+                <Heading as={as || 'h2'} {...title} >{ titleDecor && <TitleDecorWrapper>{titleDecor}</TitleDecorWrapper>}{title}</Heading>
                 {textLoopAst && textLoopAst.internal && renderAst(JSON.parse(textLoopAst.internal.content))}
                 <Tagline className={'tagline'}>{tagline}</Tagline>
                 <ButtonGroup callToAction={callToAction} secondaryCallToAction={secondaryCallToAction}/>
@@ -196,6 +197,7 @@ const HeroSection = ({
 };
 
 HeroSection.propTypes = {
+  titleDecor: PropTypes.string,
   title: PropTypes.string,
   as : PropTypes.string,
   tagline : PropTypes.string,
@@ -212,14 +214,14 @@ HeroSection.defaultProps = {
   hero: false, // determines if this is a hero class...
   reverse: false,
   as: 'h2',
-  title: {
-    fontSize: ['22px', '34px', '30px', '35px'],
-    fontWeight: '400',
-    color: '#0f2137',
-    letterSpacing: '-0.025em',
-    mb: ['20px', '25px'],
-    lineHeight: '1.5',
-  },
+  // title: {
+  //   fontSize: ['22px', '34px', '30px', '35px'],
+  //   fontWeight: '400',
+  //   color: '#0f2137',
+  //   letterSpacing: '-0.025em',
+  //   mb: ['20px', '25px'],
+  //   lineHeight: '1.5',
+  // },
   description: {
     fontSize: '16px',
     color: '#343d48cc',

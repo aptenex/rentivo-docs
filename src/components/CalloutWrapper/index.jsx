@@ -5,10 +5,12 @@ import RehypeReact from 'rehype-react';
 import Text from 'reusecore/src/elements/Text';
 import styled from 'styled-components';
 import Check from '-!babel-loader!svg-react-loader?classIdPrefix=coding!./svg/icon-check-green.svg';
+import Yes from '-!babel-loader!svg-react-loader?classIdPrefix=coding!./svg/yes.svg';
 
 const Item = styled('span')`
   margin-left: 10px;
   flex-grow: 1;    
+  line-height:1.5em;
 `;
 const CheckWrapper = styled('span')`
   margin-left: 10px;
@@ -26,7 +28,7 @@ const Callout = (props) => {
   return (
       <span className={classes}>
         <CheckWrapper>
-          <Check />
+          <Yes />
         </CheckWrapper>
         <Item>
           {props.children.map(el => el)}

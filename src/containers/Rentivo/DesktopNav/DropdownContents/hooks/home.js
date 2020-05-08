@@ -16,7 +16,7 @@ export const getMenuProducts = () => {
               }
             }
           }
-          allContentfulIntegration(filter: { node_locale: {glob: "en*"}, type: {eq: "Channel"}}) {
+          allContentfulIntegration(filter: {node_locale: {glob: "en*"}, type: {eq: "Channel"}, slug: {regex: "/homeaway|airbnb|booking/"}}) {
             edges {
               node {
                 id

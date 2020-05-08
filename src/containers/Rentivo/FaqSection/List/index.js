@@ -34,6 +34,7 @@ const FaqList = ({
   sectionTitleWrapper,    
   sectionSubTitle,
   titleStyle,
+  showHeaders,
   descriptionStyle,
   buttonWrapper,
   button,
@@ -49,10 +50,10 @@ const FaqList = ({
   return (
     <FaqSectionWrapper id="faq_section">
       <Container>
-        <Box {...sectionHeader}>
+        { showHeaders && <Box {...sectionHeader}>
           <Text {...sectionSubTitle} />
           <Heading {...sectionTitle} />
-        </Box>
+        </Box> }
 
         <Box className="row">
           <FaqAccordion>
@@ -104,6 +105,7 @@ FaqList.propTypes = {
   secHeading: PropTypes.object,
   secText: PropTypes.object,
   nameStyle: PropTypes.object,
+  showHeaders: PropTypes.bool,
   descriptionStyle: PropTypes.object,
   priceStyle: PropTypes.object,
   priceLabelStyle: PropTypes.object,
@@ -128,6 +130,7 @@ FaqList.defaultProps = {
     color: '#01c88b',
     mb: '5px',
   },
+  showHeaders: true,
   // section title default style
   sectionTitle: {
     content: 'Want to ask something about us ?',

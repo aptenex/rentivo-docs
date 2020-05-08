@@ -129,8 +129,8 @@ const FeaturetteSection = ({
         {image.length === 1 ? (
                 <Fragment>
                   { image.map((node, index) => (
-                        <Fragment key={node.id}>
-                          { oversizeHero ? <OversizeImage/> :
+                        <Fragment key={node.id ? node.id : index}>
+                          { oversizeHero && node.fluid ? <OversizeImage/> :
                           <ContentfulAsset
                               className={'zoomable'}
                               data={node}
@@ -222,12 +222,17 @@ const FeaturetteSection = ({
                     <Heading content={title} />
                   }
                   description={
-                    content && content?.childMarkdownRemark && <Text {...description} dangerouslySetInnerHTML={{ __html: content?.childMarkdownRemark?.html }} />
+                    content && content?.childMarkdownRemark && ( content?.childMarkdownRemark?.html ?
+                        <Text {...description} dangerouslySetInnerHTML={{ __html: content?.childMarkdownRemark?.html }} /> :
+                        content?.childMarkdownRemark?.component )
                   }
                   button={<ButtonGroup />}
               />
 
-              { callout && callout.childMarkdownRemark && <CalloutWrapper data={callout.childMarkdownRemark} /> }
+              { callout && callout.childMarkdownRemark && (
+                  callout.childMarkdownRemark.htmlAst ? <CalloutWrapper data={callout.childMarkdownRemark} /> :
+                      callout.childMarkdownRemark.component )
+              }
 
             </Col>
             <Col xs={12} md={12} xl={6}>

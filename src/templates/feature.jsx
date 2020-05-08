@@ -14,12 +14,19 @@ import AsideCategoryMenu from '../containers/Rentivo/AsideCategoryMenu';
 import Row from 'components/Flex/Row'
 import Col from 'components/Flex/Col'
 import ProductIcons from '../containers/Rentivo/ProductIcons';
+import ContentSection from '../containers/Rentivo/ContentSection';
 import ProductDefinitions from '../containers/Rentivo/ProductIcons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChevronLeft } from '@fortawesome/pro-duotone-svg-icons'
 import Text from "../reusecore/src/elements/Text";
-
-
+import Heading from "../reusecore/src/elements/Heading";
+import Box from "../reusecore/src/elements/Box";
+import { renderPage } from '../utils/renderer';
+import FeatuetteSection from "../containers/Rentivo/FeaturetteSection";
+import ProductSection from "../containers/Rentivo/FeatureGallery";
+import HeroSection from "../containers/Rentivo/HeroSection";
+import FaqList from "../containers/Rentivo/FaqSection/List";
+import FaqSection from '../containers/Rentivo/FaqSection';
 
 const ReferenceProduct = styled(Link)`
   display: flex;
@@ -57,8 +64,8 @@ class FeatureTemplate extends React.Component {
     const { faq : faqGroups}  = data;
     const categoryLinks = this.getCategoryLinks();
     const options = { };
-    const Body = documentToReactComponents(featureNode?.body?.json, options);
 
+    const Body = renderPage( featureNode, options );
     return (
 
       <MarketingLayout location={location} subNav={true}>
@@ -89,9 +96,29 @@ class FeatureTemplate extends React.Component {
                 }
               </Col>
               <Col xs={12} md={7} xl={9} >
-                { Body }
+                {featureNode?.pageTitle && <Heading as="h1" content={featureNode.pageTitle} /> }
+                <ContentSection>{ Body }</ContentSection>
+
+                { featureNode?.featurettes && featureNode?.featurettes.map( (feature, index) => (
+                    (
+                        feature.internal.type === 'ContentfulFaq' && feature.items && <FaqList key={index}  showHeaders={false} sectionTitle={{
+                          content: feature.question,
+                          textAlign: 'center',
+                          fontSize: ['20px', '24px'],
+                          fontWeight: '400',
+                          color: '#0f2137',
+                          letterSpacing: '-0.025em',
+
+                          mb: '0',
+                        }} data={feature.items} />
+                    )
+                ))
+                }
+
               </Col>
             </Row>
+
+
 
           </Container>
 

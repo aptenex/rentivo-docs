@@ -1,5 +1,6 @@
 import styled, {keyframes} from 'styled-components';
 import {themeGet} from 'styled-system';
+import Heading from 'reusecore/src/elements/Heading';
 const wave = keyframes`
   0% {
     top: -2%;
@@ -71,7 +72,7 @@ const HeroWrapper = styled.section`
   overflow: hidden;
   text-align: center;
 
-  
+ 
   .button__wrapper {
     margin-top: 40px;
     @media (max-width: 767px) {
@@ -169,8 +170,9 @@ const HeroWrapper = styled.section`
   }
   
   h1,h2,h3 {
+    position: relative;
       font-weight: 400;
-  }
+  } 
   .tagline {
     color: #666;
     line-height: 36px;
@@ -179,9 +181,20 @@ const HeroWrapper = styled.section`
       font-size: 24px;
     }
     
-    margin-bottom: 2em;
-    
+    margin-bottom: 2em;    
   }
 `;
 
+export const TitleDecorWrapper = styled.u`
+      position: absolute;
+    top: -1rem;
+    left: 50%;
+    z-index: -1;
+    transform: translate(-50%,-50%);
+    font-size: 6.5rem;
+    font-weight: 900;
+    line-height: 6rem;
+    color: #ccd7e5;
+    white-space: nowrap;
+`;
 export default HeroWrapper;

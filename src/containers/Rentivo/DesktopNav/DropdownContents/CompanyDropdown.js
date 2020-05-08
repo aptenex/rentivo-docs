@@ -254,9 +254,6 @@ const CompanyDropdown = () => {
           </Integrations>
       </WhyCallout>
 
-
-
-
     </CompanyDropdownEl>
   )
 }

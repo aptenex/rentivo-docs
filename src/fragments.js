@@ -97,7 +97,8 @@ export const featuretteFields = graphql`
     type
     internal {
       type
-    }    
+    }   
+    
     category {
       id
       title
@@ -109,6 +110,7 @@ export const featuretteFields = graphql`
         slug
       }
     }
+    pageTitle
     body {
       json
     }
@@ -117,6 +119,9 @@ export const featuretteFields = graphql`
         htmlAst
       }
       bodyMarkdown
+    }
+    featurettes {
+      ...FAQ
     }
     seoTitle    
   }

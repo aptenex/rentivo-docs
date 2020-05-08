@@ -34,6 +34,7 @@ export const GlobalStyle = createGlobalStyle`
   h6 {
     font-family: 'Roboto', sans-serif;
   }
+  
   .__react_component_tooltip {
         max-width: 460px;
     font-size: 1.1em !important;
