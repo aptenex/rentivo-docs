@@ -174,7 +174,8 @@ const HeroSection = ({
                         <IconCheck/>
                         <div>
                           <Heading fontWeight={600} as={'h4'} textAlign={'left'} content={feature.title}/>
-                          <Text>{feature.description && feature.description.description}</Text>
+                          {feature.description && feature.description.description && <Text>{feature.description.description}</Text>}
+                          {feature.description && typeof feature.description === 'string' && <Text>{feature.description}</Text>}
                         </div>
                       </CardNumbers>
                   )}
