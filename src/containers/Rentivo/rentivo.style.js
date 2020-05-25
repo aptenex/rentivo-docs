@@ -140,6 +140,14 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
   }
   
+  .svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -0.125em;
+}
+  
   .__react_component_tooltip {
         max-width: 460px;
     font-size: 1.1em !important;

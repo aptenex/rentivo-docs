@@ -13,7 +13,8 @@ import {themeGet} from "styled-system";
 
 const ProductsDropdownEl = styled.div`
   
-  max-width: 100vw !important; 
+  max-width: 85vw !important;
+  width: 40rem; 
   display: flex;
   //margin: -20px;
   position: relative;
@@ -94,7 +95,7 @@ const ProductsSection = styled.ul`
   margin: 20px;
   li {
     display: flex;
-    min-width: 680px;
+    
     width: 100%;
     position: relative;
     &[data-slug] {

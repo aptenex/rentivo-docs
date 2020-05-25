@@ -10,7 +10,7 @@ import {
 } from "./Components"
 
 const LearnDropdownEl = styled.div`
-  width: 34rem;
+  width: 40rem;
    ${DropdownSection} {
     margin-bottom: 30px;
   }
