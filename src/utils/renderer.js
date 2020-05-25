@@ -6,6 +6,10 @@ import Callout from "../componentsMarkdown/Callout";
 import CodeGroup from "../componentsMarkdown/CodeGroup";
 import TextLoop from "react-text-loop";
 import {documentToReactComponents} from "@contentful/rich-text-react-renderer";
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
+import Text from 'reusecore/src/elements/Text';
+import Heading from 'reusecore/src/elements/Heading';
+import Link from 'gatsby-link';
 const { BLOCKS, MARKS, INLINES } = require('@contentful/rich-text-types');
 import _ from 'lodash';
 import Image from 'gatsby-image';
@@ -21,6 +25,8 @@ import html from 'rehype-stringify';
 import remark2string from 'rehype-stringify';
 import rehype2react from 'rehype-react'
 import Remark from 'remark';
+import PageAnchor from "../componentsMarkdown/PageAnchor";
+import ListItem from "../componentsMarkdown/ListItem";
 
 const renderAst = new RehypeReact({
   createElement: React.createElement,
@@ -29,6 +35,10 @@ const renderAst = new RehypeReact({
     'call-out-link': CalloutLink,
     'call-out': Callout,
     'code-group': CodeGroup,
+    'list' : ( {node,children}) => { return(<ul>
+      {children}
+      </ul>) },
+    'item'  : ListItem,
     TextLoop: TextLoop
   },
 }).Compiler;
@@ -77,8 +87,36 @@ const transform = (fields, index) => {
 };
 const richTextOptions = {
     renderNode: {
-      [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        const { title, description, file } = node.data.target.fields;
+      [BLOCKS.PARAGRAPH]: (node, children) => {
+        return <Text>{children}</Text>
+      },
+      [BLOCKS.HEADING_1]: (node, children) => {
+        return <Heading mt={'2rem'} as={'h2'}>{children}</Heading>
+      },
+      [BLOCKS.HEADING_2]: (node, children) => {
+        let clone = _.clone(node);
+        clone.nodeType = 'document';
+        return <Heading mt={'2rem'} id={_.kebabCase(renderPlaintext(clone).toLowerCase())} as={'h2'}>{ children }</Heading>
+      },
+      [BLOCKS.HEADING_3]: (node, children) => {
+        return <Heading mt={'2rem'} id={_.kebabCase(node.content[0].value)} as={'h3'}>{children}</Heading>
+      },
+      [BLOCKS.HEADING_4]: (node, children) => {
+        return <Heading id={_.kebabCase(node.content[0].value)} as={'h4'}>{children}</Heading>
+      },
+      [INLINES.ENTRY_HYPERLINK]: (node, children) => {
+        console.log('naodnaosdnasodnasodn', node, children);
+        // If given link begins with a single `/`, treat as internal Gatsby Link
+        return /^\/(?!\/)/.test(node.data.uri)
+            ? `<Link to="${node.data.uri}">{ children }</Link>`
+            : `<a href="${node.data.uri}">{ children }</a>`
+      },
+      [BLOCKS.EMBEDDED_ASSET] : (node) => {
+        console.log('asdasdad', node);
+        if(node.data.target.sys.type === 'Link'){
+          return <></>;
+        }
+        const { title, description, file } = node.data.target.fields || {};
         const mimeType = file['en-US'].contentType;
         const mimeGroup = mimeType.split('/')[0];
 
@@ -109,11 +147,9 @@ const richTextOptions = {
         // https://github.com/gatsbyjs/gatsby/pull/15084
         switch(node.data.target.sys.contentType.sys.id){
           case 'hero':
-            console.log("FIELDS", node.data , transform( node.data.target.fields));
             return <HeroSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
           break;
           case 'featurette':
-            console.log("FIELDS", node.data ,transform( node.data.target.fields));
             return <FeatuetteSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
             break;
           default:
@@ -130,14 +166,23 @@ const richTextOptions = {
 };
 
 export const render = (json) => {
-  console.log(">>>>", json);
   return json?.nodeType === 'document' ?
        documentToReactComponents(json, richTextOptions)  :
           json ? renderAst(json) : null;
 };
 
+export const renderPlaintext = (json) => {
+
+  if(json && ( json.nodeType === null && json.htmlAst === null) ){
+    console.error('You must send a htmlAst from markdownRemark or a richtext-type');
+  }
+
+  return json?.nodeType === 'document' ?
+      documentToPlainTextString(json)  :
+      json ? renderAst(json) : null;
+};
+
 export const renderPage = (postNode) => {
-  console.log(postNode, "<<<");
   return render(postNode?.body?.json?.content?.length > 0 ?
       postNode?.body.json :
       (postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst ? postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst : null));

@@ -228,7 +228,6 @@ top: 10px;
 
 export default () => {
   const {allContentfulProduct, allContentfulIntegration} = getMenuProducts();
-  // console.log(allContentfulProduct,"##$#434", allContentfulIntegration);
   return (
       <ProductsDropdownEl>
         <Col>

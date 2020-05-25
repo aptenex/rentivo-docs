@@ -97,8 +97,28 @@ export const featuretteFields = graphql`
     type
     internal {
       type
-    }   
-    
+    }
+    summary {
+      childMarkdownRemark {
+        id
+        htmlAst
+      }
+    }
+    associatedPages {
+      internal {
+        type
+      }
+      parentPage {
+        slug
+      }
+      type
+      name
+      slug
+      body {
+        id
+        json
+      }
+    }
     category {
       id
       title
@@ -113,10 +133,24 @@ export const featuretteFields = graphql`
     pageTitle
     body {
       json
+      fields {
+        readingTime {
+          text
+          minutes
+          time
+          words
+        }
+      }
     }
     bodyMarkdown {
       childMarkdownRemark {
         htmlAst
+        timeToRead
+        wordCount {
+          paragraphs
+          sentences
+          words
+        }
       }
       bodyMarkdown
     }

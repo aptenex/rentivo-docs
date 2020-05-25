@@ -34,7 +34,7 @@ class Glossary extends React.Component {
     return (
       <Layout location={location} subNav={true}>
         <div className="container">
-          <SEO postNode={this.props} title="Glossary" description="Rentivo Glossary of Terms" />
+          <SEO postNode={this.props} postType={'docs-glossary'} title="Glossary" description="Rentivo Glossary of Terms" />
           <h1>Glossary</h1>
           <div className="row">
             {Object.keys(this.glossary).map(key => (

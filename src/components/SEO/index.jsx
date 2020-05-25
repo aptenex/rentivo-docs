@@ -5,7 +5,7 @@ import config from '../../../data/SiteConfig';
 class SEO extends Component {
   static capitalizeFirstLetter(str) {
     str = str.split(' ');
-
+    console.log("STRING", str);
     for (let i = 0, x = str.length; i < x; i++) {
       str[i] = str[i][0].toUpperCase() + str[i].substr(1);
     }
@@ -22,19 +22,19 @@ class SEO extends Component {
     let title;
     let permalink;
     let description = false;
+
     if(postNode?.seoTitle){
       title = postNode.seoTitle;
       description = postNode.seoDescription;
 
-    } else if (postType === 'category') {
+    } else if (postType === 'docs-category') {
       const {
-        docType,
         category : { title : category },
       } = postNode.pageContext;
 
-      title = SEO.capitalizeFirstLetter(`${docType.replace('-', ' ')} | ${category.replace('-', ' ')}`);
+      title = SEO.capitalizeFirstLetter(`${category.replace('-', ' ')}`);
 
-    }  else if(postType ==='glossary'){
+    }  else if(postType ==='docs-glossary'){
       permalink = sitePath + '/glossary/' + postNode.slug;
       ({ title } = this.props);
       ({ description } = this.props);

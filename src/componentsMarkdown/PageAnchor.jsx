@@ -1,12 +1,15 @@
 import React from 'react';
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
+import _ from "lodash";
 
 export default class PageAnchor extends React.Component {
   getContent() {
-    const name = `-${this.props.children[0].trim().replace(/ /g, '-')}`;
+    const name = `${this.props.children[0] }`;
+    const nameToId = _.kebabCase( name ).toLowerCase();
 
     return (
       <span>
-        <a href={`#${name}`} id={name} aria-hidden="true" className="anchor">
+        <a href={`#${nameToId}`} id={nameToId} aria-hidden="true" className="anchor">
           <svg
             aria-hidden="true"
             height="16"
@@ -20,7 +23,7 @@ export default class PageAnchor extends React.Component {
             />
           </svg>
         </a>
-        {this.props.children[0]}
+        { name }
       </span>
     );
   }

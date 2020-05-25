@@ -89,7 +89,14 @@ module.exports = {
       resolve: 'gatsby-plugin-module-resolver',
       options: {
         root: './src', // <- will be used as a root dir
-        aliases: require('./webpack.alias').resolve.alias
+        aliases: {
+          'reusecore': '/reusecore',
+          'common': '/common',
+          'functions': '/functions',
+          'containers' : '/containers',
+          'components' : '/components',
+          'constants' : '/constants'
+        }
       }
     },
     {

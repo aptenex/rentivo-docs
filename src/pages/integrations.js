@@ -1,9 +1,17 @@
-import React, { useState, useEffect, Fragment, Component } from 'react';
+import React, {useState, useEffect, Fragment, Component} from 'react';
 import Sticky from 'react-stickynode';
-import { ThemeProvider } from 'styled-components';
-import { rentivoTheme } from 'common/src/theme/rentivo';
-import { ResetCSS } from 'common/src/assets/css/style';
-import { GlobalStyle, ContentWrapper } from '../containers/Rentivo/rentivo.style';
+import {ThemeProvider} from 'styled-components';
+import {rentivoTheme} from 'common/src/theme/rentivo';
+import {ResetCSS} from 'common/src/assets/css/style';
+import {
+  GlobalStyle,
+  ContentWrapper,
+  HotIntegration,
+  RetiringIntegration,
+  SoftLaunchIntegration,
+  TagList,
+  TagFilter
+} from '../containers/Rentivo/rentivo.style';
 import Navbar from '../containers/Rentivo/Navbar';
 import BannerSection from '../containers/Rentivo/BannerSection';
 import CalendlySection from '../containers/Rentivo/CalendlySection';
@@ -19,11 +27,11 @@ import TestimonialCards from '../containers/Rentivo/TestimonialCards';
 import TestimonialSection from '../containers/Rentivo/TestimonialSection';
 import PartnerSection from '../containers/Rentivo/PartnerSection';
 import IntegrationFlipchart from '../containers/Rentivo/IntegrationFlipchart';
-import { DrawerProvider } from 'common/src/contexts/DrawerContext';
+import {DrawerProvider} from 'common/src/contexts/DrawerContext';
 import SEO from '../components/seo';
-import { useProductHome } from "../containers/Rentivo/FeatureGallery/hooks/home";
-import { useFAQGroupsOnHome } from "../containers/Rentivo/FaqSection/hooks/home";
-import { getMenuProducts} from '../containers/Rentivo/DesktopNav/DropdownContents/hooks/home';
+import {useProductHome} from "../containers/Rentivo/FeatureGallery/hooks/home";
+import {useFAQGroupsOnHome} from "../containers/Rentivo/FaqSection/hooks/home";
+import {getMenuProducts} from '../containers/Rentivo/DesktopNav/DropdownContents/hooks/home';
 import MarketingLayout from "../components/MarketingLayout";
 import Box from 'reusecore/src/elements/Box';
 import Text from 'reusecore/src/elements/Text';
@@ -41,8 +49,8 @@ import {Link, graphql} from "gatsby";
 import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 import {useScript} from '../components/useScript';
 import Lottie from 'react-lottie';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/pro-duotone-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faChevronRight, faPepperHot, faRocketLaunch} from '@fortawesome/pro-duotone-svg-icons'
 import ReactTooltip from "react-tooltip";
 
 const Section = styled('section')`
@@ -69,12 +77,14 @@ const WhiteSectionWrapper = styled.section`
 const CardIntegration = styled(Card)`
   padding: 30px;
   background: white;
+  position: relative;
   margin-bottom: 20px;
   text-align: center;
   .featureLogo {
     float: left;
     margin-bottom: 5px;
   }
+
   h2 {
     font-size: 1rem;
     color: #ccc;
@@ -104,13 +114,13 @@ const CardIntegration = styled(Card)`
     min-height: 20px;
     }
   }
-`
+`;
 
 const IntegrationImage = styled(Image)`
   margin: 0 auto;
   margin-bottom: 20px;
   text-align: center;
-`
+`;
 const LearnMoreLink = styled(Link)`
 text-align: right;
 float:right;
@@ -143,71 +153,17 @@ const Summary = styled('p')`
 `;
 
 
-const TagFilter = styled('ul')`
-  font-size: 1.3em;
-  display: inline-flex;
-  max-width: 100%;
-  margin: 0px;
-  padding: 0px;  
-  vertical-align: bottom;
-  margin-bottom: 10px;
-    display: flex;
-  flex-flow: row wrap;
-  position: relative;
-  li {
-    border-radius: 3px;
-    background: white;
-    padding: 15px 30px;
-    border: 1px solid #01b47d;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    align-items: center;
-    justify-content: center;
-    &:hover {
-      border: 1px solid #01b47d;      
-      background: #e4fff7;
-      cursor: pointer;
-    }
-    &.active {
-      background: #01b47d;
-      color: white;
-      font-weight: 600;
-      &:hover {
-       
-      }
-    }    
-  }
-  
-   @media (max-width: 768px) {
-    flex-direction: column;
-    width: 100%;
-    li { margin-bottom: 3px;}    
-   }
-`;
-
-const TagList = styled(TagFilter)`
-  font-size: 0.9em;
-  display: inline-flex;  
-  text-align: left;
-    clear:both;
-    float:left;
-    margin-bottom: 10px;
-  li {    
-    padding: 7px 12px;
-    border: 1px solid #01b47d;    ;
-    border-radius: 20px;
-  }
-   @media (max-width: 768px) {
-      flex-direction: row;
-      width: auto;
-      li { margin-bottom: 3px;}    
-   }
-`;
-
-const RetiringIntegration = styled('label')`
+const StyledSoftLaunchIntegration = styled(SoftLaunchIntegration)`
+  padding: 20px;
+  margin: -20px;
   float: right;
-  color: #cb8d11;
+  position: absolute;
+  right: 30px;  
 `;
+const StyledHotIntegration = styled(HotIntegration)``;
+const StyledRetiringIntegration = styled(RetiringIntegration)``;
+
+
 
 const LottieWrapper = styled(Container)`
 svg {
@@ -215,21 +171,21 @@ svg {
 }
 `;
 
-export default ({data : { tags : { distinct : tags } } , data : { allContentfulIntegration : { edges : integrations } } }, props) => {
+export default ({data: {tags: {distinct: tags}}, data: {allContentfulIntegration: {edges: integrations}}}, props) => {
   const faqGroups = useFAQGroupsOnHome();
 
 
-  const [ filteredIntegrations, setFilteredIntegrations ] = useState( integrations );
-  const [ activeTag, setActiveTag ] = useState( null );
+  const [filteredIntegrations, setFilteredIntegrations] = useState(integrations);
+  const [activeTag, setActiveTag] = useState(null);
   const handleTagClickEvent = (tag) => {
-      if(!tag) {
-        setFilteredIntegrations(integrations);
-        setActiveTag(tag);
-      } else {
-        const f = integrations.filter((p) => p.node.tags && p.node.tags.includes(tag));
-        setFilteredIntegrations(f);
-        setActiveTag(tag);
-      }
+    if (!tag) {
+      setFilteredIntegrations(integrations);
+      setActiveTag(tag);
+    } else {
+      const f = integrations.filter((p) => p.node.tags && p.node.tags.includes(tag));
+      setFilteredIntegrations(f);
+      setActiveTag(tag);
+    }
   }
 
   const defaultOptions = {
@@ -244,65 +200,80 @@ export default ({data : { tags : { distinct : tags } } , data : { allContentfulI
   return (
       <MarketingLayout location={props.location}>
 
-            <FeatuetteSection>
-              <ContainerTop width={'720px'} >
-                  <Heading fontWeight={600} textAlign={'center'} as={'h1'} content={'Our Software Integrations'} />
-                  <Heading fontWeight={400}  textAlign={'center'}  as={'h3'} content={'We are constantly adding new integrations. Here is who we already connect with.'} />
+        <FeatuetteSection>
+          <ContainerTop width={'720px'}>
+            <Heading fontWeight={600} textAlign={'center'} as={'h1'} content={'Our Software Integrations'}/>
+            <Heading fontWeight={400} textAlign={'center'} as={'h3'}
+                     content={'We are constantly adding new integrations. Here is who we already connect with.'}/>
 
-              </ContainerTop>
-              <LottieWrapper width={'1420px'}>
-                <Lottie options={defaultOptions}
-                                        height={'40vh'}
-                                        width={'60vw'}
-                />
-              </LottieWrapper>
-            </FeatuetteSection>
-            <Section>
+          </ContainerTop>
+          <LottieWrapper width={'1420px'}>
+            <Lottie options={defaultOptions}
+                    height={'40vh'}
+                    width={'60vw'}
+            />
+          </LottieWrapper>
+        </FeatuetteSection>
+        <Section>
 
-              <Container >
-                <TagFilter>
-                  <li className={ activeTag === null ?  "active" : null  } onClick={() => handleTagClickEvent(null)} key={'all-integrations'}>All Integrations</li>
-                {tags.map( (tag, index) => (
-                    <li className={ activeTag === tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
-                ))}
-                </TagFilter>
+          <Container>
+            <TagFilter>
+              <li className={activeTag === null ? "active" : null} onClick={() => handleTagClickEvent(null)}
+                  key={'all-integrations'}>All Integrations
+              </li>
+              {tags.map((tag, index) => (
+                  <li className={activeTag === tag ? "active" : null} onClick={() => handleTagClickEvent(tag)}
+                      key={index}>{tag}</li>
+              ))}
+            </TagFilter>
 
-                <ListGrid
-                    data={filteredIntegrations}
-                    columnWidth={[1, 1/2, 1/2, 1/3]} //{[1, 1/2, 1/4]} responsive
-                    component={({node}) => (
-                        <CardIntegration className={node.slug} key={node.slug}>
+            <ListGrid
+                data={filteredIntegrations}
+                columnWidth={[1, 1 / 2, 1 / 2, 1 / 3]} //{[1, 1/2, 1/4]} responsive
+                component={({node}) => (
+                    <CardIntegration className={node.slug} key={node.slug}>
 
 
-                          { ( node.slug &&  <Link to={'integrations/' + node.slug }>
-                                              <ContentfulAsset className={'featureLogo'} data={node.logo}/>
-                                            </Link> ) ||
-                                            <ContentfulAsset className={'featureLogo'} data={node.logo}/> }
+                      {(node.slug && <Link to={'integrations/' + node.slug}>
+                        <ContentfulAsset className={'featureLogo'} data={node.logo}/>
+                      </Link>) ||
+                      <ContentfulAsset className={'featureLogo'} data={node.logo}/>}
 
-                          <Heading fontWeight={400} as={'h2'}  textAlign={'right'}  content={node.name} />
+                      <Heading fontWeight={400} as={'h2'} textAlign={'right'} content={node.name}/>
 
-                          { node.status && node.status ==='Retiring Integration' && <RetiringIntegration style={{float: 'right'}} data-multiline="true" data-tip="Due to service being removed from the market, this integration is being retired<br />If you are looking for a comparable product, please get in contact to help with a migration.">{node.status}</RetiringIntegration> }
+                      {node.status && node.status === 'Retiring Integration' &&
+                      <StyledRetiringIntegration style={{float: 'right'}} data-multiline="true"
+                                                 data-tip="Due to service being removed from the market, this integration is being retired<br />If you are looking for a comparable product, please get in contact to help with a migration.">{node.status}</StyledRetiringIntegration>}
+                      {node.status && node.status === 'Hot' &&
+                      <StyledHotIntegration style={{float: 'right'}} data-multiline="true"
+                                            data-tip="This connection is hot. Our customers love this integration and is one of the most popular integrations we support."><FontAwesomeIcon
+                          icon={faPepperHot}/><FontAwesomeIcon icon={faPepperHot}/><FontAwesomeIcon icon={faPepperHot}/></StyledHotIntegration>}
+                      {node.status && node.status === 'Soft Launched' &&
+                      <StyledSoftLaunchIntegration style={{float: 'right'}} data-multiline="true"
+                                                   data-tip="We have completed our technical integration for this integration and we are currently soft launching this integration with existing Rentivo customers. Please contact your Rentivo Success manager for more information.">Soft
+                        Launch <FontAwesomeIcon icon={faRocketLaunch}/></StyledSoftLaunchIntegration>}
 
-                          <TagList>
-                            {node.tags && node.tags.map( (tag, index) => (
-                                <li className={ activeTag === tag ?  "active" : null  } onClick={() => handleTagClickEvent(tag)} key={index}>{tag}</li>
-                            ))}
-                          </TagList>
-                          { node.summary && <Summary>{node.summary.summary}</Summary> }
+                      <TagList>
+                        {node.tags && node.tags.map((tag, index) => (
+                            <li className={activeTag === tag ? "active" : null} onClick={() => handleTagClickEvent(tag)}
+                                key={index}>{tag}</li>
+                        ))}
+                      </TagList>
+                      {node.summary && <Summary>{node.summary.summary}</Summary>}
 
-                          {node.slug &&
-                          <LearnMoreLink to={'integrations/' + node.slug }>
-                              Learn more
-                              <FontAwesomeIcon icon={faChevronRight} />
-                          </LearnMoreLink> }
-                        </CardIntegration>
-                    )}
-                />
-              </Container>
+                      {node.slug &&
+                      <LearnMoreLink to={'integrations/' + node.slug}>
+                        Learn more
+                        <FontAwesomeIcon icon={faChevronRight}/>
+                      </LearnMoreLink>}
+                    </CardIntegration>
+                )}
+            />
+          </Container>
 
-            </Section>
+        </Section>
 
-            <FaqSection  data={faqGroups} groups={"General,Billing"} active={"General"}  />
+        <FaqSection data={faqGroups} groups={"General,Billing"} active={"General"}/>
 
       </MarketingLayout>
   );
@@ -352,7 +323,7 @@ export const query = graphql`
             summary
           }
           webAddress
-          
+
         }
       }
     }

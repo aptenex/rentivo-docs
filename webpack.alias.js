@@ -6,12 +6,12 @@ function srcPath(subdir) {
 module.exports = {
   resolve: {
     alias: {
-      'reusecore': './reusecore',
-      'common': './common',
-      'functions': './functions',
-      'containers' : './containers',
-      'components' : './components',
-      'constants' : './constants'
+      'reusecore': srcPath('src/reusecore'),
+      'common': srcPath('src/common'),
+      'functions': srcPath('src/functions'),
+      'containers' : srcPath('src/containers'),
+      'components' : srcPath('src/components'),
+      'constants' : srcPath('src/constants')
     }
   }
 };

@@ -64,7 +64,7 @@ class AsideMenu extends Component {
             } = el;
             let classes = `doc-header ${el.tagName}`;
 
-            if (el.id === this.state.activeNavItem.slug) {
+            if (el.id === this.state?.activeNavItem?.slug) {
               classes += ' active';
             }
 

@@ -1,3 +1,5 @@
+const readingTime = require('reading-time');
+const documentToPlainTextString = require('@contentful/rich-text-plain-text-renderer').documentToPlainTextString;
 const path = require('path');
 const _ = require('lodash');
 const webpackLodashPlugin = require('lodash-webpack-plugin');
@@ -8,8 +10,18 @@ const crypto = require('crypto');
  *
  * @param {any} { node, boundActionCreators, getNode }
  */
-exports.onCreateNode = ({node, boundActionCreators, getNode}) => {
+exports.onCreateNode = async ({node, boundActionCreators, loadNodeContent, actions, getNode}) => {
+
+
   const {createNodeField} = boundActionCreators;
+  const { internal } = node;
+  const { owner, mediaType } = internal;
+  if (mediaType === "text/richtext" && owner === "gatsby-source-contentful") {
+    const doc = JSON.parse(await loadNodeContent(node));
+    const text = documentToPlainTextString(doc);
+    const result = readingTime(text);
+    actions.createNodeField({ node, name: "readingTime", value: result });
+  }
 
   /**
    * Add slug edge
@@ -160,7 +172,11 @@ exports.createPages = ({graphql, boundActionCreators}) => {
 
     resolve(graphql(`
         {
-          kb : allContentfulPage(filter: {type: {eq: "Knowledge Base"}, slug: {ne: null}}) {
+          kb : allContentfulPage(filter: {
+                  type: {regex: "/Knowledge Base|How To/"},
+                  slug: {ne: null}
+               }
+          ) {
             edges {
               node {
                 id
@@ -209,6 +225,7 @@ exports.createPages = ({graphql, boundActionCreators}) => {
       // ** CATEGORIES **
       //
       const kbProductList = Array.from(kbProductSet);
+      const uniqueDocTypes = _.uniq( _.map(  kbProductList, 'type') );
       kbProductList.forEach((category, i) => {
         // Create "/ui/<category-slug>" pages.
         createPage({
@@ -216,10 +233,11 @@ exports.createPages = ({graphql, boundActionCreators}) => {
           component: categoryPage,
           context: {
             parentPage : category.parentPage.id,
-            docType: category.type, // This is the "type" within the Page.
-            categoryTitle: category.title,
-            categoryId : category.id,
-            category: category // not sure how to use an object in graphql function
+            // docTypes: uniqueDocTypes, // This is all the "types" within the Page. ie "How To" or "Knowledge Base".
+            categoryTypes: `/${uniqueDocTypes.join("|")}/`,
+            category: {
+              title: category.parentPage.name,
+            }
           }
         });
       });

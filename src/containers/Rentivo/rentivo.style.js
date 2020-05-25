@@ -7,6 +7,111 @@ import Logo from 'reusecore/src/elements/UI/Logo';
 import Container from "../../common/src/components/UI/Container";
 
 
+
+export const TagFilter = styled('ul')`
+  font-size: 1.3em;
+  max-width: 100%;
+  margin: 0px;
+  padding: 0px;  
+  vertical-align: bottom;
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  position: relative;
+  li {
+    border-radius: 3px;
+    background: white;
+    padding: 15px 30px;
+    border: 1px solid #01b47d;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      border: 1px solid #01b47d;      
+      background: #e4fff7;
+      cursor: pointer;
+    }
+    &.active {
+      background: #01b47d;
+      color: white;
+      font-weight: 600;
+      &:hover {
+       
+      }
+    }    
+  }
+  
+   @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+    li { margin-bottom: 3px;}    
+   }
+`;
+
+export const TagList = styled(TagFilter)`
+  font-size: 0.9em;
+  display: inline-flex;  
+  text-align: left;
+    clear:both;
+    float:left;
+    margin-bottom: 10px;
+  li {    
+    padding: 7px 12px;
+    border: 1px solid #01b47d;    ;
+    border-radius: 20px;
+  }
+   @media (max-width: 768px) {
+      flex-direction: row;
+      width: auto;
+      li { margin-bottom: 3px;}    
+   }
+`;
+
+export const RetiringIntegration = styled('label')`
+  float: right;
+  color: rgba(27,16,7,0.33);
+`;
+export const HotIntegration = styled('label')`
+  @keyframes bounce {
+    0%, 100%, 20%, 50%, 80% {
+      transform:         translateY(0)
+    }
+    40% {
+      transform:         translateY(-10px)
+    }
+    60% {
+      transform:         translateY(-5px)
+    }
+  }
+  
+  animation-duration: 1.4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+   &:hover {
+      cursor: pointer;
+    animation-name: bounce;
+    -moz-animation-name: bounce;
+   }
+  svg:nth-child(2) {
+    font-size: 1.2em;
+    color: #ff4e00;
+  }
+  svg:last-child {
+    font-size: 1.5em;
+    color: red;
+  }
+`;
+
+export const SoftLaunchIntegration = styled(HotIntegration)`
+  color: deepskyblue;
+  svg:last-child {
+    font-size: 1.5em;
+    color: deepskyblue;
+  }
+`;
+
 export const BlobWrapperA = styled.div`
   position: absolute;
   left: -40%;

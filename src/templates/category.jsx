@@ -8,6 +8,7 @@ import GROUPS from '../constants/groups';
 import Layout from '../components/DocsLayout';
 import './category.scss';
 
+
 class CategoryTemplate extends React.Component {
   static sortGroups(groupEdges) {
 
@@ -16,14 +17,14 @@ class CategoryTemplate extends React.Component {
       return { ...edge, order };
     });
 
-    const groupEdgesSorted = _.sortBy(groupsEdgesWithOrder, ['order', 'name']);
-    return groupEdgesSorted;
+    return _.sortBy(groupsEdgesWithOrder, [ 'order', 'name']);
+
   }
 
   renderGroups() {
     const { data } = this.props;
     const sortedGroups = CategoryTemplate.sortGroups(data.docs.group);
-
+    console.log(sortedGroups, '<<<<');
     return sortedGroups.map((group) => {
       const title = GROUPS[group.fieldValue] ? GROUPS[group.fieldValue].name : group.fieldValue;
       return (
@@ -37,14 +38,14 @@ class CategoryTemplate extends React.Component {
 
   render() {
     const { pageContext, location } = this.props;
-    const { categoryTitle } = pageContext;
+    const { title : categoryTitle } = pageContext.category;
     // If we don't have a "pretty category", make one out of the category context.
     const title = CATEGORIES[categoryTitle] ? CATEGORIES[categoryTitle] : categoryTitle.replace(/-/g, ' ');
     return (
       <Layout location={location} subNav={true}>
         <div className="category-container container">
-          <SEO postNode={  this.props} postType="category" />
-          <h1 className="page-title">Category: {title}</h1>
+          <SEO postNode={  this.props } postType="docs-category" />
+          <h1 className="page-title">Rentivo Product: {title}</h1>
           <div className="row">
             {this.renderGroups()}
           </div>
@@ -58,12 +59,12 @@ export default CategoryTemplate;
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
-  query CategoryPage($parentPage: String, $docType: String) {
+  query CategoryPage($parentPage: String, $categoryTypes: String) {
     docs: allContentfulPage(
       limit: 1000
       sort: { fields: [name], order: ASC }
       filter: {
-        type: {eq: $docType}
+        type: {regex: $categoryTypes}
         parentPage: { id : { eq: $parentPage} }        
       }
     ) {
