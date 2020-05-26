@@ -27,6 +27,6 @@
   padding: $scaledown-3 $scaleup-3;
 
   &__success {
-    @include colfax(600);
+    @include montserrat(600);
   }
 }

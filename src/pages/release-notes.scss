@@ -19,7 +19,7 @@
   line-height: $scaleup-1;
   color: $slate-60;
 
-  @include colfax(600);
+  @include montserrat(600);
 
   &::after {
     content: '';
@@ -38,7 +38,7 @@
 }
 
 .release-notes-overview p {
-  @include colfax(400);
+  @include montserrat(400);
 
   color: $slate-80;
 }
@@ -51,7 +51,7 @@
 }
 
 .release-notes-key__icon {
-  @include colfax(600);
+  @include montserrat(600);
 
   color: $slate-60;
   flex: 1;

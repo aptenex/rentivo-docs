@@ -3,8 +3,14 @@
 // linting disabled due to mixins from 3rd parties
 
 // colfax
-@mixin colfax($font-weight: 400) {
+@mixin montserrat($font-weight: 400) {
   font-family: Colfax, Helvetica, Arial, sans-serif;
+  font-style: normal;
+  font-weight: $font-weight;
+}
+
+@mixin montserrat($font-weight: 400) {
+  font-family: Montserrat, Colfax, Helvetica, Arial, sans-serif;
   font-style: normal;
   font-weight: $font-weight;
 }
