@@ -28,9 +28,7 @@ class SEO extends Component {
       description = postNode.seoDescription;
 
     } else if (postType === 'docs-category') {
-      const {
-        category : { title : category },
-      } = postNode.pageContext;
+      const category = postNode.pageContext.parentPageName;
 
       title = SEO.capitalizeFirstLetter(`${category.replace('-', ' ')}`);
 

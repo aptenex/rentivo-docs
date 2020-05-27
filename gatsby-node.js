@@ -204,13 +204,13 @@ exports.createPages = ({graphql, boundActionCreators}) => {
       }
 
       // We use a set because it automatically deduplicates items..
-      const kbProductSet = new Set();
+      const kbProductCategories = new Set();
       const developerProductSet = new Set();
 
       result.data.kb.edges.forEach(({node}) => {
         const { title } = node.category || {}; // ie "How it Works", "Getting Starting". etc.
         const { type : docType } = node; // node.type === docType
-        kbProductSet.add({ parentPage : node.parentPage, type: docType , ...node.category});
+        kbProductCategories.add({ parentPage : node.parentPage, type: docType , ...node.category});
         createPage({
           path: ('/docs/' + (node.parentPage && node.parentPage.slug ? (node.parentPage.slug + '/' + node.slug) : node.slug)),
           component: docsPage,
@@ -224,22 +224,25 @@ exports.createPages = ({graphql, boundActionCreators}) => {
       //
       // ** CATEGORIES **
       //
-      const kbProductList = Array.from(kbProductSet);
-      const uniqueDocTypes = _.uniq( _.map(  kbProductList, 'type') );
-      kbProductList.forEach((category, i) => {
-        // Create "/ui/<category-slug>" pages.
-        createPage({
-          path: `/docs/${_.kebabCase(category.parentPage.slug)}/`,
-          component: categoryPage,
-          context: {
-            parentPage : category.parentPage.id,
-            // docTypes: uniqueDocTypes, // This is all the "types" within the Page. ie "How To" or "Knowledge Base".
-            categoryTypes: `/${uniqueDocTypes.join("|")}/`,
-            category: {
-              title: category.parentPage.name,
+
+      const kbProductUniqueList = _.uniqWith( Array.from(kbProductCategories) , function(a,b) {
+        return a.title === b.title && JSON.stringify(a.parentPage) === JSON.stringify(b.parentPage);
+      });
+      const kbUniqueDocTypes = _.uniq( _.map(  kbProductUniqueList, 'type') );
+
+      kbProductUniqueList.forEach((category, i) => {
+        // Create "/docs/<category-slug>" pages. BUT ONLY if we have a parentPage
+        if(category.parentPage) {
+          createPage({
+            path: `/docs/${_.kebabCase(category.parentPage.slug)}/`,
+            component: categoryPage,
+            context: {
+              parentPage: category.parentPage.id,
+              parentPageName : category.parentPage.name,
+              categoryTypes: `/${kbUniqueDocTypes.join("|")}/`, // We use this for searching regex...
             }
-          }
-        });
+          });
+        }
       });
 
 

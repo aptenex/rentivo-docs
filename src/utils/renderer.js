@@ -27,6 +27,7 @@ import rehype2react from 'rehype-react'
 import Remark from 'remark';
 import PageAnchor from "../componentsMarkdown/PageAnchor";
 import ListItem from "../componentsMarkdown/ListItem";
+import {getFullPath} from "constants/pageSlugPrefixes";
 
 const renderAst = new RehypeReact({
   createElement: React.createElement,
@@ -44,10 +45,112 @@ const renderAst = new RehypeReact({
 }).Compiler;
 
 
-// http://jsfiddle.net/2cq5zf9y/
-// http://jsfiddle.net/7c8byprq/
+const richTextOptions = {
+    renderNode: {
+      [BLOCKS.PARAGRAPH]: (node, children) => {
+        return <Text>{children}</Text>
+      },
+      [BLOCKS.HEADING_1]: (node, children) => {
+        return <Heading mt={'2rem'} as={'h2'}>{children}</Heading>
+      },
+      [BLOCKS.HEADING_2]: (node, children) => {
+        let clone = _.clone(node);
+        clone.nodeType = 'document';
+        return <Heading mt={'2rem'} id={_.kebabCase(renderPlaintext(clone).toLowerCase())} as={'h2'}>{ children }</Heading>
+      },
+      [BLOCKS.HEADING_3]: (node, children) => {
+        return <Heading mt={'2rem'} id={_.kebabCase(node.content[0].value)} as={'h3'}>{children}</Heading>
+      },
+      [BLOCKS.HEADING_4]: (node, children) => {
+        return <Heading id={_.kebabCase(node.content[0].value)} as={'h4'}>{children}</Heading>
+      },
+      [INLINES.ENTRY_HYPERLINK]: (node, children) => {
 
-const transform = (fields, index) => {
+        let uri = getFullPath(node.data.target);
+        // If given link begins with a single `/`, treat as internal Gatsby Link
+        return (uri && <Link to={uri}>{ children }</Link>) ||  children ;
+      },
+      [INLINES.HYPERLINK]: (node, children) => {
+        const website_url = 'https://www.rentivo.com';
+        return <a href={node.data.uri} target={`${node.data.uri.startsWith(website_url) ? '_self' : '_blank'}`} rel={`${node.data.uri.startsWith(website_url) ? '' : 'noopener noreferrer'}`}>{node.content[0].value}</a>;
+
+      },
+      [BLOCKS.EMBEDDED_ASSET] : (node) => {
+        if(node.data.target.sys.type === 'Link'){
+          return <></>;
+        }
+        const { title, description, file } = node.data.target.fields || {};
+        const mimeType = file['en-US'].contentType;
+        const mimeGroup = mimeType.split('/')[0];
+
+        switch (mimeGroup) {
+          case 'image':
+            return <img
+                title={ title ? title['en-US'] : null}
+                alt={description ?  description['en-US'] : null}
+                src={file['en-US'].url}
+            />
+          case 'video':
+            return <video width="100%" autoplay controls="controls">
+              <source src={ file['en-US'].url } type="video/mp4" />
+            </video>
+          case 'application':
+            return <a
+                href={file['en-US'].url}
+            >{ title ? title['en-US'] : file['en-US'].details.fileName }
+            </a>
+          default:
+            return <span style={{backgroundColor: 'red', color: 'white'}}> {mimeType} embedded asset </span>
+        }
+
+      },
+      [BLOCKS.EMBEDDED_ENTRY]: node => {
+        // If this isn't working, there seems to be a bug on contentful??
+        // https://github.com/gatsbyjs/gatsby/issues/10592
+        // https://github.com/gatsbyjs/gatsby/pull/15084
+        switch(node.data.target.sys.contentType.sys.id){
+          case 'hero':
+            return <HeroSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
+          case 'featurette':
+            return <FeatuetteSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
+          default:
+            return <span style={{padding: '20px', backgroundColor: 'red', color: 'white'}}>missing embedded asset { node.data.target.sys.contentType.sys.id } </span>
+        }
+      },
+    },
+    /*
+     * Defines custom html string for each mark type like bold, italic etc..
+     */
+    renderMark: {
+
+    }
+};
+
+export const render = (json) => {
+  return json?.nodeType === 'document' ?
+       documentToReactComponents(json, richTextOptions)  :
+          json ? renderAst(json) : null;
+};
+
+export const renderPlaintext = (json) => {
+
+  if(json && ( json.nodeType === null && json.htmlAst === null) ){
+    console.error('You must send a htmlAst from markdownRemark or a richtext-type');
+  }
+
+  return json?.nodeType === 'document' ?
+      documentToPlainTextString(json)  :
+      json ? renderAst(json) : null;
+};
+
+export const renderPage = (postNode) => {
+  return render(postNode?.body?.json?.content?.length > 0 ?
+      postNode?.body.json :
+      (postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst ? postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst : null));
+}
+
+
+export const transform = (fields, index) => {
   if(typeof fields === 'string' || typeof fields === 'boolean' ) {
     // If we have a content.. transform into markdown
     //  || index === 'callout'
@@ -85,106 +188,5 @@ const transform = (fields, index) => {
     return typeof item !== 'object' ? item : { item : fields };
   });
 };
-const richTextOptions = {
-    renderNode: {
-      [BLOCKS.PARAGRAPH]: (node, children) => {
-        return <Text>{children}</Text>
-      },
-      [BLOCKS.HEADING_1]: (node, children) => {
-        return <Heading mt={'2rem'} as={'h2'}>{children}</Heading>
-      },
-      [BLOCKS.HEADING_2]: (node, children) => {
-        let clone = _.clone(node);
-        clone.nodeType = 'document';
-        return <Heading mt={'2rem'} id={_.kebabCase(renderPlaintext(clone).toLowerCase())} as={'h2'}>{ children }</Heading>
-      },
-      [BLOCKS.HEADING_3]: (node, children) => {
-        return <Heading mt={'2rem'} id={_.kebabCase(node.content[0].value)} as={'h3'}>{children}</Heading>
-      },
-      [BLOCKS.HEADING_4]: (node, children) => {
-        return <Heading id={_.kebabCase(node.content[0].value)} as={'h4'}>{children}</Heading>
-      },
-      [INLINES.ENTRY_HYPERLINK]: (node, children) => {
-        console.log('naodnaosdnasodnasodn', node, children);
-        // If given link begins with a single `/`, treat as internal Gatsby Link
-        return /^\/(?!\/)/.test(node.data.uri)
-            ? `<Link to="${node.data.uri}">{ children }</Link>`
-            : `<a href="${node.data.uri}">{ children }</a>`
-      },
-      [BLOCKS.EMBEDDED_ASSET] : (node) => {
-        console.log('asdasdad', node);
-        if(node.data.target.sys.type === 'Link'){
-          return <></>;
-        }
-        const { title, description, file } = node.data.target.fields || {};
-        const mimeType = file['en-US'].contentType;
-        const mimeGroup = mimeType.split('/')[0];
 
-        switch (mimeGroup) {
-          case 'image':
-            return <img
-                title={ title ? title['en-US'] : null}
-                alt={description ?  description['en-US'] : null}
-                src={file['en-US'].url}
-            />
-          case 'video':
-            return <video width="100%" autoplay controls="controls">
-              <source src={ file['en-US'].url } type="video/mp4" />
-            </video>
-          case 'application':
-            return <a
-                href={file['en-US'].url}
-            >{ title ? title['en-US'] : file['en-US'].details.fileName }
-            </a>
-          default:
-            return <span style={{backgroundColor: 'red', color: 'white'}}> {mimeType} embedded asset </span>
-        }
-
-      },
-      [BLOCKS.EMBEDDED_ENTRY]: node => {
-        // If this isn't working, there seems to be a bug on contentful??
-        // https://github.com/gatsbyjs/gatsby/issues/10592
-        // https://github.com/gatsbyjs/gatsby/pull/15084
-        switch(node.data.target.sys.contentType.sys.id){
-          case 'hero':
-            return <HeroSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
-          break;
-          case 'featurette':
-            return <FeatuetteSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
-            break;
-          default:
-            return <span style={{padding: '20px', backgroundColor: 'red', color: 'white'}}>missing embedded asset { node.data.target.sys.contentType.sys.id } </span>
-        }
-      },
-    },
-    /*
-     * Defines custom html string for each mark type like bold, italic etc..
-     */
-    renderMark: {
-
-    }
-};
-
-export const render = (json) => {
-  return json?.nodeType === 'document' ?
-       documentToReactComponents(json, richTextOptions)  :
-          json ? renderAst(json) : null;
-};
-
-export const renderPlaintext = (json) => {
-
-  if(json && ( json.nodeType === null && json.htmlAst === null) ){
-    console.error('You must send a htmlAst from markdownRemark or a richtext-type');
-  }
-
-  return json?.nodeType === 'document' ?
-      documentToPlainTextString(json)  :
-      json ? renderAst(json) : null;
-};
-
-export const renderPage = (postNode) => {
-  return render(postNode?.body?.json?.content?.length > 0 ?
-      postNode?.body.json :
-      (postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst ? postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst : null));
-}
 export default renderAst;

@@ -38,8 +38,7 @@ class CategoryTemplate extends React.Component {
 
   render() {
     const { pageContext, location } = this.props;
-    const { title : categoryTitle } = pageContext.category;
-    // If we don't have a "pretty category", make one out of the category context.
+    const categoryTitle = pageContext.parentPageName;
     const title = CATEGORIES[categoryTitle] ? CATEGORIES[categoryTitle] : categoryTitle.replace(/-/g, ' ');
     return (
       <Layout location={location} subNav={true}>
