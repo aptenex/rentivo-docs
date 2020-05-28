@@ -18,17 +18,23 @@ import { render } from '../utils/renderer';
 import AssociatedPages from "../containers/Rentivo/AssociatedPages";
 import PageTypeLabel from "../containers/Rentivo/PageTypeLabel";
 import styled from "styled-components";
+const ArticleWrapper = styled('section')`
+        margin-top: 30px;
+      `;
+const ArticleToolbar = styled('div')`
+  
+      `;
 class DocTemplate extends React.Component {
   getLinks() {
     const { data } = this.props;
     if(data?.doc?.body?.json){
       console.log("doc", data.doc.body);
-      const headers = data?.doc.body.json.content.filter(el => el.nodeType === 'heading-2');
+      const headers = data?.doc.body.json.content.filter(el => el.nodeType === 'heading-2' || el.nodeType === 'heading-3');
       return headers?.map((header) => {
         const link = {};
         link.tagName = `h${header.nodeType.split('-')[1]}`;
         link.textNode = header.content[0].value;
-        link.id = _.kebabCase(header.content[0].value).toLowerCase();
+        link.id = _.kebabCase(header.content[0].value.toLowerCase());
         return link;
       }) || [];
 
@@ -43,26 +49,30 @@ class DocTemplate extends React.Component {
       }) || [];
     }
 
+  };
+
+  getBody(){
+    const { data, location } = this.props;
+    const postNode = data.doc;
+    return render( postNode?.body?.json?.content?.length > 0 ?
+        postNode?.body.json :
+        (postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst ? postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst : null) );
   }
 
-  render() {
+  getAssociatedPages(){
     const { data, location } = this.props;
     const postNode = data.doc;
     const associations = data.associations;
-    console.log(postNode, associations);
-    const associatedPages = _.merge(associations?.nodes, postNode.associatedPages );
+    return  _.merge(associations?.nodes, postNode.associatedPages );
 
-    const ArticleWrapper = styled('section')`
-      margin-top: 30px;
-    `;
-    const ArticleToolbar = styled('div')`
+  }
 
-    `;
+  render() {
+
+    const { data, location } = this.props;
+    const postNode = data.doc;
     const asideLinks = this.getLinks();
 
-    const Body = render( postNode?.body?.json?.content?.length > 0 ?
-        postNode?.body.json :
-        (postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst ? postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst : null) );
     return (
       <Layout location={location} subNav={true}>
         <div className="container-lg doc-wrap">
@@ -71,17 +81,15 @@ class DocTemplate extends React.Component {
             ? (<AsideMenu asideLinks={this.getLinks()} />)
             : null
           }
-
           <div className="doc-main">
-
             <h1 dangerouslySetInnerHTML={{ __html: postNode.name }} />
             <ArticleToolbar>
               <PageTypeLabel type={postNode.type} />
               { postNode?.body?.fields?.readingTime?.text }
               { postNode?.bodyMarkdown?.childMarkdownRemark.timeToRead && postNode?.bodyMarkdown?.childMarkdownRemark.timeToRead + ' min read' }
             </ArticleToolbar>
-            <ArticleWrapper>{ Body }</ArticleWrapper>
-            <AssociatedPages pages={associatedPages} />
+            <ArticleWrapper>{ this.getBody() }</ArticleWrapper>
+            <AssociatedPages pages={this.getAssociatedPages()} />
             <Rating />
 
           </div>

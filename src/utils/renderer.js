@@ -56,13 +56,22 @@ const richTextOptions = {
       [BLOCKS.HEADING_2]: (node, children) => {
         let clone = _.clone(node);
         clone.nodeType = 'document';
-        return <Heading mt={'2rem'} id={_.kebabCase(renderPlaintext(clone).toLowerCase())} as={'h2'}>{ children }</Heading>
+        let name = _.kebabCase(renderPlaintext(clone).toLowerCase());
+        return <Heading mt={'2rem'} className={'linked-header'} id={name} as={'h2'}>
+          <a href={`#` + name} aria-hidden="true" className="anchor" data-slug={ name}>
+            <svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16">
+              <path fill-rule="evenodd"
+                    d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+            </svg>
+          </a>
+          { children }
+          </Heading>
       },
       [BLOCKS.HEADING_3]: (node, children) => {
-        return <Heading mt={'2rem'} id={_.kebabCase(node.content[0].value)} as={'h3'}>{children}</Heading>
+        return <Heading mt={'2rem'} className={'linked-header'} id={_.kebabCase(node.content[0].value)} as={'h3'}>{children}</Heading>
       },
       [BLOCKS.HEADING_4]: (node, children) => {
-        return <Heading id={_.kebabCase(node.content[0].value)} as={'h4'}>{children}</Heading>
+        return <Heading className={'linked-header'} id={_.kebabCase(node.content[0].value)} as={'h4'}>{children}</Heading>
       },
       [INLINES.ENTRY_HYPERLINK]: (node, children) => {
 
@@ -72,6 +81,9 @@ const richTextOptions = {
       },
       [INLINES.HYPERLINK]: (node, children) => {
         const website_url = 'https://www.rentivo.com';
+        if(node.data.uri.startsWith('/')){
+          return <Link to={node.data.uri}>{node.content[0].value}</Link>
+        }
         return <a href={node.data.uri} target={`${node.data.uri.startsWith(website_url) ? '_self' : '_blank'}`} rel={`${node.data.uri.startsWith(website_url) ? '' : 'noopener noreferrer'}`}>{node.content[0].value}</a>;
 
       },

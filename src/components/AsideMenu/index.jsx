@@ -7,7 +7,7 @@ class AsideMenu extends Component {
 
     this.scrollSpy = this.scrollSpy.bind(this);
     // Scrollspy will highlight next section when header is 100 pixels from top of browser chrome.
-    this.scrollSpyOffset = 100;
+    this.scrollSpyOffset = 200;
 
     this.state = {
       activeNavItem: false,
@@ -27,12 +27,12 @@ class AsideMenu extends Component {
   scrollSpy() {
     const selector = this.state.pageType === 'release-notes' ? 'h2 .anchor' : 'h2 .anchor, h3 .anchor';
     const headers = Array.from(document.querySelectorAll(selector));
-
+    console.log('found headers', headers);
     // headers with offset
     const headersOffset = headers.map((el, i) => {
       const { slug } = el.dataset;
       let nextEl;
-
+      console.log("SLUG", slug);
       // Offset for a given section is the NEXT header.
       if ((headers.length - 1) !== i) {
         nextEl = headers[i + 1].getBoundingClientRect().top;

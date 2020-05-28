@@ -233,43 +233,13 @@ module.exports = {
       options: {
         fonts: [
           {
-            family: `Roboto`,
+            family: `Montserrat`,
             variants: [
-              `100`,
-              `100i`,
-              `300`,
-              `300i`,
               `400`,
-              `400i`,
-              `500`,
-              `500i`,
+              `600`,
               `700`,
-              `700i`,
-              `900`,
-              `900i`,
             ],
-          },
-          {
-            family: `Poppins`,
-            variants: [`300`, `400`, `500`, `600`, `700`],
-          },
-          {
-            family: `Lato`,
-            variants: [`300`, `400`, `700`],
-          },
-          {
-            family: `Open Sans`,
-            variants: [`300`, `400`, `600`, `700`, `800`],
-          },
-          {
-            family: `Raleway`,
-            variants: [`500`, `600`],
-          },
-
-          {
-            family: `Heebo`,
-            variants: [`300`, `400`, `500`, `600`, `700`, `800`],
-          },
+          }
         ],
       },
     },

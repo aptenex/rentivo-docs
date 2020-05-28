@@ -49,6 +49,7 @@ const ProductDescriptionSection = styled('div')`
   text-align: left;
 `
 
+
 class FeatureTemplate extends React.Component {
   getCategoryLinks() {
     const { data : { sideLinks : { edges : links } } } = this.props;

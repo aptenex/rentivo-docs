@@ -4,6 +4,7 @@ import Link from 'gatsby-link';
 import { themeGet } from 'styled-system';
 
 export const Wrapper = styled('article')`
+
   ol {
     list-style: inherit;
     li {
@@ -15,5 +16,8 @@ export const Wrapper = styled('article')`
     li {
       list-style-type: inherit;
     }
+  }
+  [class^='heroSectionstyle__HeroWrapper']{
+    padding-bottom: 40px;
   }
 `;

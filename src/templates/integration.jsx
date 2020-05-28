@@ -90,8 +90,9 @@ const WhiteContainer = styled(Container)`
 `
 
 const SummaryContent = styled('div')`
+border-radius: .5rem;
   p {
-      font-size: 24px;
+      font-size: 20px;
       line-height: 2.5rem;
     }
 `;
@@ -269,6 +270,10 @@ const StyledTableOfKeyStats = styled(TableOfKeyStats)`
  } 
 `;
 
+const StyledLogosContainer = styled(Container)`
+  margin-top: 40px;
+  margin-bottom: 8px;
+`;
 
 
 class IntegrationTemplate extends React.Component {
@@ -329,11 +334,10 @@ class IntegrationTemplate extends React.Component {
 
           <Container width={'1024px'}>
             <Heading fontWeight={400} textAlign={'center'} as={'h1'}>{integrationNode.title}</Heading>
-            <Text textAlign={'center'} fontSize={['22px', '25px', '22px', '26px']} as={'h5'}
-                  className={'tagline'}>{integrationNode.tagline}</Text>
+            <Text textAlign={'center'} lineHeight={['32px', '35px', '32px', '36px']} fontSize={['22px', '25px', '22px', '26px']} as={'h5'}>{integrationNode.tagline}</Text>
           </Container>
 
-          <Container width={'720px'}>
+          <StyledLogosContainer width={'720px'} >
             <Row top="xs">
               <Col xs={6}>
                 <CardWrapper>
@@ -353,7 +357,7 @@ class IntegrationTemplate extends React.Component {
               <ConnectorImage src={ConnectorTopLeftBottomRight}/>
 
             </Row>
-          </Container>
+          </StyledLogosContainer>
           <WhiteWrapper>
             <Container>
               <Row top="xs">

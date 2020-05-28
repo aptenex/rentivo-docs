@@ -12,7 +12,8 @@ border-radius: 3px;
 margin-bottom: 5px;
 font-weight: 700;
 color: #222;
-
+display: flex;
+ align-items: center;
 `;
 
 const WrappedIcon = styled('span')`
@@ -20,10 +21,12 @@ const WrappedIcon = styled('span')`
   border-radius: 8px;
   padding: 6px 8px;
   text-align: center;
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
   border: 1px solid rgb(230, 230, 230);
   margin-right: 20px;
+  display: inline-block;
+  
 `
 
 export default function ListItem(props) {

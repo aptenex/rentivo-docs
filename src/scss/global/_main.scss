@@ -40,6 +40,7 @@ img {
 .docs-wrap {
   max-width: 1600px;
   margin: 0 auto;
+  overflow: visible !important;
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(41,70,97,.2);
 }
