@@ -157,7 +157,7 @@ export default (props) => {
 
 export const query = graphql`
   query FeaturesQuery {
-    allContentfulPage {
+    allContentfulPage(filter: {type: {eq: "Feature Page"}}) {
       parentNames:distinct(field: parentPage___name)
       parentIds :distinct(field: parentPage___id)
       products : group(field: parentPage___id) {
