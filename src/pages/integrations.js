@@ -1,8 +1,9 @@
-import React, {useState, useEffect, Fragment, Component} from 'react';
+import React, {useState, useEffect, Fragment, Component, useLayoutEffect} from 'react';
 import Sticky from 'react-stickynode';
 import {ThemeProvider} from 'styled-components';
 import {rentivoTheme} from 'common/src/theme/rentivo';
 import {ResetCSS} from 'common/src/assets/css/style';
+
 import {
   GlobalStyle,
   ContentWrapper,
@@ -171,22 +172,32 @@ svg {
 }
 `;
 
-export default ({data: {tags: {distinct: tags}}, data: {allContentfulIntegration: {edges: integrations}}}, props) => {
+export default ({ location, data: { tags: {distinct: tags} }, data: { allContentfulIntegration: {edges: integrations} } }) => {
   const faqGroups = useFAQGroupsOnHome();
-
 
   const [filteredIntegrations, setFilteredIntegrations] = useState(integrations);
   const [activeTag, setActiveTag] = useState(null);
+
   const handleTagClickEvent = (tag) => {
     if (!tag) {
       setFilteredIntegrations(integrations);
       setActiveTag(tag);
+      window.location.hash = '';
     } else {
-      const f = integrations.filter((p) => p.node.tags && p.node.tags.includes(tag));
+      const f = integrations.filter((p) => p.node.tags && p.node.tags.map((i) => _.kebabCase(i).toLowerCase()).includes(tag));
       setFilteredIntegrations(f);
       setActiveTag(tag);
+      window.location.hash = tag;
     }
-  }
+
+  };
+  useEffect(() => {
+    // Update the document title using the browser API
+    handleTagClickEvent(location.hash.replace('#',''))
+  }, []);
+
+
+
 
   const defaultOptions = {
     loop: true,
@@ -198,7 +209,7 @@ export default ({data: {tags: {distinct: tags}}, data: {allContentfulIntegration
   };
 
   return (
-      <MarketingLayout location={props.location}>
+      <MarketingLayout location={location}>
 
         <FeatuetteSection>
           <ContainerTop width={'720px'}>
@@ -222,8 +233,8 @@ export default ({data: {tags: {distinct: tags}}, data: {allContentfulIntegration
                   key={'all-integrations'}>All Integrations
               </li>
               {tags.map((tag, index) => (
-                  <li className={activeTag === tag ? "active" : null} onClick={() => handleTagClickEvent(tag)}
-                      key={index}>{tag}</li>
+                  <li className={activeTag === _.kebabCase(tag.toLowerCase()) ? "active" : null} onClick={() => handleTagClickEvent(_.kebabCase(tag.toLowerCase()))}
+                      key={_.kebabCase(tag.toLowerCase())}>{tag}</li>
               ))}
             </TagFilter>
 
@@ -255,8 +266,8 @@ export default ({data: {tags: {distinct: tags}}, data: {allContentfulIntegration
 
                       <TagList>
                         {node.tags && node.tags.map((tag, index) => (
-                            <li className={activeTag === tag ? "active" : null} onClick={() => handleTagClickEvent(tag)}
-                                key={index}>{tag}</li>
+                            <li className={activeTag === _.kebabCase(tag.toLowerCase()) ? "active" : null} onClick={() => handleTagClickEvent(_.kebabCase(tag.toLowerCase()))}
+                                key={_.kebabCase(tag.toLowerCase())}>{tag}</li>
                         ))}
                       </TagList>
                       {node.summary && <Summary>{node.summary.summary}</Summary>}
