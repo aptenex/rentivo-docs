@@ -28,7 +28,6 @@ class DocTemplate extends React.Component {
   getLinks() {
     const { data } = this.props;
     if(data?.doc?.body?.json){
-      console.log("doc", data.doc.body);
       const headers = data?.doc.body.json.content.filter(el => el.nodeType === 'heading-2' || el.nodeType === 'heading-3');
       return headers?.map((header) => {
         const link = {};

@@ -157,6 +157,9 @@ const ConnectorImage = styled('img')`
     left: 23%;
     margin-bottom: -120px;
     z-index: 1;
+   @media (max-width: 990px) {
+    display: none;
+   }
 `;
 
 const StyledTable = styled('table')`
@@ -275,6 +278,13 @@ const StyledLogosContainer = styled(Container)`
   margin-bottom: 8px;
 `;
 
+const SummaryCol = styled(Col)`
+   @media (max-width: 1220px) {
+    img,svg {
+      display: none;
+    }
+    }
+`;
 
 class IntegrationTemplate extends React.Component {
   getLinks() {
@@ -361,12 +371,12 @@ class IntegrationTemplate extends React.Component {
           <WhiteWrapper>
             <Container>
               <Row top="xs">
-                <Col xs={12} sm={4} lg={3}>
+                <Col xs={12} sm={4} lg={6} xl={3}>
                   <BackNav to={'/integrations'}>
                     <FontAwesomeIcon icon={faChevronLeft}/> All Integrations
                   </BackNav>
                 </Col>
-                <Col xs={12} sm={8} lg={9}>
+                <Col xs={12} sm={8} lg={6} xl={9}>
                     <StyledTagList>
                       {integrationNode.tags && integrationNode.tags.map((tag, index) => (
                           <li key={index}>{tag}</li>
@@ -380,18 +390,18 @@ class IntegrationTemplate extends React.Component {
             <WhiteContainer>
 
               <Row top="xs">
-                <Col xs={12} sm={4} lg={3}>
+                <SummaryCol xs={12} sm={12} lg={4} xl={3}>
                   {integrationNode?.logo?.fluid?.src ? <Image
                       fluid={integrationNode.logo}
-                      style={{width: '80%'}}
+                      style={{width: '80%', maxWidth: '300px'}}
                       alt="Product"
                   /> : integrationNode?.logo?.file ?
-                      <ContentfulAsset className={'featureLogo'} data={integrationNode.logo}/> : null}
+                      <ContentfulAsset className={'featureLogo'}  style={{width: '80%', maxWidth: '300px'}} data={integrationNode.logo}/> : null}
                   <Text content={integrationNode.webAddress}/>
                   <SummaryContent>{ render(integrationNode?.summary?.childMarkdownRemark?.htmlAst) }</SummaryContent>
 
-                </Col>
-                <Col xs={12} sm={8} lg={9}>
+                </SummaryCol>
+                <Col xs={12} sm={12} lg={8} xl={9}>
                   {integrationNode?.howItWorks?.childMarkdownRemark?.htmlAst &&
                   <HowItWorksContent>
                     <Heading as={'h3'}>How It Works</Heading>

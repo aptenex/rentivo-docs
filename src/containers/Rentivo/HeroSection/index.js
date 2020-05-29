@@ -147,9 +147,9 @@ const HeroSection = ({
   }
   const getColWidths = (features) => {
     if(features.length % 2 === 0){
-      return [1, 1 / 2, 1 / 2, 1 / 2 ]
+      return [1, 1, 1 / 2, 1 / 2 ]
     }
-    return [1, 1 / 2, 1 / Math.min(Math.max(parseInt(features.length, 10), 1), 2), 1 / Math.min(Math.max(parseInt(features.length, 10), 2), 3) ]
+    return [1, 1, 1 / Math.min(Math.max(parseInt(features.length, 10), 1), 2), 1 / Math.min(Math.max(parseInt(features.length, 10), 2), 3) ]
   };
 
   return (

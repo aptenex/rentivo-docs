@@ -182,12 +182,12 @@ export default ({ location, data: { tags: {distinct: tags} }, data: { allContent
     if (!tag) {
       setFilteredIntegrations(integrations);
       setActiveTag(tag);
-      window.location.hash = '';
+      history.pushState(null,null, '#all');
     } else {
       const f = integrations.filter((p) => p.node.tags && p.node.tags.map((i) => _.kebabCase(i).toLowerCase()).includes(tag));
       setFilteredIntegrations(f);
       setActiveTag(tag);
-      window.location.hash = tag;
+      history.pushState(null,null,'#' + tag );
     }
 
   };

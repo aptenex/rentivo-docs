@@ -24,7 +24,6 @@ class CategoryTemplate extends React.Component {
   renderGroups() {
     const { data } = this.props;
     const sortedGroups = CategoryTemplate.sortGroups(data.docs.group);
-    console.log(sortedGroups, '<<<<');
     return sortedGroups.map((group) => {
       const title = GROUPS[group.fieldValue] ? GROUPS[group.fieldValue].name : group.fieldValue;
       return (

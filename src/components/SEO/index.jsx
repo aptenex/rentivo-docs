@@ -5,7 +5,6 @@ import config from '../../../data/SiteConfig';
 class SEO extends Component {
   static capitalizeFirstLetter(str) {
     str = str.split(' ');
-    console.log("STRING", str);
     for (let i = 0, x = str.length; i < x; i++) {
       str[i] = str[i][0].toUpperCase() + str[i].substr(1);
     }

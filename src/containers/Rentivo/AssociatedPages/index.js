@@ -64,7 +64,6 @@ const AssociatedPages = ({
   buttonWrapper,
   button,
 }) => {
-  console.log("THE PAGES", pages);
   const TOC = (json) => {
 
     const headers = _.filter(  _.flatten(json?.content), item => /^heading/.test(item?.nodeType)  );

@@ -11,7 +11,6 @@ export const getFullPath = (linkToPage) => {
     let type = linkToPage.internal.type;
 
     if(type === 'ContentfulPage'){
-      console.log("LINK TO PAGE", linkToPage);
       if( linkToPage?.type && linkToPage?.parentPage?.slug && (
           linkToPage.type === 'Knowledge Base' || linkToPage.type === 'How To')) {
         return Types[type + '_' + linkToPage.type] + '/' + linkToPage.parentPage.slug + '/' + linkToPage.slug;
