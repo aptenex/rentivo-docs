@@ -250,7 +250,7 @@ export default ({data: {tags: {distinct: tags}}, data: {allContentfulIntegration
                           icon={faPepperHot}/><FontAwesomeIcon icon={faPepperHot}/><FontAwesomeIcon icon={faPepperHot}/></StyledHotIntegration>}
                       {node.status && node.status === 'Soft Launched' &&
                       <StyledSoftLaunchIntegration style={{float: 'right'}} data-multiline="true"
-                                                   data-tip="We have completed our technical integration for this integration and we are currently soft launching this integration with existing Rentivo customers. Please contact your Rentivo Success manager for more information.">Soft
+                                                   data-tip="We have completed our technical development for this integration and we are currently soft launching this integration with existing Rentivo customers. Please contact your Rentivo Success manager for more information.">Soft
                         Launch <FontAwesomeIcon icon={faRocketLaunch}/></StyledSoftLaunchIntegration>}
 
                       <TagList>

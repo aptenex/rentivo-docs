@@ -89,6 +89,7 @@ export const HotIntegration = styled('label')`
   animation-fill-mode: both;
   animation-timing-function: ease-in-out;
   animation-iteration-count: 1;
+  color: orange;
    &:hover {
       cursor: pointer;
     animation-name: bounce;
@@ -105,7 +106,7 @@ export const HotIntegration = styled('label')`
 `;
 
 export const SoftLaunchIntegration = styled(HotIntegration)`
-  color: deepskyblue;
+  color: #306eb3;
   svg:last-child {
     font-size: 1.5em;
     color: deepskyblue;

@@ -75,6 +75,7 @@ const CardNumbers = styled(Card)`
     text-align: left;
     color: themed('Rentivo.coilor');
     background: #f2f2f2;
+    height: 100%;
     svg {      
       width: 42px;
       margin-right: 15px;
@@ -94,6 +95,7 @@ const Components = {
 const HeroSection = ({
   titleDecor,
   title,
+  titleStyle,
   backgroundParticles,
   description,
   hero,
@@ -143,6 +145,12 @@ const HeroSection = ({
   if(forceHeroPrimaryBg){
     addAllClasses.push('forcePrimaryBg');
   }
+  const getColWidths = (features) => {
+    if(features.length % 2 === 0){
+      return [1, 1 / 2, 1 / 2, 1 / 2 ]
+    }
+    return [1, 1 / 2, 1 / Math.min(Math.max(parseInt(features.length, 10), 1), 2), 1 / Math.min(Math.max(parseInt(features.length, 10), 2), 3) ]
+  };
 
   return (
       <HeroWrapper className={addAllClasses.join(' ')}>
@@ -157,7 +165,7 @@ const HeroSection = ({
             <Col {...getColWidth(columnWidths, 0)}>
               <Container width={'960px'}>
                 {/*https://gist.github.com/Kalyse/922cb05b7c9e08e43e39f73538169d77*/}
-                <Heading as={as || 'h2'} {...title} >{ titleDecor && <TitleDecorWrapper>{titleDecor}</TitleDecorWrapper>}{title}</Heading>
+                <Heading {...titleStyle} as={as || 'h2'} {...title} >{ titleDecor && <TitleDecorWrapper>{titleDecor}</TitleDecorWrapper>}{title}</Heading>
                 {textLoopAst && textLoopAst.internal && renderAst(JSON.parse(textLoopAst.internal.content))}
                 <Tagline className={'tagline'}>{tagline}</Tagline>
                 <ButtonGroup callToAction={callToAction} secondaryCallToAction={secondaryCallToAction}/>
@@ -168,14 +176,19 @@ const HeroSection = ({
 
               {features && <ListGrid
                   data={features}
-                  columnWidth={[1, 1 / 2, 1 / 2, 1 / 3]} //{[1, 1/2, 1/4]} responsive
+                  componentContainerStyle={ {
+                    pr: '0.7rem',
+                    pl: '0.7rem',
+                    mb: '2rem'
+                  }}
+                  columnWidth={getColWidths(features)} //{[1, 1/2, 1/4]} responsive
                   component={(feature) => (
-                      <CardNumbers content={feature.title} key={feature.id}>
+                      <CardNumbers content={feature.title} key={feature.id} >
                         <IconCheck/>
                         <div>
                           <Heading fontWeight={600} as={'h4'} textAlign={'left'} content={feature.title}/>
-                          {feature.description && feature.description.description && <Text>{feature.description.description}</Text>}
-                          {feature.description && typeof feature.description === 'string' && <Text>{feature.description}</Text>}
+                          {feature.description && feature.description.description && <Text mb={0}>{feature.description.description}</Text>}
+                          {feature.description && typeof feature.description === 'string' && <Text mb={0}>{feature.description}</Text>}
                         </div>
                       </CardNumbers>
                   )}
@@ -215,14 +228,14 @@ HeroSection.defaultProps = {
   hero: false, // determines if this is a hero class...
   reverse: false,
   as: 'h2',
-  // title: {
-  //   fontSize: ['22px', '34px', '30px', '35px'],
-  //   fontWeight: '400',
-  //   color: '#0f2137',
-  //   letterSpacing: '-0.025em',
-  //   mb: ['20px', '25px'],
-  //   lineHeight: '1.5',
-  // },
+  titleStyle: {
+    fontSize: ['22px', '34px', '30px', '35px'],
+    fontWeight: '400',
+    color: '#0f2137',
+    letterSpacing: '-0.025em',
+    mb: ['20px', '25px'],
+    lineHeight: '1.5',
+  },
   description: {
     fontSize: '16px',
     color: '#343d48cc',

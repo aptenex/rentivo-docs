@@ -371,7 +371,7 @@ class IntegrationTemplate extends React.Component {
                       {integrationNode.tags && integrationNode.tags.map((tag, index) => (
                           <li key={index}>{tag}</li>
                       ))}
-                      { integrationNode.status && integrationNode.status ==='Soft Launched' && <li><SoftLaunchIntegration data-multiline="true" data-tip="We have completed our technical integration for this integration and we are currently soft launching this integration with existing Rentivo customers. Please contact your Rentivo Success manager for more information.">Soft Launch <FontAwesomeIcon icon={faRocketLaunch}/></SoftLaunchIntegration></li> }
+                      { integrationNode.status && integrationNode.status ==='Soft Launched' && <li><SoftLaunchIntegration data-multiline="true" data-tip="We have completed our technical development for this integration and we are currently soft launching this integration with existing Rentivo customers. Please contact your Rentivo Success manager for more information.">Soft Launch <FontAwesomeIcon icon={faRocketLaunch}/></SoftLaunchIntegration></li> }
                     </StyledTagList>
 
                 </Col>
