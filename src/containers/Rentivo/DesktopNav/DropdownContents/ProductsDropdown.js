@@ -18,7 +18,7 @@ const ProductsDropdownEl = styled.div`
   display: flex;
   //margin: -20px;
   position: relative;
-  flex-direction: column; 
+  flex-direction: column;
   ul, li {    
     h3 {
       margin-bottom: -6px;
@@ -68,6 +68,7 @@ const ProductLink = styled(Link)`
   padding: 10px;
   width: 100%;
   border-radius: 4px;
+  
   &:hover {
     background: #dbf1ff42;
     background: rgba(0,0,0,0.02);
@@ -95,9 +96,12 @@ const ProductsSection = styled.ul`
   margin: 20px;
   li {
     display: flex;
-    
+    font-size:12px;
     width: 100%;
     position: relative;
+    h4 { 
+      text-transform: capitalize;
+    }
     &[data-slug] {
       &:hover {
           &:before {
@@ -183,7 +187,7 @@ const ProductsSection = styled.ul`
 
 const Text = styled.p`
   color: #546b81;
-  font-weight: bold;
+  font-weight: 500;
 `;
 
 const DemoRequest = styled.div`
@@ -244,7 +248,7 @@ export default () => {
                       </ProductIconWrapper>
                       <div>
                         { node.name === "Manage" && <Notice>Flagship Product</Notice> }
-                        <Heading color="primary">{node.name}</Heading>
+                        <Heading as={'h4'} color="primary">{node.name}</Heading>
                         <Text> {node.summary}</Text>
                       </div>
                     </ProductLink>

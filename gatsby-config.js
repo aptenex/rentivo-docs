@@ -236,6 +236,7 @@ module.exports = {
             family: `Montserrat`,
             variants: [
               `400`,
+              `500`,
               `600`,
               `700`,
             ],
