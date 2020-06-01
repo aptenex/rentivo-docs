@@ -3,7 +3,7 @@ import Sticky from 'react-stickynode';
 import {ThemeProvider} from 'styled-components';
 import {rentivoTheme} from 'common/src/theme/rentivo';
 import {ResetCSS} from 'common/src/assets/css/style';
-
+import _ from 'lodash';
 import {
   GlobalStyle,
   ContentWrapper,
