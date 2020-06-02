@@ -87,6 +87,12 @@ const WhiteContainer = styled(Container)`
     padding-top: 20px;
     padding-bottom: 0px;
   }
+  [class^='HeroSection__CtaLink'] {
+    margin-bottom: 10px;
+    position: relative;
+    top: -30px;
+  }
+  
 `
 
 const SummaryContent = styled('div')`
@@ -287,18 +293,6 @@ const SummaryCol = styled(Col)`
 `;
 
 class IntegrationTemplate extends React.Component {
-  getLinks() {
-    const {data} = this.props;
-    return [];
-    const headers = data.product.htmlAst.children.filter(el => el.type === 'element' && _.includes(['h2', 'h3'], el.tagName));
-    return headers.map((header) => {
-      const link = {};
-      link.tagName = header.tagName;
-      link.textNode = header.children[1] ? header.children[1].value : '';
-      link.id = header.properties.id;
-      return link;
-    });
-  }
 
   getImage(logo) {
 
@@ -327,15 +321,10 @@ class IntegrationTemplate extends React.Component {
     const {data, location} = this.props;
     const integrationNode = data.integration;
     const {faq: faqGroups} = data;
-    const asideLinks = this.getLinks();
-
+    console.log('what is integration node', integrationNode);
     return (
         <MarketingLayout location={location} subNav={true}>
           <SEO postNode={integrationNode} postType="integration"/>
-          {asideLinks.length > 0
-              ? (<AsideMenu asideLinks={this.getLinks()}/>)
-              : null
-          }
 
           {
             integrationNode?.heroFeaturette?.internal.type === 'ContentfulHero' &&
