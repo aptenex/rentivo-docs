@@ -240,7 +240,7 @@ aside a.active {
   flex-grow: 1;
 
   > a {
-    text-transform: uppercase;
+    text-transform: capitalize;
   }
 
   @media (max-width: 475px) {

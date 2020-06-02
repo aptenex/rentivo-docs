@@ -1,5 +1,7 @@
 import React from 'react';
 import config from '../../data/SiteConfig';
+import {renderMarkdown, renderPlaintext} from "../utils/renderer";
+import {Link} from "gatsby";
 
 class CalloutLink extends React.Component {
   componentDidMount() {
@@ -26,13 +28,20 @@ class CalloutLink extends React.Component {
     return (
       <div className="callout-link">
         <div className="callout-link__copy">
-          {this.props.children.map(el => el)}
-          <a
-            href={this.props.link}
-            onClick={this.handleClick}
-          >
-            { linkText } →
-          </a>
+          <div>
+          {this.props.children.map(el => { return renderMarkdown(el) })}
+          </div>
+          { this.props.link.startsWith('/') ?
+              <Link to={this.props.link}
+                    onClick={this.handleClick}> { linkText } →</Link>
+              :
+                <a
+                  href={this.props.link}
+                  onClick={this.handleClick}
+                >
+                  { linkText } →
+                </a>
+          }
         </div>
         <div className="callout-link__img" style={{ backgroundImage: `url(${config.envPrefix + this.props.img})` }} />
       </div>

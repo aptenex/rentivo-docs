@@ -175,7 +175,7 @@ const ProductsSection = styled.ul`
     }
     svg[data-prefix=fad]{
       font-size: 2.4em;    
-      margin-top: 10px;
+      margin-top: 0px;
     }
       
     div p {

@@ -29,19 +29,20 @@ import PageAnchor from "../componentsMarkdown/PageAnchor";
 import ListItem from "../componentsMarkdown/ListItem";
 import {getFullPath} from "constants/pageSlugPrefixes";
 
+const RehypeComponentsList = {
+  gist: Gist,
+  'callout-link': CalloutLink,
+  'callout': Callout,
+  'code-group': CodeGroup,
+  'list' : ( {node,children}) => { return(<ul>
+    {children}
+  </ul>) },
+  'item'  : ListItem,
+  TextLoop: TextLoop
+};
 const renderAst = new RehypeReact({
   createElement: React.createElement,
-  components: {
-    gist: Gist,
-    'call-out-link': CalloutLink,
-    'call-out': Callout,
-    'code-group': CodeGroup,
-    'list' : ( {node,children}) => { return(<ul>
-      {children}
-      </ul>) },
-    'item'  : ListItem,
-    TextLoop: TextLoop
-  },
+  components: RehypeComponentsList,
 }).Compiler;
 
 
@@ -166,6 +167,16 @@ export const render = (json) => {
           json ? renderAst(json) : null;
 };
 
+export const renderMarkdown = (markdownContent) => {
+  let processor = unified()
+      .use(markdown, {commonmark: true})
+      .use(remark2rehype)
+      .use(rehype2react, {createElement: React.createElement, components: RehypeComponentsList });
+  let contents =   processor.processSync(markdownContent).result;
+  console.log(contents, "markdown contents");
+  return contents;
+}
+
 export const renderPlaintext = (json) => {
 
   if(json && ( json.nodeType === null && json.htmlAst === null) ){
@@ -192,9 +203,7 @@ export const transform = (fields, index) => {
       let processor = unified()
           .use(markdown)
           .use(remark2rehype)
-          .use(rehype2react, {createElement: React.createElement, components: {
-              'callout': Callout
-            }});
+          .use(rehype2react, {createElement: React.createElement, components: RehypeComponentsList });
       let contents =   processor.processSync( fields).contents;
 
       return { 'childMarkdownRemark' : { 'component' : contents } };
