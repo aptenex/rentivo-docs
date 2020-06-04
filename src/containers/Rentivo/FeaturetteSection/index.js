@@ -179,8 +179,7 @@ const FeaturetteSection = ({
     if(content && content?.childMarkdownRemark.html){
       return (<div dangerouslySetInnerHTML={ { __html : content.childMarkdownRemark.html }} />);
     }
-
-
+    return <></>;
 
   };
   const HeroCarousel = (props) => (

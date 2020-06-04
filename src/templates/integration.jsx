@@ -36,7 +36,7 @@ import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import FaqSection from '../containers/Rentivo/FaqSection';
 import ProductSection from '../containers/Rentivo/FeatureGallery';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faChevronLeft, faExclamationCircle, faRocketLaunch} from '@fortawesome/pro-duotone-svg-icons'
+import {faChevronLeft, faExclamationCircle, faRocketLaunch, faSadTear } from '@fortawesome/pro-duotone-svg-icons'
 import {render} from "../utils/renderer";
 import ReactTooltip from "react-tooltip";
 const renderAst = new RehypeReact({

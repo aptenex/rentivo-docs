@@ -51,7 +51,8 @@ import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 import {useScript} from '../components/useScript';
 import Lottie from 'react-lottie';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faChevronRight, faPepperHot, faRocketLaunch} from '@fortawesome/pro-duotone-svg-icons'
+import {faChevronRight, faPepperHot, faRocketLaunch } from '@fortawesome/pro-duotone-svg-icons'
+import { faSadTear } from '@fortawesome/pro-regular-svg-icons'
 import ReactTooltip from "react-tooltip";
 
 const Section = styled('section')`
@@ -254,7 +255,9 @@ export default ({ location, data: { tags: {distinct: tags} }, data: { allContent
 
                       {node.status && node.status === 'Retiring Integration' &&
                       <StyledRetiringIntegration style={{float: 'right'}} data-multiline="true"
-                                                 data-tip="Due to service being removed from the market, this integration is being retired<br />If you are looking for a comparable product, please get in contact to help with a migration.">{node.status}</StyledRetiringIntegration>}
+                                                 data-tip={ node.slug === 'lodgix' ? 'But wait! We can pull this integration back from the darkened-depths of the abyss if  you need connectivity.' : 'Due to service being removed from the market, this integration is being retired<br />If you are looking for a comparable product, please get in contact to help with a migration.'}>
+                        <FontAwesomeIcon icon={faSadTear}/> {node.status}
+                        </StyledRetiringIntegration>}
                       {node.status && node.status === 'Hot' &&
                       <StyledHotIntegration style={{float: 'right'}} data-multiline="true"
                                             data-tip="This connection is hot. Our customers love this integration and is one of the most popular integrations we support."><FontAwesomeIcon
