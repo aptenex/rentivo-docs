@@ -81,7 +81,7 @@ class AnimatedNavbar extends Component {
     return (
       <Flipper
         flipKey={currentIndex}
-        spring={duration === 300 ? "noWobble" : { stiffness: 10, damping: 10 }}
+        spring={duration === 300 ? "stiff" : { stiffness: 10, damping: 10 }}
       >
 
           <Navbar onMouseLeave={this.onMouseLeave}>
@@ -97,7 +97,7 @@ class AnimatedNavbar extends Component {
                     <DropdownContainer
                       direction={direction}
                       animatingOut={this.state.animatingOut}
-                      duration={duration}
+                      duration={100}
                     >
                       <CurrentDropdown />
                       {PrevDropdown && <PrevDropdown />}

@@ -140,7 +140,15 @@ export const GlobalStyle = createGlobalStyle`
   h6 {
     font-family: 'Montserrat', sans-serif;
   }
-  
+  .tagline {
+    color: #666;
+    line-height: 36px;
+    @media (min-width: 600px) {
+      font-size: 24px;
+    }
+    margin-bottom: 2em;
+    
+  }
   .svg-inline--fa {
     display: inline-block;
     font-size: inherit;

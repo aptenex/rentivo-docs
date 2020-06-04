@@ -36,9 +36,9 @@ import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import FaqSection from '../containers/Rentivo/FaqSection';
 import ProductSection from '../containers/Rentivo/FeatureGallery';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faChevronLeft, faRocketLaunch} from '@fortawesome/pro-duotone-svg-icons'
+import {faChevronLeft, faExclamationCircle, faRocketLaunch} from '@fortawesome/pro-duotone-svg-icons'
 import {render} from "../utils/renderer";
-
+import ReactTooltip from "react-tooltip";
 const renderAst = new RehypeReact({
   createElement: React.createElement,
   components: {
@@ -54,10 +54,13 @@ const SummarySection = styled('section')`
   position: relative;
   padding-top: 80px;
   padding-bottom: 80px;
-  img,svg {
+  svg,.featureLogo {
     max-width: 420px;
     width: 420px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+  }
+  table svg {
+    margin-bottom: 0px;
   }
    
 `;
@@ -91,6 +94,10 @@ const WhiteContainer = styled(Container)`
     margin-bottom: 10px;
     position: relative;
     top: -30px;
+  }
+  
+  .container-wrapper {
+    padding: 0px;
   }
   
 `
@@ -219,7 +226,7 @@ const StyledTagList = styled('ul')`
 
 const TableOfKeyStats = ({integration, className}) => {
 
-  return (integration.minumumUnits || integration.pricingModel || integration.partnerCost || integration.whatsSupported)  &&  <StyledTable className={className}>
+  return (integration.minumumUnits || integration.pricingModel || integration.partnerCost || integration.whatsSupported)  &&  <StyledTable className={className}><tbody>
     {integration.phoneNumber && <tr>
       <th>Phone Number</th>
       <td>{integration.phoneNumber}</td>
@@ -253,7 +260,7 @@ const TableOfKeyStats = ({integration, className}) => {
       <td>{integration.pricingModel.join(', ')}</td>
     </tr>}
     {integration.partnerCost && <tr>
-      <th>Partner Cost</th>
+      <th>Partner Cost <FontAwesomeIcon data-multiline="true" data-tip={`This is the cost charged by ${integration.name} and not a Rentivo cost. All costs are approximations based on last checked fees and are provided for convenience purposes and are not gaurantees.`} icon={ faExclamationCircle }/></th>
       <td>{integration.partnerCost}</td>
     </tr>}
     {integration.commissionModel && <tr>
@@ -268,14 +275,17 @@ const TableOfKeyStats = ({integration, className}) => {
       <th>Integration Requirements</th>
       <td>{integration.integrationRequirements}</td>
     </tr>}
-
+  </tbody>
   </StyledTable>
 };
 
 const StyledTableOfKeyStats = styled(TableOfKeyStats)`
  tr {
   background: red;
-  line-height: 50px;  
+  line-height: 50px;
+  svg {
+    margin-bottom: 0px;
+  }  
  } 
 `;
 
@@ -428,7 +438,6 @@ class IntegrationTemplate extends React.Component {
                   ))}
 
                   <SummarySection>
-                    <Container>
                       {integrationNode?.logo?.fluid?.src ? <Image
                           fluid={integrationNode.logo}
                           style={{width: '100%'}}
@@ -437,7 +446,6 @@ class IntegrationTemplate extends React.Component {
                           <ContentfulAsset className={'featureLogo'} data={integrationNode.logo}/> : null}
 
                       <TableOfKeyStats integration={integrationNode}/>
-                    </Container>
                   </SummarySection>
 
                   {integrationNode.faq && integrationNode.faq.length > 0 && <FaqList data={integrationNode.faq}/>}

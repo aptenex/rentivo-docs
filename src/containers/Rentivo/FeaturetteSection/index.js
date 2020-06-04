@@ -29,6 +29,7 @@ import HeroWrapper, {
   LeadingLabel,
   BannerObject,
 } from './featuretteSection.style';
+import {render} from "../../../utils/renderer";
 
 // Glide js options
 
@@ -64,6 +65,7 @@ const FeaturetteSection = ({
       padding-bottom: 14px;
       font-weight: bold;
       font-size: 1.1em;
+      margin-bottom: 20px;
     }
   `;
   const CtaLink = styled(Link)`
@@ -72,6 +74,7 @@ const FeaturetteSection = ({
       padding-bottom: 14px;
       font-weight: bold;
       font-size: 1.1em;
+      margin-bottom: 20px;
     }
   `;
 
@@ -108,13 +111,13 @@ const FeaturetteSection = ({
 
   const ButtonGroup = () => (
       <Fragment>
-        { callToAction && callToAction.to &&
+        { callToAction && callToAction.to && callToAction.to.length > 0 &&
           <CtaLink className="btn btn-primary outlined" to={callToAction.to} >
             {callToAction.text}
           </CtaLink>
         }
         { callToAction && callToAction.url &&
-          <CtaHref className="btn btn-primary" to={callToAction.url} >
+          <CtaHref target="_blank" className="btn btn-primary" href={callToAction.url} >
             {callToAction.text}
           </CtaHref>
         }
@@ -158,6 +161,28 @@ const FeaturetteSection = ({
         } ) }
       </Fragment>
   );
+
+  const DescriptionBlock = ({content}) => {
+
+
+
+    if(content && content?.childMarkdownRemark.htmlAst){
+      return (<Fragment>
+        { render(content.childMarkdownRemark.htmlAst) }
+      </Fragment>);
+    }
+
+    if(content && content?.childMarkdownRemark.component){
+      return (content?.childMarkdownRemark?.component);
+    }
+
+    if(content && content?.childMarkdownRemark.html){
+      return (<div dangerouslySetInnerHTML={ { __html : content.childMarkdownRemark.html }} />);
+    }
+
+
+
+  };
   const HeroCarousel = (props) => (
 
       <BannerObject {...props}>
@@ -222,9 +247,7 @@ const FeaturetteSection = ({
                     <Heading content={title} />
                   }
                   description={
-                    content && content?.childMarkdownRemark && ( content?.childMarkdownRemark?.html ?
-                        <Text {...description} dangerouslySetInnerHTML={{ __html: content?.childMarkdownRemark?.html }} /> :
-                        content?.childMarkdownRemark?.component )
+                    <DescriptionBlock content={content} />
                   }
                   button={<ButtonGroup />}
               />

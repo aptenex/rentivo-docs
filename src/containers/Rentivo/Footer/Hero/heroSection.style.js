@@ -31,19 +31,8 @@ const HeroWrapper = styled.section`
       font-weight: bold;
     }
     
-  }
+  }  
   
-  
-  .tagline {
-    color: #666;
-    line-height: 36px;
-    @media (min-width: 600px) {
-      font-size: 24px;
-    }
-    
-    margin-bottom: 2em;
-    
-  }
 `;
 
 export default HeroWrapper;

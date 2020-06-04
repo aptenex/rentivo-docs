@@ -60,13 +60,12 @@ const BannerSection = ({
               <Text content="Easy Onboarding" {...discountAmount} />
               <Text content="and free demo" {...discountText} />
             </DiscountLabel>
+            <Heading
+                content={intl.formatMessage({id: "index_landing_hero_title"})}
+                {...title}
+            />
+            <Text className={'tagline'}>Get more bookings and improve distribution</Text>
             <FeatureBlock
-              title={
-                <Heading
-                  content={intl.formatMessage({id: "index_landing_hero_title"})}
-                  {...title}
-                />
-              }
               description={
                 <Text
                   content="We provide an end-to-end software solution which simplifies every aspect of managing a holiday rental business. Get more bookings, with less work and expand your marketing reach with our one click channel distribution."

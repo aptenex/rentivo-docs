@@ -230,6 +230,8 @@ export const featuretteFields = graphql`
       content
       childMarkdownRemark {
         html
+        rawMarkdownBody
+        htmlAst
       }
     }
     callout {

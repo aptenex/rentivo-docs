@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import config from '../../data/SiteConfig';
 import {renderMarkdown, renderPlaintext} from "../utils/renderer";
 import {Link} from "gatsby";
@@ -29,7 +29,7 @@ class CalloutLink extends React.Component {
       <div className="callout-link">
         <div className="callout-link__copy">
           <div>
-          {this.props.children.map(el => { return renderMarkdown(el) })}
+            {this.props.children.map((el,index) => { return <Fragment key={index}> { renderMarkdown(el) }</Fragment> })}
           </div>
           { this.props.link.startsWith('/') ?
               <Link to={this.props.link}
@@ -37,6 +37,7 @@ class CalloutLink extends React.Component {
               :
                 <a
                   href={this.props.link}
+                  target={this.props.link.includes('rentivo') ? '_self' : '_blank' }
                   onClick={this.handleClick}
                 >
                   { linkText } →

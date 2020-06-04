@@ -164,6 +164,17 @@ aside a.active {
   }
 }
 
+
+.callout--notice {
+  background: $sg-blue-05;
+  border-left: 2px solid $sg-blue;
+
+  &::before {
+    content: 'Did you know';
+    color: $sg-blue;
+  }
+}
+
 .callout--warning {
   background: rgba(183, 28, 28, 0.05);
   border-left: 2px solid $alert-danger-text;

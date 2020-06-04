@@ -31,6 +31,13 @@ import {getFullPath} from "constants/pageSlugPrefixes";
 
 const RehypeComponentsList = {
   gist: Gist,
+  'a' : ( props ) => {
+
+    if(props.href.startsWith('/')){
+      return <Link {...props} to={props.href}>{props.children}</Link>
+    }
+    return <a {...props} target={  typeof props.children[0] === 'string' && !props.children[0].includes('rentivo') ? '_blank' : '' }>{props.children}</a>
+  },
   'callout-link': CalloutLink,
   'callout': Callout,
   'code-group': CodeGroup,

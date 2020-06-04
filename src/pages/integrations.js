@@ -179,7 +179,7 @@ export default ({ location, data: { tags: {distinct: tags} }, data: { allContent
   const [activeTag, setActiveTag] = useState(null);
 
   const handleTagClickEvent = (tag) => {
-    if (!tag) {
+    if (!tag || tag === 'all') {
       setFilteredIntegrations(integrations);
       setActiveTag(tag);
       history.pushState(null,null, '#all');
