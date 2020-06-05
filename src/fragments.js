@@ -219,6 +219,24 @@ export const featuretteFields = graphql`
     tagline
 
   }
+  
+  fragment LogoReel on ContentfulLogoReel {
+      internal {
+        type
+      }  
+      id
+      logos {
+        id
+        description
+        fixed(height: 160) {
+          ...GatsbyContentfulFixed
+        }
+      }
+      columnCount
+      title
+   
+  }
+  
   fragment Featurette on ContentfulFeaturette {
     internal {
       type

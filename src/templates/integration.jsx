@@ -39,6 +39,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faChevronLeft, faExclamationCircle, faRocketLaunch, faSadTear } from '@fortawesome/pro-duotone-svg-icons'
 import {render} from "../utils/renderer";
 import ReactTooltip from "react-tooltip";
+import LogoReelSection from "containers/Rentivo/LogoReelSection";
 const renderAst = new RehypeReact({
   createElement: React.createElement,
   components: {
@@ -434,6 +435,7 @@ class IntegrationTemplate extends React.Component {
                             letterSpacing: '-0.025em',
                             mb: '0',
                           }} data={feature.items}/>
+                          || feature?.internal?.type === 'ContentfulLogoReel' && <LogoReelSection {...feature} />
                       )
                   ))}
 
@@ -559,6 +561,7 @@ export const pageQuery = graphql`
       featurettes {
         ...Featurette
         ...Hero
+        ...LogoReel
       }
     }
 
