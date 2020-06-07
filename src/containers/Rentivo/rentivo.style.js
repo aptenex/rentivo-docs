@@ -18,6 +18,7 @@ export const TagFilter = styled('ul')`
   display: flex;
   flex-flow: row wrap;
   position: relative;
+  clear: left;
   li {
     border-radius: 3px;
     background: white;
