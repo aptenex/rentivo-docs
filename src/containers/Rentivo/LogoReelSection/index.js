@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const LogoGrid = styled('div')`
    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-gap: 1rem;
   > div {
     background: white;
@@ -17,7 +17,7 @@ const LogoGrid = styled('div')`
       content: "";
       display: block;
       padding-bottom: 100%;
-      grid-area: 1 / 1 / 2 / 2;
+      grid-area: 1 / 2 / 2 / 2;
     }
     img {
       width: 100%;

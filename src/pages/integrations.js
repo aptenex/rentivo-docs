@@ -10,6 +10,7 @@ import {
   HotIntegration,
   RetiringIntegration,
   SoftLaunchIntegration,
+  ComingSoonIntegration,
   TagList,
   TagFilter
 } from '../containers/Rentivo/rentivo.style';
@@ -51,9 +52,10 @@ import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 import {useScript} from '../components/useScript';
 import Lottie from 'react-lottie';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faChevronRight, faPepperHot, faRocketLaunch } from '@fortawesome/pro-duotone-svg-icons'
-import { faSadTear } from '@fortawesome/pro-regular-svg-icons'
+import {faChevronRight, faPepperHot, faRocketLaunch} from '@fortawesome/pro-duotone-svg-icons'
+import {faSadTear} from '@fortawesome/pro-regular-svg-icons'
 import ReactTooltip from "react-tooltip";
+import {getFullPath} from "constants/pageSlugPrefixes";
 
 const Section = styled('section')`
   position: relative;  
@@ -166,14 +168,24 @@ const StyledHotIntegration = styled(HotIntegration)``;
 const StyledRetiringIntegration = styled(RetiringIntegration)``;
 
 
-
 const LottieWrapper = styled(Container)`
 svg {
   margin-top: -5vh;
 }
 `;
 
-export default ({ location, data: { tags: {distinct: tags} }, data: { allContentfulIntegration: {edges: integrations} } }) => {
+const linkToIntegration = (node) => {
+  if (node?.hardRedirect) {
+    console.log(node.hardRedirect, "<<<<");
+    return getFullPath(node.hardRedirect);
+  }
+  if (node.slug) {
+    return '/integrations/' + node.slug;
+  }
+  return null;
+}
+
+export default ({location, data: {tags: {distinct: tags}}, data: {allContentfulIntegration: {edges: integrations}}}) => {
   const faqGroups = useFAQGroupsOnHome();
 
   const [filteredIntegrations, setFilteredIntegrations] = useState(integrations);
@@ -183,21 +195,19 @@ export default ({ location, data: { tags: {distinct: tags} }, data: { allContent
     if (!tag || tag === 'all') {
       setFilteredIntegrations(integrations);
       setActiveTag(tag);
-      history.pushState(null,null, '#all');
+      history.pushState(null, null, '#all');
     } else {
       const f = integrations.filter((p) => p.node.tags && p.node.tags.map((i) => _.kebabCase(i).toLowerCase()).includes(tag));
       setFilteredIntegrations(f);
       setActiveTag(tag);
-      history.pushState(null,null,'#' + tag );
+      history.pushState(null, null, '#' + tag);
     }
 
   };
   useEffect(() => {
     // Update the document title using the browser API
-    handleTagClickEvent(location.hash.replace('#',''))
+    handleTagClickEvent(location.hash.replace('#', ''))
   }, []);
-
-
 
 
   const defaultOptions = {
@@ -234,7 +244,8 @@ export default ({ location, data: { tags: {distinct: tags} }, data: { allContent
                   key={'all-integrations'}>All Integrations
               </li>
               {tags.map((tag, index) => (
-                  <li className={activeTag === _.kebabCase(tag.toLowerCase()) ? "active" : null} onClick={() => handleTagClickEvent(_.kebabCase(tag.toLowerCase()))}
+                  <li className={activeTag === _.kebabCase(tag.toLowerCase()) ? "active" : null}
+                      onClick={() => handleTagClickEvent(_.kebabCase(tag.toLowerCase()))}
                       key={_.kebabCase(tag.toLowerCase())}>{tag}</li>
               ))}
             </TagFilter>
@@ -246,7 +257,7 @@ export default ({ location, data: { tags: {distinct: tags} }, data: { allContent
                     <CardIntegration className={node.slug} key={node.slug}>
 
 
-                      {(node.slug && <Link to={'integrations/' + node.slug}>
+                      {(linkToIntegration(node) && <Link to={linkToIntegration(node)}>
                         <ContentfulAsset className={'featureLogo'} data={node.logo}/>
                       </Link>) ||
                       <ContentfulAsset className={'featureLogo'} data={node.logo}/>}
@@ -255,28 +266,35 @@ export default ({ location, data: { tags: {distinct: tags} }, data: { allContent
 
                       {node.status && node.status === 'Retiring Integration' &&
                       <StyledRetiringIntegration style={{float: 'right'}} data-multiline="true"
-                                                 data-tip={ node.slug === 'lodgix' ? 'But wait! We can pull this integration back from the darkened-depths of the abyss if  you need connectivity.' : 'Due to service being removed from the market, this integration is being retired<br />If you are looking for a comparable product, please get in contact to help with a migration.'}>
+                                                 data-tip={node.slug === 'lodgix' ? 'But wait! We can pull this integration back from the darkened-depths of the abyss if  you need connectivity.' : 'Due to service being removed from the market, this integration is being retired<br />If you are looking for a comparable product, please get in contact to help with a migration.'}>
                         <FontAwesomeIcon icon={faSadTear}/> {node.status}
-                        </StyledRetiringIntegration>}
+                      </StyledRetiringIntegration>}
+
                       {node.status && node.status === 'Hot' &&
                       <StyledHotIntegration style={{float: 'right'}} data-multiline="true"
                                             data-tip="This connection is hot. Our customers love this integration and is one of the most popular integrations we support."><FontAwesomeIcon
                           icon={faPepperHot}/><FontAwesomeIcon icon={faPepperHot}/><FontAwesomeIcon icon={faPepperHot}/></StyledHotIntegration>}
+
                       {node.status && node.status === 'Soft Launched' &&
                       <StyledSoftLaunchIntegration style={{float: 'right'}} data-multiline="true"
                                                    data-tip="We have completed our technical development for this integration and we are currently soft launching this integration with existing Rentivo customers. Please contact your Rentivo Success manager for more information.">Soft
                         Launch <FontAwesomeIcon icon={faRocketLaunch}/></StyledSoftLaunchIntegration>}
 
+                      {node.status && node.status === 'Coming Soon' &&
+                      <ComingSoonIntegration style={{float: 'right'}} data-multiline="true"
+                                                   data-tip="It is on our roadmap.">Coming Soon</ComingSoonIntegration>}
+
                       <TagList>
                         {node.tags && node.tags.map((tag, index) => (
-                            <li className={activeTag === _.kebabCase(tag.toLowerCase()) ? "active" : null} onClick={() => handleTagClickEvent(_.kebabCase(tag.toLowerCase()))}
+                            <li className={activeTag === _.kebabCase(tag.toLowerCase()) ? "active" : null}
+                                onClick={() => handleTagClickEvent(_.kebabCase(tag.toLowerCase()))}
                                 key={_.kebabCase(tag.toLowerCase())}>{tag}</li>
                         ))}
                       </TagList>
                       {node.summary && <Summary>{node.summary.summary}</Summary>}
 
-                      {node.slug &&
-                      <LearnMoreLink to={'integrations/' + node.slug}>
+                      {linkToIntegration(node) &&
+                      <LearnMoreLink to={linkToIntegration(node)}>
                         Learn more
                         <FontAwesomeIcon icon={faChevronRight}/>
                       </LearnMoreLink>}
@@ -306,6 +324,23 @@ export const query = graphql`
           name
           tags
           status
+          hardRedirect {
+            ... on ContentfulProduct {
+              name
+              internal {
+                type
+              }
+              slug
+            }
+            ... on ContentfulIntegration {
+              name
+              internal {
+                type
+              }
+              slug
+            }
+
+          }
           logo {
             id
             fluid(maxHeight: 50) {

@@ -87,6 +87,13 @@ const WhiteContainer = styled(Container)`
   padding-bottom: 0px;
   min-height: inherit;
   }
+  ul:not([class]) {
+    margin-top: 20px;
+  }
+  ul:not([class]) li:not([class]){
+    margin-bottom: 25px;
+    list-style-type: disc;
+  } 
   [class^='heroSectionstyle']{
     padding-top: 20px;
     padding-bottom: 0px;
@@ -95,6 +102,10 @@ const WhiteContainer = styled(Container)`
     margin-bottom: 10px;
     position: relative;
     top: -30px;
+  }
+   [class^='featuretteSectionstyle__HeroWrapper'] {
+    padding-bottom: 10px;
+    margin-bottom: 0px;
   }
   
   .container-wrapper {
@@ -152,6 +163,10 @@ const CardWrapper = styled(Card)`
     h4 {
       font-size: 18px;
     }
+     @media (max-width: 767px) {
+      width: 100%;
+      margin-bottom: 20px;
+     }
     //.iconBlock__wrapper,
     //.imgWrapper {
     //  width: 100%; 
@@ -349,12 +364,12 @@ class IntegrationTemplate extends React.Component {
 
           <StyledLogosContainer width={'720px'} >
             <Row top="xs">
-              <Col xs={6}>
+              <Col xs={12} sm={6}>
                 <CardWrapper>
                   {integrationNode.logo && <ContentfulAsset data={integrationNode.logo}/>}
                 </CardWrapper>
               </Col>
-              <Col xs={6}>
+              <Col xs={12} sm={6}>
                 <CardWrapper>
                   <img
                       style={{height: '60px'}}

@@ -2,6 +2,7 @@ import {renderPlaintext, transform} from "../utils/renderer";
 
 export const getFullPath = (linkToPage) => {
 
+    console.log('>AD>AD', linkToPage);
 
     if(linkToPage.hasOwnProperty('fields') && linkToPage.hasOwnProperty('sys')){
       let internal = { type : SysIdMap[linkToPage.sys?.contentType?.sys?.id]};
@@ -33,6 +34,7 @@ const SysIdMap = {
   'hero' : null
 }
 export const Types = {
+  'ContentfulIntegration' : '/integrations',
   'ContentfulPage' : '/features',
   'ContentfulPage_Knowledge Base' : '/docs',
   'ContentfulPage_Feature Page' : '/docs',

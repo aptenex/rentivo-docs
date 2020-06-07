@@ -22,7 +22,7 @@ class CalloutLink extends React.Component {
     if (!this.props.children) {
       return null;
     }
-
+    console.log('link markdown', this.props.children);
     const linkText = this.props.linktext || 'Read More';
 
     return (

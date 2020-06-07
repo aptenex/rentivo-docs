@@ -122,7 +122,7 @@ aside a.active {
   padding: $scaleup-3 $scaleup-4;
   margin: $scaleup-4 0;
   position: relative;
-
+  line-height: 1.5rem;
   &::before {
     display: block;
     text-transform: uppercase;
@@ -147,6 +147,8 @@ aside a.active {
   &::before {
     content: 'Tip';
     color: $sg-blue;
+    position: relative;
+    top: -10px;
   }
 }
 

@@ -373,13 +373,16 @@ exports.createPages = ({graphql, boundActionCreators}) => {
         graphql(
             `
             {
-              allContentfulIntegration(filter: {slug: {ne: null}}) {
+              allContentfulIntegration(filter: { slug: {ne: null}}) {
                 edges {
                   node {
                     id
                     slug
                     name
                     node_locale
+                    hardRedirect {
+                     __typename
+                    }
                   }
                 }
               }
@@ -390,17 +393,23 @@ exports.createPages = ({graphql, boundActionCreators}) => {
             reject(result.errors)
           }
 
+          // If we have a hardRedirect, just skip it. We cannot filter, because you cannot filter by a UnionType shared
+          // by two ContentTypes.
+
+
           const pages = result.data.allContentfulIntegration.edges;
           pages.forEach((page, index) => {
-            createPage({
-              path: `/integrations/${_.kebabCase(page.node.slug)}`,
-              component: integrationPage,
-              context: {
-                slug: page.node.slug,
-                id: page.node.id,
-                node_locale: page.node.node_locale
-              },
-            });
+            if(page.node.hardRedirect === null) {
+              createPage({
+                path: `/integrations/${_.kebabCase(page.node.slug)}`,
+                component: integrationPage,
+                context: {
+                  slug: page.node.slug,
+                  id: page.node.id,
+                  node_locale: page.node.node_locale
+                },
+              });
+            }
           })
         })
     )

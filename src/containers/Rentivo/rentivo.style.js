@@ -45,7 +45,7 @@ export const TagFilter = styled('ul')`
    @media (max-width: 768px) {
     flex-direction: column;
     width: 100%;
-    li { margin-bottom: 3px;}    
+    li { margin-bottom: 3px; margin-right: 0px;}    
    }
 `;
 
@@ -53,7 +53,6 @@ export const TagList = styled(TagFilter)`
   font-size: 0.9em;
   display: inline-flex;  
   text-align: left;
-    clear:both;
     float:left;
     margin-bottom: 10px;
   li {    
@@ -107,6 +106,18 @@ export const HotIntegration = styled('label')`
 
 export const SoftLaunchIntegration = styled(HotIntegration)`
   color: #306eb3;
+  svg:last-child {
+    font-size: 1.5em;
+    color: deepskyblue;
+  }
+`;
+
+export const ComingSoonIntegration = styled(HotIntegration)`
+  color: white;
+  background: #ff615f;
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 0.9em;
   svg:last-child {
     font-size: 1.5em;
     color: deepskyblue;
