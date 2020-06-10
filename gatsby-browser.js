@@ -9,6 +9,8 @@ exports.onClientEntry = () => {
     // require('./src/scss/style-guide.scss');
   }());
 
+
+
   window.erxesSettings = {
     messenger: {
       brand_id: "mM6o5a",

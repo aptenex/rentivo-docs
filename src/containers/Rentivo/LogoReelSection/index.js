@@ -1,7 +1,7 @@
 import React from 'react';
 import {Heading} from "containers/Rentivo/DesktopNav/DropdownContents/Components";
 import styled from 'styled-components';
-
+import ContentfulAsset from 'containers/Rentivo/ContentfulAsset';
 
 const LogoGrid = styled('div')`
    display: grid;
@@ -35,7 +35,10 @@ const LogoReelSection = ({logos, title}) => {
         <Heading>{title}</Heading>
         <LogoGrid>
         {logos.map(logo => {
-          return <div><img key={logo.id} src={logo.fixed.src} /></div>;
+          if(logo?.fixed?.src) {
+            return <div><img key={logo.id} src={logo.fixed.src}/></div>;
+          }
+          return <ContentfulAsset data={logo} />;
         })}
         </LogoGrid>
       </>

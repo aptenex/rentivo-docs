@@ -643,6 +643,19 @@ export const ContentWrapper = styled.main`
       border: 0;
     }
   }
+  
+   @media (min-width: 1220px) {
+      img[title='split-payment'],
+      img[title='multiple-owners'],
+      img[title='you-as-merchant'] {
+        padding: 4vw;
+        background: white;
+        width: calc( 100% - 4vw * 2);
+        margin: 20px;
+        border-radius: 10px;
+      }
+  }
+  
 `;
 
 export const ButtonGroup = styled.div``;

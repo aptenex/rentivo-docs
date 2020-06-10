@@ -15,6 +15,7 @@ export default (props) => {
           <Heading fontWeight={600} textAlign={'center'} as={'h1'} content={'Support - General Question'} />
           <Heading fontWeight={400}  textAlign={'center'}  as={'h3'} content={'We love solving support tickets in a single email. Where possible, please include as much information as your fingers will type. .'} />
           <ErxesEmbed embed={FORM_SUPPORT_GENERAL}  />
+          <script type='text/javascript' src='https://widget.freshworks.com/widgets/23000000038.js' async defer></script>
         </Container>
       </Layout>
   );

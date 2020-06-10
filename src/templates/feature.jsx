@@ -49,6 +49,9 @@ const ProductDescriptionSection = styled('div')`
   text-align: left;
 `
 
+const StyledContentSection = styled(ContentSection)`
+  
+`;
 
 class FeatureTemplate extends React.Component {
   getCategoryLinks() {
@@ -98,7 +101,7 @@ class FeatureTemplate extends React.Component {
               </Col>
               <Col xs={12} md={7} xl={9} >
                 {featureNode?.pageTitle && <Heading as="h1" content={featureNode.pageTitle} /> }
-                <ContentSection>{ Body }</ContentSection>
+                <StyledContentSection>{ Body }</StyledContentSection>
 
                 { featureNode?.featurettes && featureNode?.featurettes.map( (feature, index) => (
                     (

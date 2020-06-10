@@ -28,6 +28,7 @@ import Remark from 'remark';
 import PageAnchor from "../componentsMarkdown/PageAnchor";
 import ListItem from "../componentsMarkdown/ListItem";
 import {getFullPath} from "constants/pageSlugPrefixes";
+import LogoReelSection from "containers/Rentivo/LogoReelSection";
 
 const RehypeComponentsList = {
   gist: Gist,
@@ -150,13 +151,16 @@ const richTextOptions = {
         // If this isn't working, there seems to be a bug on contentful??
         // https://github.com/gatsbyjs/gatsby/issues/10592
         // https://github.com/gatsbyjs/gatsby/pull/15084
-        switch(node.data.target.sys.contentType.sys.id){
+        switch(node.data?.target?.sys?.contentType?.sys?.id){
+          case 'logoReel':
+            console.log("logo rell", transform( node.data.target.fields));
+            return <LogoReelSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) } />;
           case 'hero':
             return <HeroSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
           case 'featurette':
             return <FeatuetteSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
           default:
-            return <span style={{padding: '20px', backgroundColor: 'red', color: 'white'}}>missing embedded asset { node.data.target.sys.contentType.sys.id } </span>
+            return <span style={{padding: '20px', backgroundColor: 'red', color: 'white'}}>missing embedded asset { node?.data?.target?.sys?.contentType?.sys.id } </span>
         }
       },
     },

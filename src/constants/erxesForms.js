@@ -1,7 +1,7 @@
 const CSS = '.erxes-form, .erxes-topbar {border-top-right-radius: 3px;border-top-left-radius: 3px; } a.close { display: none !important; } button.erxes-button{ font-size: 1.2em; }';
 export const FORM_DEMO = {
-  brand_id: "mM6o5a",
-  form_id: "Rsu27J",
+  brand_id: "PrGjXX",
+  form_id: "MsHSxY",
   css: CSS
 };
 export const FORM_SUPPORT_GENERAL = {

@@ -18,7 +18,7 @@ export const ErxesEmbed = ({embed}) => {
           forms: [embed],
         };
         let script = document.createElement('script');
-        script.src = "https://engage.rentivo.com/widgets/build/formWidget.bundle.js";
+        script.src = "https://rentivo.app.erxes.io/widgets/build/formWidget.bundle.js";
         script.async = true;
         let entry = document.getElementsByTagName('script')[0];
         entry.parentNode.insertBefore(script, entry);
