@@ -50,7 +50,7 @@ const ProductDescriptionSection = styled('div')`
 `
 
 const StyledContentSection = styled(ContentSection)`
-  
+   
 `;
 
 class FeatureTemplate extends React.Component {

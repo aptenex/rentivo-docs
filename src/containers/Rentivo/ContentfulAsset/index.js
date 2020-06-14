@@ -20,7 +20,7 @@ class Main extends Component {
 
     const Wrapper = styled('div')`
       min-width: 96px;
-      margin-right: 15px;    
+          
       svg {
         height: 100%;
         width: 100%;

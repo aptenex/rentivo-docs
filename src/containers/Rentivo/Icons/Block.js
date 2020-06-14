@@ -51,7 +51,7 @@ class Main extends Component {
         width: 100%;
       }
     `;
-    const {type, content} = this.props
+    const {type, content} = this.props;
     return (
           <Wrapper className={addAllClasses.join(' ')} dangerouslySetInnerHTML={{ __html: this.props.content }} /> ||
           <Wrapper className={addAllClasses.join(' ')} >

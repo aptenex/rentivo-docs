@@ -40,6 +40,7 @@ import {faChevronLeft, faExclamationCircle, faRocketLaunch, faSadTear } from '@f
 import {render} from "../utils/renderer";
 import ReactTooltip from "react-tooltip";
 import LogoReelSection from "containers/Rentivo/LogoReelSection";
+import {StyledTable} from "containers/Rentivo/rentivo.style";
 const renderAst = new RehypeReact({
   createElement: React.createElement,
   components: {
@@ -191,29 +192,6 @@ const ConnectorImage = styled('img')`
    }
 `;
 
-const StyledTable = styled('table')`
-  background: white;
-  box-shadow: 12px 12px 0px 8px #01b47d2e;
-  border-color: #e2e2e2;
-  border-radius: 0 8px 8px 2px;
- tr {
-  line-height: 30px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  border-color: #e2e2e2;
-  
- }
- td {
-  border-color: #e2e2e2;
-  padding-left: 20px;
- }
- th {
-  text-align: left;
-  font-weight: 600;
-  border-right-color:#e2e2e2; 
-  box-shadow: 3px 0px 6px 0px rgba(0,0,0,0.06);
- }
-`;
 
 const StyledTagList = styled('ul')`
   margin-top: 30px;

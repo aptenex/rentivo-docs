@@ -36,6 +36,13 @@ import Container from "common/src/components/UI/Container";
 const { get } = require('lodash');
 import remarkParse from "remark-parse";
 import rehypeRaw from "rehype-raw";
+import styled from "styled-components";
+import {StyledTable} from "containers/Rentivo/rentivo.style";
+
+const getBlockquoteClass = (props) => {
+  // The idea I had was to count the words within the props...
+  return 'callout-quote';
+};
 
 const RehypeComponentsList = {
   gist: Gist,
@@ -50,9 +57,15 @@ const RehypeComponentsList = {
   'callout-link': CalloutLink,
   'callout': Callout,
   'code-group': CodeGroup,
+  'table' : ({node,children}) => {
+    return (<StyledTable>{children}</StyledTable>);
+  },
   'list' : ( {node,children}) => { return(<ul>
     {children}
   </ul>) },
+  'blockquote' : ( props) => { return(<blockquote className={getBlockquoteClass(props)}>
+    {props.children}
+  </blockquote>) },
   'item'  : ListItem,
   TextLoop: TextLoop
 };
@@ -83,6 +96,9 @@ const richTextOptions = {
           </a>
           { children }
           </Heading>
+      },
+      [BLOCKS.QUOTE] : (node,children) => {
+        return (<blockquote className={getBlockquoteClass(children)}>{children}</blockquote>);
       },
       [BLOCKS.HEADING_3]: (node, children) => {
         let clone = _.clone(node);
@@ -215,10 +231,29 @@ export const renderPlaintext = (json) => {
       json ? renderAst(json) : null;
 };
 
+const MarkdownContent = styled('div')`
+
+`;
+const RichtextContent = styled('div')`
+ + ${MarkdownContent} {
+  margin-top: 90px;
+ }
+`;
+
+
+
 export const renderPage = (postNode) => {
-  return render(postNode?.body?.json?.content?.length > 0 ?
-      postNode?.body.json :
-      (postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst ? postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst : null));
+  let richtextContent = render(postNode?.body?.json);
+  let markdownContent = render(postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst);
+  return (<>
+    { richtextContent && <RichtextContent>{richtextContent}</RichtextContent>}
+    { markdownContent && <MarkdownContent>{markdownContent}</MarkdownContent>}
+  </>);
+  /*
+  render(postNode?.body?.json?.content?.length > 0 ?
+    postNode?.body.json :
+    (postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst ? postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst : null));
+   */
 }
 
 // https://codesandbox.io/s/pzkexbrqw?file=/index.js
