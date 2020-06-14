@@ -9,6 +9,8 @@ export const Wrapper = styled('article')`
     list-style: inherit;
     li {
       list-style-type: decimal;
+      font-size: 16px;
+      line-height: 27px;
     }
   }
    ul {

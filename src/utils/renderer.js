@@ -10,6 +10,7 @@ import { documentToPlainTextString } from '@contentful/rich-text-plain-text-rend
 import Text from 'reusecore/src/elements/Text';
 import Heading from 'reusecore/src/elements/Heading';
 import Link from 'gatsby-link';
+import Img from 'gatsby-image';
 const { BLOCKS, MARKS, INLINES } = require('@contentful/rich-text-types');
 import _ from 'lodash';
 import Image from 'gatsby-image';
@@ -17,18 +18,24 @@ import * as ReactDOM from "react-dom";
 import HeroSection from "../containers/Rentivo/HeroSection";
 import FeatuetteSection from "../containers/Rentivo/FeaturetteSection";
 import unified from 'unified';
-import markdown from  'remark-parse';
-import remark2rehype from 'remark-rehype';
+import parse from  'remark-parse';
+import remarkRehype from 'remark-rehype';
 import doc from 'rehype-document';
 import format from 'rehype-format';
-import html from 'rehype-stringify';
+import stringify from 'rehype-stringify';
+import html from 'remark-html';
 import remark2string from 'rehype-stringify';
-import rehype2react from 'rehype-react'
+import rehypeReact from 'rehype-react'
 import Remark from 'remark';
 import PageAnchor from "../componentsMarkdown/PageAnchor";
 import ListItem from "../componentsMarkdown/ListItem";
 import {getFullPath} from "constants/pageSlugPrefixes";
 import LogoReelSection from "containers/Rentivo/LogoReelSection";
+import {getFluidGatsbyImage} from "./getFluidGatsbyImage";
+import Container from "common/src/components/UI/Container";
+const { get } = require('lodash');
+import remarkParse from "remark-parse";
+import rehypeRaw from "rehype-raw";
 
 const RehypeComponentsList = {
   gist: Gist,
@@ -37,7 +44,8 @@ const RehypeComponentsList = {
     if(props.href.startsWith('/')){
       return <Link {...props} to={props.href}>{props.children}</Link>
     }
-    return <a {...props} target={  typeof props.children[0] === 'string' && !props.children[0].includes('rentivo') ? '_blank' : '' }>{props.children}</a>
+    let href = !props.children[0];
+    return <a {...props} target={  typeof href === 'string' && ( !href.startsWith('#') || !href.includes('rentivo') ? '_blank' : '') }>{props.children}</a>
   },
   'callout-link': CalloutLink,
   'callout': Callout,
@@ -69,8 +77,8 @@ const richTextOptions = {
         return <Heading mt={'2rem'} className={'linked-header'} id={name} as={'h2'}>
           <a href={`#` + name} aria-hidden="true" className="anchor" data-slug={ name}>
             <svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-              <path fill-rule="evenodd"
-                    d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+              <path fillRule="evenodd"
+                    d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z" />
             </svg>
           </a>
           { children }
@@ -83,8 +91,8 @@ const richTextOptions = {
         return <Heading mt={'2rem'} className={'linked-header'} id={name} as={'h3'}>
           <a href={`#` + name} aria-hidden="true" className="anchor" data-slug={ name}>
             <svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-              <path fill-rule="evenodd"
-                    d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+              <path fillRule="evenodd"
+                    d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"/>
             </svg>
           </a>
           {children}
@@ -97,8 +105,8 @@ const richTextOptions = {
         return <Heading className={'linked-header'} id={name} as={'h4'}>
           <a href={`#` + name} aria-hidden="true" className="anchor" data-slug={ name}>
           <svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16">
-            <path fill-rule="evenodd"
-                  d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+            <path fillRule="evenodd"
+                  d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z" />
           </svg>
           </a>
           {children}
@@ -128,20 +136,37 @@ const richTextOptions = {
 
         switch (mimeGroup) {
           case 'image':
+            if (node.data.target ) {
+              const { description, file } = get(
+                  node,
+                  'data.target.fields',
+                  {}
+              );
+
+              const image = {
+                file: file['en-US'],
+              };
+
+              const fluidProps = getFluidGatsbyImage(image, {});
+              console.log(image.file.details);
+              return <Container className={'rentivo-fluid-img'} noGutter={true} mobileGutter={true} width={image?.file?.details?.image?.width + 'px'}><Img fluid={fluidProps} /></Container>
+            }
+
+
             return <img
                 title={ title ? title['en-US'] : null}
                 alt={description ?  description['en-US'] : null}
                 src={file['en-US'].url}
-            />
+            />;
           case 'video':
-            return <video width="100%" autoplay controls="controls">
+            return <video width="100%" autoPlay controls="controls">
               <source src={ file['en-US'].url } type="video/mp4" />
-            </video>
+            </video>;
           case 'application':
             return <a
                 href={file['en-US'].url}
             >{ title ? title['en-US'] : file['en-US'].details.fileName }
-            </a>
+            </a>;
           default:
             return <span style={{backgroundColor: 'red', color: 'white'}}> {mimeType} embedded asset </span>
         }
@@ -178,15 +203,6 @@ export const render = (json) => {
           json ? renderAst(json) : null;
 };
 
-export const renderMarkdown = (markdownContent) => {
-  let processor = unified()
-      .use(markdown, {commonmark: true})
-      .use(remark2rehype)
-      .use(rehype2react, {createElement: React.createElement, components: RehypeComponentsList });
-  let contents =   processor.processSync(markdownContent).result;
-  console.log(contents, "markdown contents");
-  return contents;
-}
 
 export const renderPlaintext = (json) => {
 
@@ -205,19 +221,25 @@ export const renderPage = (postNode) => {
       (postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst ? postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst : null));
 }
 
-
+// https://codesandbox.io/s/pzkexbrqw?file=/index.js
+// https://codesandbox.io/s/remark-quick-practice-b23bc allow
 export const transform = (fields, index) => {
   if(typeof fields === 'string' || typeof fields === 'boolean' ) {
     // If we have a content.. transform into markdown
     //  || index === 'callout'
     if(index === 'content'){
       let processor = unified()
-          .use(markdown)
-          .use(remark2rehype)
-          .use(rehype2react, {createElement: React.createElement, components: RehypeComponentsList });
-      let contents =   processor.processSync( fields).contents;
+          .use(remarkParse)
+          .use(remarkRehype,  {
+            allowDangerousHTML: true,
+          })
+          .use(rehypeRaw)
+          .use(rehypeReact, {createElement: React.createElement, components: RehypeComponentsList });
 
-      return { 'childMarkdownRemark' : { 'component' : contents } };
+      let contents =   processor.runSync( processor.parse(fields)); // or .content if you are unsunre?????
+
+      console.log(processor.stringify(contents), "<<<<" , contents);
+      return { 'childMarkdownRemark' : { 'component' : processor.stringify(contents) } };
     }
     return fields;
   }
@@ -242,5 +264,18 @@ export const transform = (fields, index) => {
     return typeof item !== 'object' ? item : { item : fields };
   });
 };
+
+export const renderMarkdown = (markdownContent) => {
+  let processor = unified()
+      .use(remarkParse, {commonmark: true})
+      .use(stringify)
+      .use(remarkRehype, { allowDangerousHTML: true })
+      .use(html)
+      .use(rehypeReact, {createElement: React.createElement, toHast: {allowDangerousHTML: true}, components: RehypeComponentsList });
+  let contents =   processor.processSync(markdownContent).result;
+  console.log(contents, "################ markdown contents");
+  return contents;
+}
+
 
 export default renderAst;

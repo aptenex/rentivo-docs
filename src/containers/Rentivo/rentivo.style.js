@@ -212,7 +212,10 @@ table td {
   border-bottom: 1px solid #ccc;
 }
 
-
+  
+  .rentivo-fluid-img {
+    margin: unset !important;
+  }
   
   .supply {
     --primaryColor :  ${themeGet('colorStyles.products.supply.color')};
@@ -643,6 +646,15 @@ export const ContentWrapper = styled.main`
       border: 0;
     }
   }
+  
+  
+   img[title='Loading Website'] {
+       position: relative;
+    top: -216px;
+    left: 139px;
+    transform: skew(0deg, -15deg) scale(1.1);
+   }
+   
   
    @media (min-width: 1220px) {
       img[title='split-payment'],

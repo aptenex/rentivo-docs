@@ -132,7 +132,7 @@ export const featuretteFields = graphql`
     }
     pageTitle
     body {
-      json
+      json 
       fields {
         readingTime {
           text

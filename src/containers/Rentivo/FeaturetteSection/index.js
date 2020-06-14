@@ -164,6 +164,7 @@ const FeaturetteSection = ({
 
   const DescriptionBlock = ({content}) => {
 
+    console.log('whats', content);
 
 
     if(content && content?.childMarkdownRemark.htmlAst){
