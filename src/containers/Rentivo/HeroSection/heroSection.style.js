@@ -123,12 +123,21 @@ const HeroWrapper = styled.section`
       color: #f2f2f2;
     }
   }
+  
+  &.manage .btn-primary {
+    background: #07c98d;
+    border-color: #12dd9e;
+    &:hover {
+      background: #11ce93;
+    }
+  }
   .btn { 
-    border-radius: 30px;
+    border-radius: 3px;
+    transition: 0.15s ease-in-out;
     &:hover {      
-      box-shadow: 0 5px 10px 0 rgba(11,12,36,.3);
-      -webkit-transform: translateY(-2px);
-      transform: translateY(-2px);
+      box-shadow: 0 5px 10px 0 rgba(11,12,36,.1);
+      -webkit-transform: translateY(-3px);
+      transform: translateY(-3px);
     }
   }
   .contained-bg {

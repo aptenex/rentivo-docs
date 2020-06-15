@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'gatsby';
 import _ from 'lodash';
+import {getFullPath} from "constants/pageSlugPrefixes";
 
 class BreadCrumbs extends Component {
   constructor(props) {
@@ -54,6 +55,18 @@ class BreadCrumbs extends Component {
     // All paths but current page -- title is added in render method
     const subPaths = [...allPaths.slice(0, allPaths.length - 1)];
 
+    if(this.props.product){
+
+      subPaths.splice(0,0, {
+          to  :  getFullPath(this.props.product),
+          textNode : this.props.product.name
+      });
+    }
+    console.log(this.props, "Asd");
+    // parts.splice(1,0,"Foo");
+
+
+
     // Combine with home object and return.
     return [...home, ...subPaths];
   }
@@ -71,7 +84,7 @@ class BreadCrumbs extends Component {
     // update the last textNode with page title
     this.allPaths[this.allPaths.length - 1].textNode = pageTitle;
 
-    return pageTitle;
+    return _.startCase(pageTitle);
   }
 
   getJSONLD() {
@@ -107,7 +120,7 @@ class BreadCrumbs extends Component {
             const classes = `breadcrumb-item-${item.textNode.replace(' ', '-').toLowerCase()}`;
             return (
               <li key={item.textNode} className={classes}>
-                <Link to={item.to}>{item.textNode}</Link>
+                <Link to={item.to}>{_.startCase(item.textNode)}</Link>
               </li>
             );
           })}

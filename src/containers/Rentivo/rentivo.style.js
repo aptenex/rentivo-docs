@@ -1,11 +1,10 @@
-import styled, { createGlobalStyle } from 'styled-components';
-import { themeGet } from 'styled-system';
+import styled, {createGlobalStyle} from 'styled-components';
+import {themeGet} from 'styled-system';
 import NavbarItem from "./DesktopNav/Navbar/NavbarItem";
 import Navbar from "./Navbar";
 import {LoginLink, Cta, CtaSection, IconLock} from "./Navbar/Navbar.style";
 import Logo from 'reusecore/src/elements/UI/Logo';
 import Container from "../../common/src/components/UI/Container";
-
 
 
 export const TagFilter = styled('ul')`
@@ -217,38 +216,7 @@ table td {
     margin: unset !important;
   }
   
-  .supply {
-    --primaryColor :  ${themeGet('colorStyles.products.supply.color')};
-    svg [fill="#3f3d56"] { 
-      fill: #f8cd53;
-    }    
-    svg [fill="#e6e6e6"] { 
-      fill: ${themeGet('colorStyles.products.supply.color')};
-    }
-  }
-  .manage {
-    --primaryColor :  ${themeGet('colorStyles.products.manage.color')};     
-  }
-  
-  .website {
-    --primaryColor :  ${themeGet('colorStyles.products.website.color')};     
-  }
-  
-  .channels {
-    --primaryColor :  ${themeGet('colorStyles.products.channels.color')};
-    svg path[fill="#3f3d56"] { 
-      fill: var(--primaryColor);
-    }
-  }
-  
-  .cooperative,
-  .coop {
-    --primaryColor :  ${themeGet('colorStyles.products.coop.color')};
-    svg path[fill="#3f3d56"] { 
-      fill: var(--primaryColor);
-    }
-  }
-  
+ 
   section {
     position: relative;
   }
@@ -404,7 +372,256 @@ export const ContentWrapper = styled.main`
     text-decoration: none;
   }
   
-  &:not(.contained) .sticky-outer-wrapper {
+  
+  blockquote.callout-quote {
+    p {
+      font-style: italic;
+      font-size: 1.8em !important;
+      line-height: 1.2em;
+    }
+    p:first-child:first-letter {
+       color: ${themeGet('colors.primary', '#028489')};
+      font-family: Georgia;
+      initial-letter: 2;
+      font-size: 1.2em;
+    }
+  }
+  
+  [class^='featuretteSectionstyle__HeroWrapper'] {
+    padding-bottom: 10px;
+    margin-bottom: 0px;
+  }
+
+  .trial-section {
+    background: linear-gradient(to bottom, #fafbff 0%, #f7f8fd 100%);
+
+    .button_group {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 990px) {
+    .glide__slide--active .pricing_table {
+      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.05);
+      border: 0;
+    }
+  }
+  
+  
+   img[title='Loading Website'] {
+       position: relative;
+    top: -216px;
+    left: 139px;
+    transform: skew(0deg, -15deg) scale(1.1);
+   }
+   
+  
+   @media (min-width: 1220px) {
+      img[title='split-payment'],
+      img[title='multiple-owners'],
+      img[title='you-as-merchant'] {
+        padding: 4vw;
+        background: white;
+        width: calc( 100% - 4vw * 2);
+        margin: 20px;
+        border-radius: 10px;
+      }
+  }
+  
+  
+  
+   --primary : ${themeGet('colorStyles.products.manage.color')};
+   &[class*="product-"] {
+       ul li a {
+        color: var(--primary);
+        &:hover {
+          color: var(--primaryHover);
+        }
+       }  
+   }
+   &.product-manage {    
+      --primary : ${themeGet('colorStyles.products.manage.color')};
+      .manage {
+        &.menu {    
+          background:${themeGet('colorStyles.products.manage.color')};
+        }
+       
+      }  
+   }
+   .manage:not(article){
+            background: ${themeGet('colorStyles.products.manage.background')};
+    }
+    .channels:not(article){
+              background: ${themeGet('colorStyles.products.channels.background')};;
+    }
+    .website {    
+        &:not(article){
+          background:   ${themeGet('colorStyles.products.website.background')};
+        }
+        .bg-tertiary {
+          display: inherit;    
+        }
+   }   
+    .coop {         
+          &:not(article){
+              background: ${themeGet('colorStyles.products.coop.background')};;
+          }        
+        } 
+   .supply {    
+          &:not(article){
+             // background: ${themeGet('colorStyles.products.supply.background')};
+          }
+          .bg-tertiary {
+            display: inherit;    
+          }
+          &.main_navbar {    
+            // background: ${themeGet('colorStyles.products.supply.color')};
+          }
+          .btn-primary {
+              ${themeGet('colorStyles.products.supply.primaryWithBg')};
+          }
+          .btn-secondary {
+              ${themeGet('colorStyles.products.supply.secondary')};
+          }
+          &.forcePrimaryBg {
+            background: ${themeGet('colorStyles.products.supply.background')};
+            h1, h2,h3,h4,h5,h6 {
+              color: white;
+            }
+          }
+      } 
+         
+    &.product-channel-management {
+      --primary : ${themeGet('colorStyles.products.channels.color')};
+        svg path[fill="#3f3d56"] { 
+        fill: var(--primary);
+      }
+       .channels {        
+          &.main_navbar {    
+            background: ${themeGet('colorStyles.products.channels.color')};
+          }
+        }  
+    }
+    &.product-direct-booking-website {
+       --primary : ${themeGet('colorStyles.products.website.color')};   
+       
+       .btn-primary {
+         ${themeGet('colorStyles.products.website.primary')};
+        }
+        .btn-secondary {
+          ${themeGet('colorStyles.products.website.secondary')};
+        }
+      
+        .website {  
+         
+          &.main_navbar {    
+            background: ${themeGet('colorStyles.products.website.headerBackground')};
+            .btn-primary {
+              background:  ${themeGet('colorStyles.products.website.color')};
+              border-color:  ${themeGet('colorStyles.products.website.colorAccent')};
+              &:hover {
+                background: #6275d0;
+              }
+            }
+          }
+        }     
+    }
+    &.product-supply {
+      --primary : ${themeGet('colorStyles.products.supply.color')};
+       svg [fill="#3f3d56"] { 
+          fill: var(--primary);
+        }    
+        svg [fill="#e6e6e6"] { 
+          fill: var(--primary);
+        }
+        
+    }
+    &.product-cooperative {
+      --primary : ${themeGet('colorStyles.products.coop.color')};
+       svg path[fill="#3f3d56"] { 
+        fill: var(--primary);
+      }
+      .btn-primary {
+         ${themeGet('colorStyles.products.coop.primary')};
+      }
+      .btn-secondary {
+          ${themeGet('colorStyles.products.coop.secondary')};
+      }
+       .coop {         
+          &.main_navbar {    
+            background: ${themeGet('colorStyles.products.coop.color')};
+          }
+        }
+     
+        
+    }
+  
+    [data-slug=manage] {    
+      --primary : ${themeGet('colorStyles.products.manage.color')};
+      div, svg {
+        color: ${themeGet('colorStyles.products.manage.color')};
+      }      
+    }
+    [data-slug=channel-management] {
+      --primary : ${themeGet('colorStyles.products.channels.color')};
+        svg {
+       position: relative;
+       left: -6px;
+       }
+    
+       div, svg  {    
+        color: ${themeGet('colorStyles.products.channels.color')};
+        color: #258bb4;
+      }
+    }
+    [data-slug=direct-booking-website] {
+       --primary : ${themeGet('colorStyles.products.website.color')};       
+       div, svg {
+        color: ${themeGet('colorStyles.products.website.color')};
+      }
+    }
+    [data-slug=supply] {
+      --primary : ${themeGet('colorStyles.products.supply.color')};
+      div, svg {    
+        color: ${themeGet('colorStyles.products.supply.color')};
+      }
+    }
+     [data-slug=cooperative] {
+      --primary : ${themeGet('colorStyles.products.coop.color')};
+        svg {
+         position: relative;
+         left: 5px;
+         font-size:0.9em;
+         }
+      
+       div, svg {    
+        color: ${themeGet('colorStyles.products.coop.color')};
+      }
+    }
+    ul.breadcrumb {
+      li {
+        
+        a { 
+          color: var(--primary);
+          font-weight: 500;
+          text-transform: inherit !important;  
+        }
+        
+      }
+    }
+    
+    aside {
+      a:hover {
+        color: var(--primary);
+      }
+      a.active {
+        border-left-color: var(--primary);
+        color: var(--primary);
+      }
+    }
+    
+    
+    &:not(.contained) .sticky-outer-wrapper {
     li ${NavbarItem} button {
         color: #222;
     }
@@ -432,71 +649,6 @@ export const ContentWrapper = styled.main`
     right: 0px;
   }
   
-  .manage {
-    &.menu {    
-      background:${themeGet('colorStyles.products.manage.color')};
-    }
-    &:not(article){
-        background: ${themeGet('colorStyles.products.manage.background')};
-    }
-  }  
-  .coop {
-  .btn-primary {
-          ${themeGet('colorStyles.products.coop.primary')};
-      }
-    .btn-secondary {
-       ${themeGet('colorStyles.products.coop.secondary')};
-    }
-    &:not(article){
-        background: ${themeGet('colorStyles.products.coop.background')};;
-    }
-    &.main_navbar {    
-      background: ${themeGet('colorStyles.products.coop.color')};
-    }
-  } 
-  
-  .channels {
-  
-    &:not(article){
-        background: ${themeGet('colorStyles.products.channels.background')};;
-    }
-    &.main_navbar {    
-      background: ${themeGet('colorStyles.products.channels.color')};
-    }
-  }  
-  
-  .website {    
-    &:not(article){
-      background:   ${themeGet('colorStyles.products.website.background')};
-    }
-    .bg-tertiary {
-      display: inherit;    
-    }
-    &.main_navbar {    
-      background: ${themeGet('colorStyles.products.website.color')};
-    }
-  }
-  
-  .supply {    
-      &:not(article){
-         // background: ${themeGet('colorStyles.products.supply.background')};
-      }
-      .bg-tertiary {
-        display: inherit;    
-      }
-      &.main_navbar {    
-        // background: ${themeGet('colorStyles.products.supply.color')};
-      }
-      .btn-primary {
-          ${themeGet('colorStyles.products.supply.primaryWithBg')};
-      }
-      &.forcePrimaryBg {
-        background: ${themeGet('colorStyles.products.supply.background')};
-        h1, h2,h3,h4,h5,h6 {
-          color: white;
-        }
-      }
-  }
   
   
   .sticky-outer-wrapper:not(.sticky-nav-active)  nav.light {
@@ -528,7 +680,7 @@ export const ContentWrapper = styled.main`
         ul.breadcrumb li + li::before {
             padding: 0 6px;
             color: #f2f2f2;
-            content: "/\\A0";
+            content: "/\\\\A0";
         }
         li ${NavbarItem} button {
           color: white !important;
@@ -560,7 +712,7 @@ export const ContentWrapper = styled.main`
   
   .sticky-nav-active {
     .main_navbar {
-      background: #fff;
+      background: #fff !important;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
       padding: 15px 0;
     }
@@ -632,60 +784,8 @@ export const ContentWrapper = styled.main`
     }
   }
   
-  blockquote.callout-quote {
-    p {
-      font-style: italic;
-      font-size: 1.8em !important;
-      line-height: 1.2em;
-    }
-    p:first-child:first-letter {
-       color: ${themeGet('colors.primary', '#028489')};
-      font-family: Georgia;
-      initial-letter: 2;
-      font-size: 1.2em;
-    }
-  }
-  
-  [class^='featuretteSectionstyle__HeroWrapper'] {
-    padding-bottom: 10px;
-    margin-bottom: 0px;
-  }
-
-  .trial-section {
-    background: linear-gradient(to bottom, #fafbff 0%, #f7f8fd 100%);
-
-    .button_group {
-      text-align: center;
-    }
-  }
-
-  @media (max-width: 990px) {
-    .glide__slide--active .pricing_table {
-      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.05);
-      border: 0;
-    }
-  }
   
   
-   img[title='Loading Website'] {
-       position: relative;
-    top: -216px;
-    left: 139px;
-    transform: skew(0deg, -15deg) scale(1.1);
-   }
-   
-  
-   @media (min-width: 1220px) {
-      img[title='split-payment'],
-      img[title='multiple-owners'],
-      img[title='you-as-merchant'] {
-        padding: 4vw;
-        background: white;
-        width: calc( 100% - 4vw * 2);
-        margin: 20px;
-        border-radius: 10px;
-      }
-  }
   
 `;
 

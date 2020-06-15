@@ -14,7 +14,7 @@ const SubNav = (props) => {
         <div className="container-lg">
           <div className="row">
             <div className="col-md-8">
-              <BreadCrumbs {...props} />
+              <BreadCrumbs {...props} product={props?.product} />
             </div>
             <div className="col-md-4">
               <Search />

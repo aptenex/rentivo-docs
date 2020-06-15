@@ -34,11 +34,11 @@ const LogoReelSection = ({logos, title}) => {
       <>
         <Heading>{title}</Heading>
         <LogoGrid>
-        {logos.map(logo => {
+        {logos.map((logo, index) => {
           if(logo?.fixed?.src) {
-            return <div><img key={logo.id} src={logo.fixed.src}/></div>;
+            return <div key={index}><img  src={logo.fixed.src}/></div>;
           }
-          return <ContentfulAsset data={logo} />;
+          return <ContentfulAsset key={index} data={logo} />;
         })}
         </LogoGrid>
       </>

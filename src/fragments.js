@@ -128,6 +128,13 @@ export const featuretteFields = graphql`
         id
         name
         slug
+        heroFeaturette {
+          menuVariant
+          className
+        }
+        internal {
+          type
+        }
       }
     }
     pageTitle

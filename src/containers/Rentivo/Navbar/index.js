@@ -11,14 +11,27 @@ import Container from 'common/src/components/UI/Container';
 import { DrawerContext } from 'common/src/contexts/DrawerContext';
 import ScrollSpyMenu from 'common/src/components/ScrollSpyMenu';
 import AnimatedNavbar from "../DesktopNav/AnimatedNavbar"
-import LogoImage from 'common/src/assets/image/rentivo-logo.png';
+import LogoImage from 'common/src/assets/image/rentivo-logo.svg';
+import LogoCoop from 'common/src/assets/image/rentivo-logo-branded__cooperative.svg';
+import LogoSupply from 'common/src/assets/image/rentivo-logo-branded__supply.svg';
+import LogoDirectBookingWebsite from 'common/src/assets/image/rentivo-logo-branded__direct-booking-website.svg';
+import LogoChannelManager from 'common/src/assets/image/rentivo-logo-branded__channel-manager.svg';
 import styled from "styled-components"
 import { IconLockMan, IconLock as Lock } from '../Icons';
 import { CtaSection, LoginLink, IconLock, Cta } from './Navbar.style';
 import Link from 'gatsby-link';
 import MobileNav from "../MobileNav";
 
-const Navbar = ({ navbarStyle, className, logoStyle, row, menuWrapper, location }) => {
+const BrandedLogos = {
+  'default' : LogoImage,
+  'cooperative' : LogoCoop,
+  'manage' : LogoImage,
+  'supply' : LogoSupply,
+  'direct-booking-website' : LogoDirectBookingWebsite,
+  'channel-management' : LogoChannelManager
+};
+
+const Navbar = ({ product, navbarStyle, className, logoStyle, row, menuWrapper, location }) => {
   const addAllClasses = ['main_navbar'];
   if (className) {
     addAllClasses.push(className);
@@ -52,7 +65,7 @@ const Navbar = ({ navbarStyle, className, logoStyle, row, menuWrapper, location 
           <Logo
             className={'logo'}
             href="/"
-            logoSrc={LogoImage}
+            logoSrc={BrandedLogos[product?.slug] || LogoImage}
             title="Rentivo"
             logoStyle={logoStyle}
           />

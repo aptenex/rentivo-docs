@@ -27,6 +27,19 @@ import ProductSection from "../containers/Rentivo/FeatureGallery";
 import HeroSection from "../containers/Rentivo/HeroSection";
 import FaqList from "../containers/Rentivo/FaqSection/List";
 import FaqSection from '../containers/Rentivo/FaqSection';
+import {themeGet} from "styled-system";
+
+const ProductDescriptionSection = styled('div')`
+  text-align: left;
+`;
+
+const StyledContentSection = styled(ContentSection)`
+   
+`;
+
+const StyledAsideCategoryMenu = styled(AsideCategoryMenu)`
+
+`;
 
 const ReferenceProduct = styled(Link)`
   display: flex;
@@ -43,15 +56,10 @@ const ReferenceProduct = styled(Link)`
     font-size: 3rem;
     opacity: 0.4;
   } 
+  
+  
    
 `
-const ProductDescriptionSection = styled('div')`
-  text-align: left;
-`
-
-const StyledContentSection = styled(ContentSection)`
-   
-`;
 
 class FeatureTemplate extends React.Component {
   getCategoryLinks() {
@@ -65,25 +73,33 @@ class FeatureTemplate extends React.Component {
     const { data, location, pageContext } = this.props;
     const featureNode = data.feature;
 
+
     const { faq : faqGroups}  = data;
     const categoryLinks = this.getCategoryLinks();
     const options = { };
 
+    let productMenuClasses = [];
+    if(featureNode.parentPage.heroFeaturette.className){
+      productMenuClasses.push(featureNode.parentPage.heroFeaturette.className);
+    }
+    if(productMenuClasses.length > 0){
+      productMenuClasses.push('light');
+    }
     const Body = renderPage( featureNode, options );
     return (
 
-      <MarketingLayout location={location} subNav={true}>
+    <MarketingLayout product={featureNode.parentPage} menu={productMenuClasses} wrapperClass={`product-` + featureNode.parentPage.slug} location={location} subNav={true}>
           <SEO postNode={featureNode} postType="feature" />
 
           <Container>
             <Row top="xs">
               <Col xs={12} md={5} xl={3} >
 
-                <ReferenceProduct to={`/${featureNode.parentPage.slug}`}>
+                <ReferenceProduct to={`/${featureNode.parentPage.slug}`} data-slug={featureNode.parentPage.slug}>
                   { ProductDefinitions[featureNode.parentPage.slug] &&
                     <>
                       <ProductIcons type={featureNode.parentPage.slug} />
-                      <ProductDescriptionSection>
+                      <ProductDescriptionSection >
                         <h4>{ featureNode.parentPage.name }</h4>
                         <Text mb={0} fontSize={'0.9em;'}>
                           <FontAwesomeIcon icon={faChevronLeft}/>
@@ -95,7 +111,7 @@ class FeatureTemplate extends React.Component {
                 </ReferenceProduct>
 
                 { Object.keys( categoryLinks).length > 0
-                    ? (<AsideCategoryMenu activeNavSlug={location.pathname} asideCategories={categoryLinks} />)
+                    ? (<StyledAsideCategoryMenu dataSlug={featureNode.parentPage.slug} activeNavSlug={location.pathname} asideCategories={categoryLinks} />)
                     : null
                 }
               </Col>

@@ -134,45 +134,6 @@ const ProductsSection = styled.ul`
           }
         }
       }
-    &[data-slug=manage] {    
-      --primary : ${themeGet('colorStyles.products.manage.color')};
-      ${ProductIconWrapper} {
-        color: ${themeGet('colorStyles.products.manage.color')};
-      }      
-    }
-    &[data-slug=channel-management] {
-     svg {
-       position: relative;
-       left: -6px;
-       }
-    --primary : ${themeGet('colorStyles.products.channels.color')};
-      ${ProductIconWrapper} {    
-        color: ${themeGet('colorStyles.products.channels.color')};
-        color: #258bb4;
-      }
-    }
-    &[data-slug=direct-booking-website] {
-    --primary : ${themeGet('colorStyles.products.website.color')}; 
-      ${ProductIconWrapper} {
-        color: ${themeGet('colorStyles.products.website.color')};
-      }
-    }
-    &[data-slug=supply] {
-    --primary : ${themeGet('colorStyles.products.supply.color')};
-      ${ProductIconWrapper} {    
-        color: ${themeGet('colorStyles.products.supply.color')};
-      }
-    }
-     &[data-slug=cooperative] {
-     svg {
-       position: relative;
-       left: -5px;
-       }
-    --primary : ${themeGet('colorStyles.products.coop.color')};
-      ${ProductIconWrapper} {    
-        color: ${themeGet('colorStyles.products.coop.color')};
-      }
-    }
     svg[data-prefix=fad]{
       font-size: 2.4em;    
       margin-top: 0px;

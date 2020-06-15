@@ -43,7 +43,7 @@ const Section = styled('section')`
   position: relative;
   padding-top: 120px; 
 `;
-import LogoImage from 'common/src/assets/image/rentivo-logo.png';
+import LogoImage from 'common/src/assets/image/rentivo-logo.svg';
 
 const WhiteSectionWrapper = styled.section`
   padding: 80px 0;

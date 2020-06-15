@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import LINKS from '../../constants/pageLinks';
 import { AuthCtx } from '../withUser';
 import './NavMain.scss';
-import LogoImage from 'common/src/assets/image/rentivo-logo.png';
+import LogoImage from 'common/src/assets/image/rentivo-logo.svg';
 import Logo from 'reusecore/src/elements/UI/Logo';
 import styled from "styled-components"
 import {  IconLock as Lock } from 'containers/Rentivo/Icons';

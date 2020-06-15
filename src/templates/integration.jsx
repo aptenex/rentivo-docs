@@ -30,7 +30,7 @@ import HubspotForm from "react-hubspot-form";
 import Row from 'components/Flex/Row'
 import Col from 'components/Flex/Col'
 import Card from 'reusecore/src/elements/Card';
-import LogoImage from 'common/src/assets/image/rentivo-logo.png';
+import LogoImage from 'common/src/assets/image/rentivo-logo.svg';
 import {ConnectorTopLeftBottomRight, ConnectorTopJoinBottom} from '../containers/Rentivo/Icons';
 import FeatuetteSection from '../containers/Rentivo/FeaturetteSection';
 import FaqSection from '../containers/Rentivo/FaqSection';

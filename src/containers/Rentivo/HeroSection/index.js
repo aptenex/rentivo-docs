@@ -118,6 +118,7 @@ const HeroSection = ({
   primaryCallToAction : callToAction,
   secondaryCallToAction,
   forceHeroPrimaryBg,
+  attrId,
   logo,
   backgroundHeroImage,
   leadingLabelHeaderStyle,
@@ -153,7 +154,7 @@ const HeroSection = ({
   };
 
   return (
-      <HeroWrapper className={addAllClasses.join(' ')}>
+      <HeroWrapper id={attrId} className={addAllClasses.join(' ')}>
         <div className="contained-bg">
           <div className="bg-settings bg-1" />
           <div className="bg-settings bg-2" />

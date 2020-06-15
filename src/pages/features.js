@@ -88,7 +88,7 @@ export default (props) => {
   const  featurePagesSorted = sortGroups(props.data.allContentfulPage.products);
   const FeaturesBlocks = featurePagesSorted.map( ( product, index) => {
 
-    let HeroSections = <HeroSection forceHeroPrimaryBg={true} key={product.edges[0].node.parentPage.heroFeaturette.id} {...product.edges[0].node.parentPage.heroFeaturette } />
+    let HeroSections = <HeroSection attrId={product.edges[0].node.parentPage.name} forceHeroPrimaryBg={true} key={product.edges[0].node.parentPage.heroFeaturette.id} {...product.edges[0].node.parentPage.heroFeaturette } />
     const categories = _.groupBy( product.edges, ({node}) => {
       return node?.category?.title ? node?.category?.title : 'Overview';
     });

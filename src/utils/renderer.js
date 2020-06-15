@@ -52,7 +52,7 @@ const RehypeComponentsList = {
       return <Link {...props} to={props.href}>{props.children}</Link>
     }
     let href = !props.children[0];
-    return <a {...props} target={  typeof href === 'string' && ( !href.startsWith('#') || !href.includes('rentivo') ? '_blank' : '') }>{props.children}</a>
+    return <a {...props} target={  typeof href === 'string' && ( !href.startsWith('#') || !href.includes('rentivo')) ? '_blank' : '' }>{props.children}</a>
   },
   'callout-link': CalloutLink,
   'callout': Callout,
@@ -165,7 +165,9 @@ const richTextOptions = {
 
               const fluidProps = getFluidGatsbyImage(image, {});
               console.log(image.file.details);
-              return <Container className={'rentivo-fluid-img'} noGutter={true} mobileGutter={true} width={image?.file?.details?.image?.width + 'px'}><Img fluid={fluidProps} /></Container>
+              return <Container className={'rentivo-fluid-img'} noGutter={true} mobileGutter={true} width={image?.file?.details?.image?.width + 'px'}>
+                <Img fluid={fluidProps} />
+              </Container>
             }
 
 

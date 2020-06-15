@@ -8,7 +8,7 @@ import Logo from 'reusecore/src/elements/UI/Logo';
 import Container from 'common/src/components/UI/Container';
 import FooterWrapper, { List, ListItem } from './footer.style';
 import Link from 'gatsby-link';
-import LogoImage from 'common/src/assets/image/rentivo-logo.png';
+import LogoImage from 'common/src/assets/image/rentivo-logo.svg';
 
 const Footer = ({
   row,

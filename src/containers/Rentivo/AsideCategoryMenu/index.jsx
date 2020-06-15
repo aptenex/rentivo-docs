@@ -41,7 +41,7 @@ class AsideCategoryMenu extends Component {
   render() {
     const navCategories = this.props.asideCategories;
     return (
-      <aside className="aside-nav">
+      <aside className="aside-nav" data-slug={this.props.dataSlug}>
         { Object.entries( navCategories ).map( ([title, links]) => {
               const catLinks = links.map(({node : el}) => {
                 const {

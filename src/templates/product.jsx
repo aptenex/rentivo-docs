@@ -58,7 +58,7 @@ class ProductTemplate extends React.Component {
 
 
     return  (
-      <MarketingLayout isMenuSticky={isMenuSticky} location={location} menu={menuVariantClasses} articleClass={productNode.heroFeaturette?.className + ' ' + productNode.heroFeaturette?.bodyClasses} subNav={hasSubNav}>
+      <MarketingLayout product={productNode} wrapperClass={`product-` + productNode.slug} isMenuSticky={isMenuSticky} location={location} menu={menuVariantClasses} articleClass={productNode.heroFeaturette?.className + ' ' + productNode.heroFeaturette?.bodyClasses} subNav={hasSubNav}>
         <SEO postNode={productNode} postType="product" />
         { asideLinks.length > 0
             ? (<AsideMenu asideLinks={this.getLinks()} />)

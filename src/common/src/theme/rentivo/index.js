@@ -40,27 +40,41 @@ export const rentivoTheme = {
   colorStyles: {
     products : {
       manage : {
-        color: '#01b47d',
+        color: '#01c88b',
+        colorAccent: '#01c186',
         background: 'linear-gradient(135deg,#01b47d 0,#01b47d 100%);'
       },
       supply : {
         color: '#e5683a',
+        colorAccent: '#f06d3d',
         background: 'linear-gradient(-180deg,#e5683a,#f59f3d 43%,#f8cd53)',
         primaryWithBg: {
           color: colors.white,
           backgroundColor: '#e5683a',
           borderColor: '#b9461b',
           backgroundImage: 'linear-gradient(-180deg,#e5683a,#e5683a 43%,#e18a27)',
+          boxShadow: '0 4px 2px 0 rgba(22,29,37,.05)',
           '&:hover': {
             backgroundColor: '#e5683a',
             borderColor: '#e5683a',
             backgroundImage: 'linear-gradient(-180deg,#d76136,#d96237 43%,#d38125)',
             boxShadow: '0px 9px 20px -5px rgba(82, 104, 219, 0.57)',
+          }
+        },
+        secondary: {
+          background: '#ffffff',
+          borderColor: '#c9d0d8',
+          boxShadow: '0 4px 2px 0 rgba(22,29,37,.05)',
+          color: '#667587',
+          '&:hover': {
+            boxShadow: '0 1px 2px 0 rgba(22,29,37,.05)',
+            color: '#667587!important',
           },
         },
       },
       coop : {
-        color: 'rgba(244, 72, 105,1)',
+        color: '#f44869',
+        colorAccent: '#fe5676',
         background: 'linear-gradient(113.90679894237019deg, rgba(244, 72, 105,1) 5.012129380053908%, rgb(67, 25, 74) 97.68059299191374%)',
         primary: {
           color: '#fff',
@@ -83,11 +97,33 @@ export const rentivoTheme = {
       },
       channels : {
         color: '#012837',
+        colorAccent: '#246782',
         background: 'linear-gradient(135deg,#012837 0,#1d6683 100%)'
       },
       website : {
-        color: '#403d93',
-        background: 'linear-gradient(-180deg,#403d93,#5246bd 43%,#6367ce)'
+        // SVG fill color should be #6768CD
+        headerBackground: '#403d93',
+        color: '#5163bc',
+        colorAccent: '#1e2d77',
+        colorWashed: '#c9cde7',
+        background: 'linear-gradient(-180deg,#403d93,#5246bd 43%,#6367ce)',
+        primary: {
+          color: '#fff',
+          borderColor: 'rgba(244, 72, 105,1)',
+          background: 'rgba(244, 72, 105,1)',
+          '&:hover': {
+            background: 'rgb(246, 101, 129)',
+            borderColor: colors.secondaryHover,
+          },
+        },
+        secondary: {
+          color: 'rgba(244, 72, 105,1)',
+          borderColor: 'rgba(244, 72, 105,1)',
+          '&:hover': {
+            color: colors.secondaryHover,
+            borderColor: colors.secondaryHover,
+          },
+        },
       }
     },
 
