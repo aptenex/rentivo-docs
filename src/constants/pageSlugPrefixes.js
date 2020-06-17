@@ -2,7 +2,6 @@ import {renderPlaintext, transform} from "../utils/renderer";
 
 export const getFullPath = (linkToPage) => {
 
-    console.log('>AD>AD', linkToPage);
 
     if(linkToPage.hasOwnProperty('fields') && linkToPage.hasOwnProperty('sys')){
       let internal = { type : SysIdMap[linkToPage.sys?.contentType?.sys?.id]};
@@ -14,20 +13,20 @@ export const getFullPath = (linkToPage) => {
     if(type === 'ContentfulPage'){
       if( linkToPage?.type && linkToPage?.parentPage?.slug && (
           linkToPage.type === 'Knowledge Base' || linkToPage.type === 'How To')) {
-        return Types[type + '_' + linkToPage.type] + '/' + linkToPage.parentPage.slug + '/' + linkToPage.slug;
+        return Types[type + '_' + linkToPage.type] + '/' + _.kebabCase(linkToPage.parentPage.slug) + '/' + _.kebabCase(linkToPage.slug);
       }
       if(linkToPage?.type === 'Feature Page'){
-        return Types[type] + '/' + linkToPage.slug;
+        return Types[type] + '/' + _.kebabCase(linkToPage.slug.toLowerCase());
       }
 
-      return (Types[type + '_' + linkToPage.type] || Types[type]) + '/' + linkToPage.slug;
+      return (Types[type + '_' + linkToPage.type] || Types[type]) + '/' + _.kebabCase(linkToPage.slug);
     }
 
     if(!linkToPage.hasOwnProperty('slug') || linkToPage.slug === null){
       return null;
     }
 
-    return Types[type] + '/' + linkToPage.slug;
+    return Types[type] + '/' + _.kebabCase(linkToPage.slug);
 };
 const SysIdMap = {
   'page' : 'ContentfulPage',

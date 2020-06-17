@@ -56,29 +56,58 @@ const CardNumbers = styled(Card)`
   margin-bottom: 20px;
 `
 
-const PrimaryColor = styled('div')`
+const Color = styled('div')`
 width: 100%;
-height: 400px;
-padding: 40px 20px;
+
+padding: 20px 10px;
 margin-bottom: 50px;
 color: white;
-font-size: 2rem;
 background:#29c88e;
  ul {
   li {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   margin-bottom: 10px;
    list-style: none;
   }
  }
 `;
-const DownloadLogoLink = styled('a')`
+const PrimaryColor = styled(Color)`
+  height: 400px;
+  padding: 40px 20px;
+   ul {
+    li {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+       list-style: none;
+    }
+ }
+`;
+const CoopProduct = styled(Color)`
+  background: #f44869;
+`;
+const SupplyProduct = styled(Color)`
+  background: #e5683a;
+`;
+const WebsiteProduct = styled(Color)`
+  background: #403d93;
+`;
+const ChannelProduct = styled(Color)`
+  background: #012837;
+`;
+
+const ProductRow = styled(Row)`
   
+`;
+const DownloadLogoLink = styled('a')`
+  clear:both;
   position: relative;
-  top: 30px;
+  top: 40px;
   padding: 20px;
   background: white;
   border-radius: 3px;
+      border: 1px solid #c9d0d8;
+    box-shadow: 0 4px 2px 0 rgba(22,29,37,.05);
+    color: #667587;
   svg {
      margin-left: 20px;
   }
@@ -120,14 +149,62 @@ export default (props) => {
                     <Col xs={12} md={12} xl={6} >
                       <Logo src={LogoImage} />
                       <DownloadLogoLink href={LogoImage} download>
-                        Download as PNG (18.0KB 866x323 pixels)
+                        Download as SVG (6kB)
                         <FontAwesomeIcon icon={faCloudDownload} />
                       </DownloadLogoLink>
 
-
-
+                    </Col>
+                    <Col xs={12} md={12} xl={6} >
+                      <Heading fontWeight={300} as={'h1'}content={'Product Colors'} />
+                      <Text>Rentivo also color schemes our products. Below is the color styles for each product.</Text>
                     </Col>
                   </Row>
+                  <ProductRow top="xs">
+
+                    <Col xs={12} md={3} xl={3} >
+                      <WebsiteProduct>
+                        <ul>
+                          <li><Heading as={'h6'}>Booking Engine</Heading></li>
+                          <li><span>Hex:</span> <span>#403d93</span></li>
+                          <li>RGBA: 64, 61, 147, 1</li>
+                          <li>HSLA: 242, 41%, 41%, 1</li>
+                        </ul>
+
+                      </WebsiteProduct>
+                    </Col>
+                    <Col xs={12} md={3} xl={3} >
+                      <ChannelProduct>
+                        <ul>
+                          <li><Heading as={'h6'}>Channel Manager</Heading></li>
+                          <li><span>Hex:</span> <span>#022736</span></li>
+                          <li>RGBA: 2, 39, 54, 1</li>
+                          <li>HSLA: 197, 93%, 11%, 1</li>
+                        </ul>
+
+                      </ChannelProduct>
+                    </Col>
+                    <Col xs={12} md={3} xl={3} >
+                      <CoopProduct>
+                        <ul>
+                          <li><Heading as={'h6'}>Cooperative</Heading></li>
+                          <li><span>Hex:</span> <span>#f44869</span></li>
+                          <li>RGBA: 244, 72, 105,1</li>
+                          <li>HSLA: 348, 89%, 62%, 1</li>
+                        </ul>
+
+                      </CoopProduct>
+                    </Col>
+                    <Col xs={12} md={3} xl={3} >
+                      <SupplyProduct>
+                        <ul>
+                          <li><Heading as={'h6'}>Supply + API</Heading></li>
+                          <li><span>Hex:</span> <span>#e5673a</span></li>
+                          <li>RGBA: 229, 103, 58, 1</li>
+                          <li>HSLA: 16, 77%, 56%, 1</li>
+                        </ul>
+                      </SupplyProduct>
+                    </Col>
+                  </ProductRow>
                   <Row top="xs">
                     <Col xs={12} md={12} xl={6} >
 

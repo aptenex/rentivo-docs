@@ -76,10 +76,11 @@ export default (props) => {
   const sortGroups = (productGroups) => {
 
     const groupsEdgesWithOrder = productGroups.map(({edges}) => {
+      console.log("EDGES", edges);
       const order = PRODUCTS[edges[0].node.parentPage.name] ? PRODUCTS[edges[0].node.parentPage.name].order : null;
       return { edges : {...edges}, order };
     });
-
+    console.log("Adasd", productGroups);
     const groupEdgesSorted = _.sortBy(groupsEdgesWithOrder, ['order']);
     return groupEdgesSorted;
   };
@@ -166,14 +167,21 @@ export const query = graphql`
             id
             name
             slug
+            internal {
+              type
+            }
             category {
               id
               title
+              order
             }
             parentPage {
               id
               name
               slug
+              internal {
+                type
+              }
               heroFeaturette {
                 ...Hero
               }

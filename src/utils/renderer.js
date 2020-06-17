@@ -164,7 +164,6 @@ const richTextOptions = {
               };
 
               const fluidProps = getFluidGatsbyImage(image, {});
-              console.log(image.file.details);
               return <Container className={'rentivo-fluid-img'} noGutter={true} mobileGutter={true} width={image?.file?.details?.image?.width + 'px'}>
                 <Img fluid={fluidProps} />
               </Container>
@@ -196,7 +195,6 @@ const richTextOptions = {
         // https://github.com/gatsbyjs/gatsby/pull/15084
         switch(node.data?.target?.sys?.contentType?.sys?.id){
           case 'logoReel':
-            console.log("logo rell", transform( node.data.target.fields));
             return <LogoReelSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) } />;
           case 'hero':
             return <HeroSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
@@ -275,7 +273,6 @@ export const transform = (fields, index) => {
 
       let contents =   processor.runSync( processor.parse(fields)); // or .content if you are unsunre?????
 
-      console.log(processor.stringify(contents), "<<<<" , contents);
       return { 'childMarkdownRemark' : { 'component' : processor.stringify(contents) } };
     }
     return fields;
@@ -310,7 +307,6 @@ export const renderMarkdown = (markdownContent) => {
       .use(html)
       .use(rehypeReact, {createElement: React.createElement, toHast: {allowDangerousHTML: true}, components: RehypeComponentsList });
   let contents =   processor.processSync(markdownContent).result;
-  console.log(contents, "################ markdown contents");
   return contents;
 }
 

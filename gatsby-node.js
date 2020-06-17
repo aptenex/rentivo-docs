@@ -449,7 +449,7 @@ exports.createPages = ({graphql, boundActionCreators}) => {
 
           pages.forEach((page, index) => {
             createPage({
-              path: `/features/${_.kebabCase(page.node.slug)}`,
+              path: `/features/${_.kebabCase(page.node.slug.toLowerCase())}`,
               component: featuresPage,
               context: {
                 slug: page.node.slug,

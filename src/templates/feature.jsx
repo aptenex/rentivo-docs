@@ -28,6 +28,7 @@ import HeroSection from "../containers/Rentivo/HeroSection";
 import FaqList from "../containers/Rentivo/FaqSection/List";
 import FaqSection from '../containers/Rentivo/FaqSection';
 import {themeGet} from "styled-system";
+import NavGuide from "containers/Rentivo/NavGuide";
 
 const ProductDescriptionSection = styled('div')`
   text-align: left;
@@ -62,8 +63,32 @@ const ReferenceProduct = styled(Link)`
 `
 
 class FeatureTemplate extends React.Component {
+  getNavigationLinks() {
+    const { data : {  feature } } = this.props;
+    const links = this.getSortedLinks();
+    const foundIndex = _.findIndex( links.map(({node}) => node), { 'id' : feature.id } );
+
+    console.log("@@@@@@@@@", foundIndex,  links);
+    return {
+      previous : foundIndex > 0  ?  links[foundIndex - 1].node : null,
+      next : foundIndex >= 0 && foundIndex + 1 < links.length ? links[foundIndex + 1].node : null,
+      current : feature
+    }
+  }
+
+  getSortedLinks(){
+    const { data : { sideLinks : { edges : items } } } = this.props;
+    console.log("PRE SORTED, RAW", items);
+    const links = _.sortBy( items, ( {node}) => {
+
+      return node?.category?.order || node?.category.title;
+    });
+    return links;
+  }
+
   getCategoryLinks() {
-    const { data : { sideLinks : { edges : links } } } = this.props;
+    const links = this.getSortedLinks();
+    console.log(links, "WHAT NOT SORTED?????? <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     return _.groupBy( links, ({node}) => {
       return node?.category?.title;
     });
@@ -75,7 +100,10 @@ class FeatureTemplate extends React.Component {
 
 
     const { faq : faqGroups}  = data;
+    const { previous, next} = this.getNavigationLinks();
     const categoryLinks = this.getCategoryLinks();
+    console.log("category links", categoryLinks, previous, next);
+
     const options = { };
 
     let productMenuClasses = [];
@@ -116,6 +144,7 @@ class FeatureTemplate extends React.Component {
                 }
               </Col>
               <Col xs={12} md={7} xl={9} >
+
                 {featureNode?.pageTitle && <Heading as="h1" content={featureNode.pageTitle} /> }
                 <StyledContentSection>{ Body }</StyledContentSection>
 
@@ -135,6 +164,10 @@ class FeatureTemplate extends React.Component {
                 ))
                 }
 
+
+                <NavGuide next={next} previous={previous} />
+
+
               </Col>
             </Row>
 
@@ -153,15 +186,19 @@ export default FeatureTemplate;
 export const pageQuery = graphql`
   
   query FeatureByID($id: String!, $parentId: String ) {
-    sideLinks : allContentfulPage( filter: { type: { eq : "Feature Page"}, parentPage: { id: {  eq : $parentId} }}){
+    sideLinks : allContentfulPage( filter: { type: { eq : "Feature Page"}, parentPage: { id: {  eq : $parentId} }}, sort: {fields: category___order, order: ASC}){
       edges {
         node {
           id
           slug
           name
+          internal {
+            type
+          }
           category {
             id
             title
+            order
           }
         }
       }
