@@ -57,6 +57,12 @@ const ReferenceProduct = styled(Link)`
     font-size: 3rem;
     opacity: 0.4;
   } 
+   transition: border 250ms ease 0s;
+      transition: box-shadow 0.3s ease-out 0s, transform 0.2s linear 0s, background-color 0.2s linear 0s;
+    &:hover {
+      transform: translateY(-2px);
+          
+    }
   
   
    
@@ -79,10 +85,12 @@ class FeatureTemplate extends React.Component {
   getSortedLinks(){
     const { data : { sideLinks : { edges : items } } } = this.props;
     console.log("PRE SORTED, RAW", items);
-    const links = _.sortBy( items, ( {node}) => {
-
-      return node?.category?.order || node?.category.title;
+    const linkDecorated = items.map(({node}) => {
+      // We add, so that -50 and 0 and 50... Work when sorting.
+      return { node : { ...node, order : parseFloat(`${100000 + (node?.category?.order || 0)}.${ _.replace( node?.order, '-', 0) || 0 }`) } }
     });
+    const links = _.sortBy( linkDecorated, ['node.order'], ['asc']);
+    console.log("SORTED", items, links);
     return links;
   }
 
@@ -181,17 +189,17 @@ class FeatureTemplate extends React.Component {
 }
 
 export default FeatureTemplate;
-
+/*   // , sort: {fields: category___order, order: ASC} */
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
-  
   query FeatureByID($id: String!, $parentId: String ) {
-    sideLinks : allContentfulPage( filter: { type: { eq : "Feature Page"}, parentPage: { id: {  eq : $parentId} }}, sort: {fields: category___order, order: ASC}){
+    sideLinks : allContentfulPage( filter: { type: { eq : "Feature Page"}, parentPage: { id: {  eq : $parentId} }}){
       edges {
         node {
           id
           slug
           name
+          order
           internal {
             type
           }

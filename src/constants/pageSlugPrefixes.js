@@ -1,5 +1,5 @@
 import {renderPlaintext, transform} from "../utils/renderer";
-
+import _ from 'lodash';
 export const getFullPath = (linkToPage) => {
 
 
