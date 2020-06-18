@@ -389,7 +389,8 @@ export const ContentWrapper = styled.main`
   
   [class^='featuretteSectionstyle__HeroWrapper'] {
     padding-bottom: 10px;
-    margin-bottom: 0px;
+    padding-top: 30px;
+    margin-bottom: 30px;
   }
 
   .trial-section {
