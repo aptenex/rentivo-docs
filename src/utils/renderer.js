@@ -153,6 +153,7 @@ const richTextOptions = {
         switch (mimeGroup) {
           case 'image':
             if (node.data.target ) {
+              console.log("WHAT IS THE FILE TYPE", node);
               const { description, file } = get(
                   node,
                   'data.target.fields',

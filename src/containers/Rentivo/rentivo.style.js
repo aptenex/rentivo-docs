@@ -611,6 +611,16 @@ export const ContentWrapper = styled.main`
       }
     }
     
+    img.medium-zoom-image[alt="gutenberg editor rentivo holiday rentals preview"] {
+      border: 8px solid rgba(41,201,140,0.28);
+    }
+    
+    img[alt="Click to Expand"] {
+      float: right;
+      position: relative;
+      right: -20px;
+      top: -20px;
+    }
     aside {
       a:hover {
         color: var(--primary);
