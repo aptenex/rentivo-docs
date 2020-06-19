@@ -22,4 +22,10 @@ export const Wrapper = styled('article')`
   [class^='heroSectionstyle__HeroWrapper']{
     padding-bottom: 40px;
   }
+  .rentivo-fluid-img + [class^='heroSectionstyle__HeroWrapper']{ 
+    margin-top: 20px;
+  }
+  [class^='heroSectionstyle__HeroWrapper'] ~ [class^='featuretteSectionstyle__']  {
+    padding-top: 0px;
+  }
 `;

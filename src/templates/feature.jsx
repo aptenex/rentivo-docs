@@ -148,7 +148,8 @@ class FeatureTemplate extends React.Component {
               <Col xs={12} md={7} xl={9} >
 
                 {featureNode?.pageTitle && <Heading as="h1" content={featureNode.pageTitle} /> }
-                <PageContent postNode={featureNode} />
+                <NavGuide next={next} previous={previous} />
+                <ContentSection><PageContent postNode={featureNode} /></ContentSection>
 
                 { featureNode?.featurettes && featureNode?.featurettes.map( (feature, index) => (
                     (
