@@ -25,7 +25,7 @@ import HubspotForm from 'react-hubspot-form';
 
 
 
-import HeroWrapper, {
+import StyledFeaturetteSection, {
   LeadingLabel,
   BannerObject,
 } from './featuretteSection.style';
@@ -151,7 +151,7 @@ const FeaturetteSection = ({
   );
   const OversizeImage = (props) => (
       <Fragment>
-        { [image[0] ].map((node, index) => {
+        { image.length === 1 && [image[0] ].map((node, index) => {
           return node.fluid.src ? <Image
             key={index}
             className={classNames(reverse ? 'flexRow__column__imageOversized__left' : 'flexRow__column__imageOversized__right')}
@@ -208,23 +208,26 @@ const FeaturetteSection = ({
             }
         >
           <Fragment>
-            {image.map((node, index) => (
-                <GlideSlide key={node.id}>
+            {image.map((node, index) => {
+              return(
+                <GlideSlide key={index}>
                   <Fragment>
-                    <Image
-                        fluid={node.fluid}
-                        alt="Product"
-                    />
+                    { node?.fluid?.src ? <Image
+                      key={index}
+                      className={classNames(reverse ? 'flexRow__column__imageOversized__left' : 'flexRow__column__imageOversized__right')}
+                      fluid={node.fluid}
+                      alt="Product"
+                  /> : <ContentfulAsset key={index} data={node}/> }
                   </Fragment>
                 </GlideSlide>
-            ))}
+            )})}
           </Fragment>
         </GlideCarousel>
       </BannerObject>
   );
 
   return (
-    <HeroWrapper className={ hero ? 'hero ' : null }>
+    <StyledFeaturetteSection className={ hero ? 'hero ' : null }>
 
       <Container>
 
@@ -264,7 +267,7 @@ const FeaturetteSection = ({
         </Row>
       </Container>
 
-    </HeroWrapper>
+    </StyledFeaturetteSection>
   );
 };
 

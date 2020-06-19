@@ -1,8 +1,15 @@
 import styled from 'styled-components';
 import {themeGet} from 'styled-system';
 import BannerBG from 'common/src/assets/image/saas/saas-banner.jpg';
+import Container from "common/src/components/UI/Container";
+import ContainerWrapper from "common/src/components/UI/Container/style";
 
-const HeroWrapper = styled.section`
+const StyledFeaturetteSection = styled.section`
+  
+  ${ContainerWrapper} {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
   
   padding-top: 80px;
   padding-bottom: 120px;
@@ -74,4 +81,4 @@ const LeadingLabel = styled.div`
 
 export {LeadingLabel, BannerObject};
 
-export default HeroWrapper;
+export default StyledFeaturetteSection;

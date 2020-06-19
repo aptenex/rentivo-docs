@@ -21,7 +21,7 @@ import {faChevronLeft } from '@fortawesome/pro-duotone-svg-icons'
 import Text from "../reusecore/src/elements/Text";
 import Heading from "../reusecore/src/elements/Heading";
 import Box from "../reusecore/src/elements/Box";
-import { renderPage } from '../utils/renderer';
+import {PageContent} from '../utils/renderer';
 import FeatuetteSection from "../containers/Rentivo/FeaturetteSection";
 import ProductSection from "../containers/Rentivo/FeatureGallery";
 import HeroSection from "../containers/Rentivo/HeroSection";
@@ -29,13 +29,10 @@ import FaqList from "../containers/Rentivo/FaqSection/List";
 import FaqSection from '../containers/Rentivo/FaqSection';
 import {themeGet} from "styled-system";
 import NavGuide from "containers/Rentivo/NavGuide";
+import ContainerWrapper from "common/src/components/UI/Container/style";
 
 const ProductDescriptionSection = styled('div')`
   text-align: left;
-`;
-
-const StyledContentSection = styled(ContentSection)`
-   
 `;
 
 const StyledAsideCategoryMenu = styled(AsideCategoryMenu)`
@@ -66,7 +63,9 @@ const ReferenceProduct = styled(Link)`
   
   
    
-`
+`;
+
+
 
 class FeatureTemplate extends React.Component {
   getNavigationLinks() {
@@ -74,7 +73,6 @@ class FeatureTemplate extends React.Component {
     const links = this.getSortedLinks();
     const foundIndex = _.findIndex( links.map(({node}) => node), { 'id' : feature.id } );
 
-    console.log("@@@@@@@@@", foundIndex,  links);
     return {
       previous : foundIndex > 0  ?  links[foundIndex - 1].node : null,
       next : foundIndex >= 0 && foundIndex + 1 < links.length ? links[foundIndex + 1].node : null,
@@ -84,19 +82,16 @@ class FeatureTemplate extends React.Component {
 
   getSortedLinks(){
     const { data : { sideLinks : { edges : items } } } = this.props;
-    console.log("PRE SORTED, RAW", items);
     const linkDecorated = items.map(({node}) => {
       // We add, so that -50 and 0 and 50... Work when sorting.
       return { node : { ...node, order : parseFloat(`${100000 + (node?.category?.order || 0)}.${ _.replace( node?.order, '-', 0) || 0 }`) } }
     });
-    const links = _.sortBy( linkDecorated, ['node.order'], ['asc']);
-    console.log("SORTED", items, links);
-    return links;
+    return  _.sortBy( linkDecorated, ['node.order'], ['asc']);
+
   }
 
   getCategoryLinks() {
     const links = this.getSortedLinks();
-    console.log(links, "WHAT NOT SORTED?????? <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     return _.groupBy( links, ({node}) => {
       return node?.category?.title;
     });
@@ -110,7 +105,6 @@ class FeatureTemplate extends React.Component {
     const { faq : faqGroups}  = data;
     const { previous, next} = this.getNavigationLinks();
     const categoryLinks = this.getCategoryLinks();
-    console.log("category links", categoryLinks, previous, next);
 
     const options = { };
 
@@ -121,7 +115,7 @@ class FeatureTemplate extends React.Component {
     if(productMenuClasses.length > 0){
       productMenuClasses.push('light');
     }
-    const Body = renderPage( featureNode, options );
+
     return (
 
     <MarketingLayout product={featureNode.parentPage} menu={productMenuClasses} wrapperClass={`product-` + featureNode.parentPage.slug} location={location} subNav={true}>
@@ -154,7 +148,7 @@ class FeatureTemplate extends React.Component {
               <Col xs={12} md={7} xl={9} >
 
                 {featureNode?.pageTitle && <Heading as="h1" content={featureNode.pageTitle} /> }
-                <StyledContentSection>{ Body }</StyledContentSection>
+                <PageContent postNode={featureNode} />
 
                 { featureNode?.featurettes && featureNode?.featurettes.map( (feature, index) => (
                     (

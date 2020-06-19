@@ -610,10 +610,12 @@ export const ContentWrapper = styled.main`
         
       }
     }
-    
+    img.medium-zoom-image[alt="Search for Location Autocomplete Dormoa"],
     img.medium-zoom-image[alt="gutenberg editor rentivo holiday rentals preview"] {
-      border: 8px solid rgba(41,201,140,0.28);
+          border: 12px solid #5163bc;
+          border-radius: 8px;
     }
+    
     
     img[alt="Click to Expand"] {
       float: right;

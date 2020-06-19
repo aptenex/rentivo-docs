@@ -200,6 +200,7 @@ const richTextOptions = {
           case 'hero':
             return <HeroSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
           case 'featurette':
+            console.log("FEATURETTE",  transform( node.data.target.fields));
             return <FeatuetteSection key={node.data.target.sys.id}  {... transform( node.data.target.fields) }/>;
           default:
             return <span style={{padding: '20px', backgroundColor: 'red', color: 'white'}}>missing embedded asset { node?.data?.target?.sys?.contentType?.sys.id } </span>
@@ -241,15 +242,16 @@ const RichtextContent = styled('div')`
  }
 `;
 
+const RenderedPage = styled('div')``;
 
-
-export const renderPage = (postNode) => {
+export const PageContent = ({postNode}) => {
   let richtextContent = render(postNode?.body?.json);
   let markdownContent = render(postNode?.bodyMarkdown?.childMarkdownRemark?.htmlAst);
-  return (<>
+
+  return (<RenderedPage>
     { richtextContent && <RichtextContent>{richtextContent}</RichtextContent>}
     { markdownContent && <MarkdownContent>{markdownContent}</MarkdownContent>}
-  </>);
+  </RenderedPage>);
   /*
   render(postNode?.body?.json?.content?.length > 0 ?
     postNode?.body.json :
