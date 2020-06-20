@@ -452,7 +452,7 @@ exports.createPages = ({graphql, boundActionCreators}) => {
               path: `/features/${_.kebabCase(page.node.slug.toLowerCase())}`,
               component: featuresPage,
               context: {
-                slug: page.node.slug,
+                slug: _.kebabCase(page.node.slug.toLowerCase()),
                 id: page.node.id,
                 parentId: page.node.parentPage ? page.node.parentPage.id : null,
                 node_locale: page.node.node_locale

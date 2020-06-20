@@ -50,7 +50,6 @@ class AsideCategoryMenu extends Component {
                   name : textNode,
                 } = el;
                 let classes = `feature-header ${el.slug}`;
-
                 if (this?.state?.activeNavItem?.includes( `/features/${el.slug}` )) {
                   classes += ' active';
                 }
